@@ -213,6 +213,7 @@ export const en: I18nSchema = {
     headline: 'Master of Mechanical Engineering.',
     items: [
       { school: 'Tongji University', degree: 'Master of Mechanical Engineering' },
+      { school: 'University of Shanghai for Science and Technology', degree: 'Bachelor of Mechanical Engineering' },
     ],
   },
   languages: {
