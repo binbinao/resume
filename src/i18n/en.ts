@@ -74,10 +74,10 @@ export const en: I18nSchema = {
         role: 'Head of Computing Architecture / Simulation Cloud Product Owner',
         location: 'Shanghai',
         bullets: [
-          'Lead East-China architect team (5–20 engineers); own GPU/HPC technical strategy and architecture decisions for top-tier enterprise clients.',
-          'Designed and delivered a 1,000-card H800 GPU cluster for a financial LLM training platform serving Tonghuashun and other top Chinese financial institutions — from architecture to production within 6 months.',
-          'Founded CloudSim simulation cloud: 7 releases over 5 years (v1.0 → v1.7), covering CFD / structural / STA / DRC / SI-PI / EMI-EMC / financial compute. Delivered to 20+ enterprise clients including CSG, COMAC Shanghai Aircraft Design Institute, and SJTU AERI.',
-          'Drove AI-compute scenario rollouts: Bosch autonomous-driving training / ARM China EDA scheduling / Novita.ai elastic inference. Transformed cloud GPU resources into vertical-AI solutions.',
+          'Led Shanghai Electric Wind Power HPC cloud migration in 2020, using it as a springboard to transition from architect to Simulation Cloud PM; validated HPC-cloud feasibility with one flagship customer.',
+          'Owned CloudSim simulation cloud 7-release iteration (v1.0 → v1.7, 2021–2022) across financial / education / automotive / industrial sectors; customers include CSG, COMAC Shanghai Aircraft Design Institute, and SJTU AERI.',
+          'Serving government & enterprise clients since 2022, led GPU-compute scenario rollouts. Customer focus is "what GPU can solve", not hardware specs. Notable cases: Bosch autonomous-driving training / ARM China EDA scheduling / Novita.ai elastic inference.',
+          'Full-stack AI expertise: end-to-end understanding (training / inference / application) developed through hands-on GPU deployment for gov/enterprise clients — the foundation for industrial AI and AI for Engineering.',
         ],
       },
       {
@@ -86,8 +86,8 @@ export const en: I18nSchema = {
         role: 'Director, Enterprise Architecture & Engineering Digitalization',
         location: 'Shanghai',
         bullets: [
-          'Managed 6 architects + Engineering & Quality IT (12 total), spanning enterprise architecture and engineering digitalization.',
-          'Led NEV (new-energy vehicle) full-stack digitalization: 4 platforms (Teamcenter PLM / CAE sim / OTA connected vehicle / 3-electric quality traceability) and 20+ business systems, delivered end-to-end within 18 months.',
+          'Engineering IT Director: managed 6 architects + Engineering & Quality IT (12 total). Led engineering capability import from UK side, supporting NEV BEV launch in China — flagship models: Range Rover Evoque / Discovery Sport. Built/imported 5 systems: Teamcenter (PLM) / OTA / HPC cluster / 3-electric traceability / compliance-SAP integration — completed within 18 months.',
+          'Promoted to Enterprise Architecture Director: built Chery Jaguar Land Rover IT architecture blueprint covering Infra → ESB → 4 Capability Pillars (Engineering IT / Manufacturing IT / Corporate Operation / Sales & Marketing DMS); constructed the "China-side independently operable" IT capability foundation for the JV.',
           'Designed TOGAF ADM enterprise-architecture blueprint across infra / data / system / app domains; gave the group a unified technical vocabulary for digital transformation.',
           'Built PD-department Tableau BI cockpit: 4-dimensional visualization (project progress, cost, ROI, budget overrun); supports monthly management reviews.',
         ],
@@ -98,10 +98,10 @@ export const en: I18nSchema = {
         role: 'Senior Technical Account Manager (Enterprise)',
         location: 'Shanghai',
         bullets: [
-          'Owned technical partnerships with GE / Honeywell / ABB / Continental / UAES / Ericsson / Bosch — 7+ Fortune-500 enterprises, mix of strategic-cooperation and standard-service models.',
-          'Led ABB dry-type transformer 2D/3D thermo-structural platform (on ANSYS Mechanical); shortened product-development cycle by 50%.',
-          'Led Continental IGBT thermal-fluid platform (ANSYS Icepak + CFD); adopted across multiple Continental China R&D projects.',
-          'Bridged industrial CAE practice (ABB / Continental / Bosch) with academic research at SJTU / Tongji; drove ANSYS China localization.',
+          'Owned digital-twin engagements with ABB / Bosch Automotive Electronics / Continental Automotive Electronics — 7+ Fortune-500 enterprises under mixed strategic-cooperation and standard-service models. ABB / Continental / Bosch were flagship digital-twin accounts.',
+          'Led ABB dry-type transformer auto-design coupling system (ANSYS product ecosystem): thermo-structural coupled simulation completed in one pass during early design; shortened product-development cycle by 50%.',
+          'Led Continental Automotive IGBT-box digital-twin simulation (ANSYS Icepak + CFD): well-designed Ansys tool flow enabled early-stage electrothermal simulation; design cycle shortened by 30%+.',
+          'Bridged industrial CAE practice with academic research at SJTU / Tongji; drove ANSYS China localization.',
         ],
       },
       {
@@ -110,9 +110,9 @@ export const en: I18nSchema = {
         role: 'Senior Technical PM · Digital Thread',
         location: 'Shanghai',
         bullets: [
+          'Wind-power digital verification platform (highest-value deliverable): built on Ansys simulation tools; full-system simulation cycle 75 → 15 days (↓80%); won time advantage during China\'s wind-power installation rush; widely applied to GE wind-farm bidding.',
           'Led Digital Thread strategic planning, built the "Digital Engineering → Digital Manufacturing" technology matrix; provided a unified digital foundation for GE China\'s coal-power and wind-power business lines.',
           'Coal-power digital factory: simulation pipeline + automated reporting cut ramp-up from 45 → 15 days (↓67%).',
-          'Wind turbine digital verification: ANSYS Mechanical one-stop structural simulation cut full-system simulation cycle from 75 → 15 days (↓80%); replaced traditional physical testing.',
           'VR digital radiology PoC (HTC Vive hospital radiology layout simulation), in collaboration with GE Healthcare.',
           'Led 7-person digital product team (simulation engineers + data scientists + full-stack developers).',
         ],
@@ -136,7 +136,8 @@ export const en: I18nSchema = {
         role: 'PLM Solution Lead / R&D Effectiveness Director',
         location: 'Shanghai',
         bullets: [
-          'Independently led Aras PLM deployment across China / US / France: 16 modules, 10 legacy systems retired in 3 years.',
+          'Independently led Aras PLM (internally "PLI" — Product Level Information) deployment across China / US / France: 16 modules, 10 legacy systems retired in 3 years.',
+          'Innovated "Week-1 Onsite Agile Support" service: under cross-timezone / cross-cultural challenges, sat side-by-side with customers for the entire first week after go-live, avoiding friction with internal ticket-based support systems; helped customers ramp up quickly.',
           'Change cycle 14 days → 72 hours (↓79%), design release efficiency +40%.',
           'Saved $2M+/yr in legacy maintenance ($6M+ cumulative 3-year ROI).',
         ],
@@ -148,6 +149,7 @@ export const en: I18nSchema = {
         location: 'Greater China',
         bullets: [
           'NX CAD/CAM/CAE + Teamcenter technical support and promotion across Greater China: 100+ enterprise customers (including Foxconn / BYD), 20+ trainings/yr.',
+          'Trained large customer base on NX CAD/CAM/CAE. Most memorable: a military customer in Chengdu — CAM software solved critical-part machining challenges.',
           'Designed Teamcenter multi-version user-testing system; built requirement funnel connecting field feedback with global PMs; mechanism adopted by Teamcenter global product line.',
         ],
       },
