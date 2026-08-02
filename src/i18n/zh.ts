@@ -72,10 +72,10 @@ export const zh = {
         role: '计算架构负责人 / 仿真云产品负责人',
         location: '上海',
         bullets: [
-          '东区架构师团队 lead，负责 GPU / HPC 技术架构与重大企业客户服务',
-          '主导 1,000 卡 GPU 集群方案（H800）用于金融 LLM 训练平台',
-          'CloudSim 仿真云产品负责人（v1.0 → v1.7），覆盖 CFD / 结构 / 电磁 / 金融计算',
-          '交付 Bosch 自动驾驶训练平台、ARM 中国 EDA 调度、Novita.ai 弹性推理等关键场景',
+          '担任东区架构师团队 lead（5–20 人），主导 GPU / HPC 技术战略与重大企业客户技术决策',
+          '主导 1,000 卡 H800 GPU 集群建设（金融 LLM 训练平台，服务同花顺等头部金融机构），从架构设计到投产 6 个月内完成',
+          'CloudSim 仿真云产品负责人：5 年 7 版本迭代（v1.0 → v1.7），覆盖 CFD / 结构 / STA / DRC / SI-PI / EMI-EMC / 金融计算；交付 20+ 企业客户（含南方电网、商飞上海航研院、上交高金院等）',
+          '主导 AI 算力场景化落地：Bosch 自动驾驶训练 / ARM 中国 EDA 调度 / Novita.ai 弹性推理；将云上 GPU 资源转化为行业 AI 解决方案',
         ],
       },
       {
@@ -84,10 +84,10 @@ export const zh = {
         role: '企业架构与工程数字化总监',
         location: '上海',
         bullets: [
-          '管理 6 人架构团队 + 工程与质量 IT 团队',
-          '主导 NEV 全栈数字化（4 大平台、20+ 系统）：Teamcenter PLM、CAE 仿真、OTA 整车、3 电质量追溯',
-          'TOGAF ADM 企业架构蓝图，覆盖基础设施 / 数据 / 系统 / 应用四域',
-          'PD 部门 Tableau BI 驾驶舱：项目进度、成本、ROI、预算超支',
+          '管理 6 人架构团队 + 工程与质量 IT 团队（合计 12 人），覆盖企业架构与业务数字化两条线',
+          '主导 NEV（新能源车）全栈数字化：4 大平台（Teamcenter PLM / CAE 仿真 / OTA 整车 / 3 电质量追溯）、20+ 业务系统，18 个月内完成全栈上线',
+          '设计 TOGAF ADM 企业架构蓝图，覆盖基础设施 / 数据 / 系统 / 应用四域；为集团数字化转型提供统一技术语言',
+          '搭建 PD 部门 Tableau BI 驾驶舱：项目进度 / 成本 / ROI / 预算超支 4 维度可视化；支撑管理层月度评审',
         ],
       },
       {
@@ -96,10 +96,10 @@ export const zh = {
         role: '高级技术客户经理 (Enterprise Accounts)',
         location: '上海',
         bullets: [
-          '管理 GE、Honeywell、ABB、Continental、UAES、Ericsson、Bosch 等大客户技术合作',
-          'ABB 干式变压器 2D/3D 热-结构仿真平台（基于 ANSYS Mechanical）',
-          'Continental IGBT 热流仿真平台（ANSYS Icepak + CFD）',
-          '桥接工业 CAE 实践与高校算法研究',
+          '管理 GE / Honeywell / ABB / Continental / UAES / Ericsson / Bosch 等 7+ 头部跨国企业技术合作，战略合作 + 标准服务混合模式',
+          '主导 ABB 干式变压器 2D/3D 热-结构仿真平台建设（基于 ANSYS Mechanical），缩短产品研发周期 50%',
+          '主导 Continental IGBT 热流仿真平台建设（ANSYS Icepak + CFD 联合仿真），被 Continental 多个研发项目采用',
+          '桥接工业 CAE 实战（ABB / Continental / Bosch 等）与上海交大 / 同济算法研究，推动 ANSYS 中国本地化',
         ],
       },
       {
@@ -108,11 +108,11 @@ export const zh = {
         role: '高级技术产品经理 · 数字主线',
         location: '上海',
         bullets: [
-          '主导数字主线规划与「数字工程 → 数字制造」技术矩阵',
-          '煤电数字工厂：仿真数据管线 + 自动化报告，调试周期 45 → 15 天',
-          '风机数字验证：ANSYS Mechanical 一站式结构仿真，全系统仿真周期 75 → 15 天',
-          'VR 数字放射影像设备 PoC（HTC Vive 医院放射科布局仿真）',
-          '7 人数字产品团队',
+          '主导数字主线（Digital Thread）战略规划，构建「数字工程 → 数字制造」技术矩阵；为 GE 中国煤电 + 风电业务线提供统一数字底座',
+          '煤电数字工厂：仿真数据管线 + 自动化报告，调试周期 45 → 15 天（↓67%）',
+          '风机数字验证：ANSYS Mechanical 一站式结构仿真，全系统仿真周期 75 → 15 天（↓80%）；替代传统物理测试',
+          'VR 数字放射影像设备 PoC（HTC Vive 医院放射科布局仿真），与 GE Healthcare 合作',
+          '带领 7 人数字产品团队（含仿真工程师 + 数据科学家 + 全栈开发）',
         ],
       },
       {
@@ -121,11 +121,11 @@ export const zh = {
         role: 'IT 项目经理 · 智能制造',
         location: '上海',
         bullets: [
-          '带领 20+ 人 MES 实施团队，部署注塑 / 冲压 / 电镀 / 组装车间（约 200 台设备）',
-          '家电点火 MES：能耗监控 ±5%，冲压 OEE +35%，电镀合规 100%',
-          '汽车 Hydra MES（18 个月）：SCADA 秒级采集，生产异常响应 15 分钟',
-          '设计工具迁移：2D AutoCAD → 3D NX，参数化模板库，设计复用 +30%',
-          '40+ 技术培训，10+ 认证工程师',
+          '带领 20+ 人 MES 实施团队，24 个月内完成 4 车间 200+ 台设备 MES 部署（注塑 / 冲压 / 电镀 / 组装）',
+          '家电点火 MES：能耗监控精度 ±5%，冲压 OEE +35%，电镀合规率 100%；年节省能源成本 ¥500 万',
+          '汽车 Hydra MES（18 个月）：SCADA 秒级采集，生产异常响应 15 分钟（传统 MES 通常 60+ 分钟）',
+          '设计工具迁移：2D AutoCAD → 3D NX + 参数化模板库，设计复用率 +30%；50+ 工程师完成 NX 认证',
+          '主导 40+ 场技术培训，培养 10+ 名 NX 高级认证工程师',
         ],
       },
       {
@@ -134,9 +134,9 @@ export const zh = {
         role: 'PLM 方案负责人 / 研发效能技术总监',
         location: '上海',
         bullets: [
-          '独立主导 Aras PLM 在中 / 美 / 法三地部署；16 大模块，3 年内下线 10 个遗留系统',
-          '变更流程 14 天 → 72 小时；设计发布效率 +40%',
-          '每年节省遗留系统维护成本 $2M+',
+          '独立主导 Aras PLM 在中国 / 美国 / 法国三地部署：16 大模块，3 年内下线 10 个遗留系统',
+          '变更流程 14 天 → 72 小时（↓79%），设计发布效率 +40%',
+          '每年节省遗留系统维护成本 $2M+（3 年累计 $6M+ ROI）',
         ],
       },
       {
@@ -145,8 +145,8 @@ export const zh = {
         role: '高级应用工程师 · NX CAD/CAM/CAE 与 Teamcenter',
         location: '上海 / 大中华区',
         bullets: [
-          'NX CAD/CAM/CAE + Teamcenter 大中华区技术支持与应用推广',
-          '设计 Teamcenter 多版本用户测试系统，建立需求漏斗对接全球产品经理',
+          'NX CAD/CAM/CAE + Teamcenter 大中华区技术支持与应用推广：覆盖 100+ 客户（含富士康 / 比亚迪等），年度培训 20+ 场',
+          '设计 Teamcenter 多版本用户测试系统，建立需求漏斗对接全球产品团队；该机制被 Teamcenter 全球产品线采用',
         ],
       },
     ],

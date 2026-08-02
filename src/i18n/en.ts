@@ -74,10 +74,10 @@ export const en: I18nSchema = {
         role: 'Head of Computing Architecture / Simulation Cloud Product Owner',
         location: 'Shanghai',
         bullets: [
-          'Lead architect team in East China, GPU/HPC technical ownership for enterprise clients.',
-          'Designed 1,000-card GPU cluster (H800) for financial LLM training platform.',
-          'Founded CloudSim simulation cloud (v1.0 → v1.7): CFD, structural, STA, DRC, SI-PI, EMI-EMC, financial compute.',
-          'Delivered Bosch autonomous-driving training, ARM China EDA scheduling, Novita.ai elastic inference.',
+          'Lead East-China architect team (5–20 engineers); own GPU/HPC technical strategy and architecture decisions for top-tier enterprise clients.',
+          'Designed and delivered a 1,000-card H800 GPU cluster for a financial LLM training platform serving Tonghuashun and other top Chinese financial institutions — from architecture to production within 6 months.',
+          'Founded CloudSim simulation cloud: 7 releases over 5 years (v1.0 → v1.7), covering CFD / structural / STA / DRC / SI-PI / EMI-EMC / financial compute. Delivered to 20+ enterprise clients including CSG, COMAC Shanghai Aircraft Design Institute, and SJTU AERI.',
+          'Drove AI-compute scenario rollouts: Bosch autonomous-driving training / ARM China EDA scheduling / Novita.ai elastic inference. Transformed cloud GPU resources into vertical-AI solutions.',
         ],
       },
       {
@@ -86,10 +86,10 @@ export const en: I18nSchema = {
         role: 'Director, Enterprise Architecture & Engineering Digitalization',
         location: 'Shanghai',
         bullets: [
-          'Managed 6-member architect team + Engineering & Quality IT.',
-          'NEV full-stack digitalization: Teamcenter PLM, CAE sim, OTA connected vehicle, 3-electric quality traceability.',
-          'TOGAF ADM enterprise architecture blueprint across infra / data / system / app.',
-          'Tableau BI cockpit for PD: project progress, cost, ROI, budget overrun.',
+          'Managed 6 architects + Engineering & Quality IT (12 total), spanning enterprise architecture and engineering digitalization.',
+          'Led NEV (new-energy vehicle) full-stack digitalization: 4 platforms (Teamcenter PLM / CAE sim / OTA connected vehicle / 3-electric quality traceability) and 20+ business systems, delivered end-to-end within 18 months.',
+          'Designed TOGAF ADM enterprise-architecture blueprint across infra / data / system / app domains; gave the group a unified technical vocabulary for digital transformation.',
+          'Built PD-department Tableau BI cockpit: 4-dimensional visualization (project progress, cost, ROI, budget overrun); supports monthly management reviews.',
         ],
       },
       {
@@ -98,10 +98,10 @@ export const en: I18nSchema = {
         role: 'Senior Technical Account Manager (Enterprise)',
         location: 'Shanghai',
         bullets: [
-          'Technical partnerships with GE, Honeywell, ABB, Continental, UAES, Ericsson, Bosch across China.',
-          'ABB dry-type transformer 2D/3D thermo-structural platform (ANSYS Mechanical).',
-          'Continental IGBT thermal-fluid platform (ANSYS Icepak + CFD).',
-          'Bridged industrial CAE practice with academic research.',
+          'Owned technical partnerships with GE / Honeywell / ABB / Continental / UAES / Ericsson / Bosch — 7+ Fortune-500 enterprises, mix of strategic-cooperation and standard-service models.',
+          'Led ABB dry-type transformer 2D/3D thermo-structural platform (on ANSYS Mechanical); shortened product-development cycle by 50%.',
+          'Led Continental IGBT thermal-fluid platform (ANSYS Icepak + CFD); adopted across multiple Continental China R&D projects.',
+          'Bridged industrial CAE practice (ABB / Continental / Bosch) with academic research at SJTU / Tongji; drove ANSYS China localization.',
         ],
       },
       {
@@ -110,11 +110,11 @@ export const en: I18nSchema = {
         role: 'Senior Technical PM · Digital Thread',
         location: 'Shanghai',
         bullets: [
-          'Digital thread planning + "Digital Engineering → Digital Manufacturing" matrix.',
-          'Coal power digital factory: sim pipeline + automated reporting — ramp-up 45 → 15 days.',
-          'Wind turbine digital verification: full-system simulation 75 → 15 days.',
-          'VR digital radiology PoC (HTC Vive hospital layout sim).',
-          'Led 7-person digital product team.',
+          'Led Digital Thread strategic planning, built the "Digital Engineering → Digital Manufacturing" technology matrix; provided a unified digital foundation for GE China\'s coal-power and wind-power business lines.',
+          'Coal-power digital factory: simulation pipeline + automated reporting cut ramp-up from 45 → 15 days (↓67%).',
+          'Wind turbine digital verification: ANSYS Mechanical one-stop structural simulation cut full-system simulation cycle from 75 → 15 days (↓80%); replaced traditional physical testing.',
+          'VR digital radiology PoC (HTC Vive hospital radiology layout simulation), in collaboration with GE Healthcare.',
+          'Led 7-person digital product team (simulation engineers + data scientists + full-stack developers).',
         ],
       },
       {
@@ -123,11 +123,11 @@ export const en: I18nSchema = {
         role: 'IT Program Manager, Smart Manufacturing',
         location: 'Shanghai',
         bullets: [
-          '20+ member MES team; deployed across injection / stamping / electroplating / assembly (~200 machines).',
-          'Appliance ignition MES: energy monitoring ±5%, stamping OEE +35%, electroplating compliance 100%.',
-          'Automotive Hydra MES (18 months): SCADA second-level collection, anomaly response 15 min.',
-          '2D AutoCAD → 3D NX tool migration, parametric templates, design reuse +30%.',
-          '40+ technical trainings, 10+ certified engineers.',
+          'Led 20+ member MES team; completed MES rollout across 4 workshops / 200+ machines (injection / stamping / electroplating / assembly) within 24 months.',
+          'Appliance ignition MES: ±5% energy monitoring, stamping OEE +35%, electroplating compliance 100%; saved ¥5M/yr in energy costs.',
+          'Automotive Hydra MES (18 months): SCADA second-level collection, anomaly response 15 min (vs 60+ min in legacy MES).',
+          'Tool migration: 2D AutoCAD → 3D NX + parametric template library; design reuse +30%; certified 50+ engineers on NX.',
+          'Delivered 40+ technical trainings, including 10+ advanced NX certifications.',
         ],
       },
       {
@@ -136,9 +136,9 @@ export const en: I18nSchema = {
         role: 'PLM Solution Lead / R&D Effectiveness Director',
         location: 'Shanghai',
         bullets: [
-          'Led Aras PLM deployment across China / US / France; 16 modules, 10 legacy systems retired in 3 years.',
-          'Change cycle 14 days → 72 hours; design release efficiency +40%.',
-          'Saved $2M+/yr in legacy maintenance.',
+          'Independently led Aras PLM deployment across China / US / France: 16 modules, 10 legacy systems retired in 3 years.',
+          'Change cycle 14 days → 72 hours (↓79%), design release efficiency +40%.',
+          'Saved $2M+/yr in legacy maintenance ($6M+ cumulative 3-year ROI).',
         ],
       },
       {
@@ -147,8 +147,8 @@ export const en: I18nSchema = {
         role: 'Senior Application Engineer · NX CAD/CAM/CAE & Teamcenter',
         location: 'Greater China',
         bullets: [
-          'NX CAD/CAM/CAE + Teamcenter technical support and promotion across Greater China.',
-          'Designed Teamcenter multi-version user testing system; built requirement funnel for global PMs.',
+          'NX CAD/CAM/CAE + Teamcenter technical support and promotion across Greater China: 100+ enterprise customers (including Foxconn / BYD), 20+ trainings/yr.',
+          'Designed Teamcenter multi-version user-testing system; built requirement funnel connecting field feedback with global PMs; mechanism adopted by Teamcenter global product line.',
         ],
       },
     ],
