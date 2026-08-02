@@ -1,0 +1,51 @@
+---
+import { pickDict, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  pathPrefix?: string;
+}
+
+const { locale, pathPrefix = '' } = Astro.props;
+const t = pickDict(locale);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="relative overflow-hidden border-b border-slate-200 dark:border-slate-800">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-accent-50/60 via-transparent to-transparent dark:from-accent-900/20"></div>
+  <div class="container-prose py-20 sm:py-28">
+    <p class="section-eyebrow">{t.hero.eyebrow}</p>
+    <h1 class="text-balance text-5xl font-bold tracking-tight sm:text-6xl">
+      {t.hero.name}
+      <span class="ml-3 align-middle text-2xl font-normal text-slate-500 sm:text-3xl dark:text-slate-400">{t.hero.nameCN}</span>
+    </h1>
+    <p class="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-slate-700 sm:text-xl dark:text-slate-300">
+      {t.hero.tagline}
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-600 dark:text-slate-400">
+      <span class="inline-flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        {t.hero.location}
+      </span>
+      <a class="link-soft inline-flex items-center gap-2" href="https://github.com/binbinao" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.74.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.35.78 1.04.78 2.1v3.11c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        github.com/binbinao
+      </a>
+      <a class="link-soft inline-flex items-center gap-2" href="https://www.youtube.com/@binbinao" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        @binbinao
+      </a>
+    </div>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href={`${base}${pathPrefix}#projects`} class="inline-flex items-center gap-2 rounded-full bg-accent-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-800">
+        {t.hero.ctaPrimary}
+        <span aria-hidden="true">→</span>
+      </a>
+      <a href={`${base}${pathPrefix}#contact`} class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:border-accent-500 hover:text-accent-700 dark:border-slate-700 dark:text-slate-200 dark:hover:border-accent-400 dark:hover:text-accent-300">
+        {t.hero.ctaSecondary}
+      </a>
+    </div>
+  </div>
+</section>

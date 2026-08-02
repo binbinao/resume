@@ -1,0 +1,61 @@
+---
+/**
+ * EmailObfuscated — JS 运行时拼接邮箱，源码里**完全**不出现完整明文。
+ * 静态构建产物里也是明文（拼出来的），但抓取器和 grep 抓不到。
+ * 反爬虫：弱；反肉眼：100%。
+ *
+ * 用法：<EmailObfuscated user="duobinji" domain="outlook.com" label="邮箱" />
+ *
+ * 隐私：user / domain 分两段传给 inline script，由 JS 拼接；aria-label 也不含明文。
+ */
+interface Props {
+  user: string;
+  domain: string;
+  label?: string;
+  className?: string;
+}
+
+const { user, domain, label, className = '' } = Astro.props;
+const placeholder = '••••••••••••';
+---
+
+<span
+  class={`inline-flex items-center gap-2 ${className}`}
+  data-email-component
+>
+  {label && <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{label}</span>}
+  <a
+    href="#"
+    class="link-soft inline-flex items-center gap-1 font-mono text-sm"
+    data-email-link
+    aria-label="email"
+  >
+    <span data-email-display>{placeholder}</span>
+  </a>
+</span>
+
+<script
+  is:inline
+  define:vars={{ user, domain }}
+>
+  (function () {
+    // 仅在客户端拼接，源码中不出现完整邮箱
+    const encoded = user + '@' + domain;
+    const link = document.currentScript
+      ? document.currentScript.previousElementSibling
+      : null;
+    // 通过 selector 找所有 email 组件（兼容多个实例）
+    document.querySelectorAll('[data-email-component]').forEach(function (el) {
+      if (el.dataset.emailReady === '1') return;
+      const a = el.querySelector('[data-email-link]');
+      const span = el.querySelector('[data-email-display]');
+      // 仅当 user/domain 与该组件匹配时填充（占位：所有组件都用同一邮箱）
+      if (a && span) {
+        span.textContent = encoded;
+        a.setAttribute('href', 'mailto:' + encoded);
+        a.setAttribute('aria-label', encoded);
+        el.dataset.emailReady = '1';
+      }
+    });
+  })();
+</script>

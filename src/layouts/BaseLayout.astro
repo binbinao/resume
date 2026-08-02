@@ -1,0 +1,51 @@
+---
+/**
+ * BaseLayout — 全站布局
+ * 隐私：不挂任何第三方追踪脚本（GA / Plausible / Umami / Microsoft Clarity 都不接）
+ */
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { pickDict, type Locale } from '../i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  pathPrefix?: string;
+}
+
+const { title, description, locale, pathPrefix = '' } = Astro.props;
+const t = pickDict(locale);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isEn = locale === 'en';
+const otherLocaleHref = isEn ? `${base}/` : `${base}/en/`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://binbinao.github.io').toString();
+---
+
+<!doctype html>
+<html lang={isEn ? 'en' : 'zh-CN'} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonical} />
+    <meta property="profile:first_name" content="Robin" />
+    <meta property="profile:last_name" content="Ji" />
+    <meta name="theme-color" content="#1d3f8f" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Nav locale={locale} otherLocaleHref={otherLocaleHref} pathPrefix={pathPrefix} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer copy={t.footer.copy} />
+  </body>
+</html>

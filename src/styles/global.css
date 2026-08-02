@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-accent-500/30 text-slate-900 dark:text-white;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold tracking-tight text-slate-900 dark:text-white;
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .container-prose {
+    @apply mx-auto w-full max-w-4xl px-6 sm:px-8;
+  }
+
+  .section {
+    @apply py-20 sm:py-24;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold sm:text-4xl;
+  }
+
+  .section-eyebrow {
+    @apply mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent-600 dark:text-accent-400;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300;
+  }
+
+  .link-soft {
+    @apply text-accent-600 underline-offset-4 transition-colors hover:text-accent-700 hover:underline dark:text-accent-400 dark:hover:text-accent-300;
+  }
+
+  .timeline-node {
+    @apply absolute -left-[7px] mt-1.5 h-3.5 w-3.5 rounded-full border-2 border-accent-500 bg-slate-50 dark:bg-slate-950;
+  }
+}
+
+/* ---------- Utilities ---------- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
