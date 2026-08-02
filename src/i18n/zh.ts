@@ -165,7 +165,7 @@ export const zh = {
   },
   skills: {
     title: '技能',
-    headline: '五种能力，一条主线。',
+    headline: '五种能力，一条主线',
     groups: [
       {
         heading: '工程翻译',
@@ -236,7 +236,7 @@ export const zh = {
   },
   contact: {
     title: '联系',
-    headline: '来一封邮件。',
+    headline: '来一封邮件',
     body: '合作、面试、咨询，欢迎邮件。',
     emailLabel: '邮箱',
     obfuscationNote: 'JS 混淆 · 爬虫初筛不到',

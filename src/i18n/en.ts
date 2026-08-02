@@ -167,7 +167,7 @@ export const en: I18nSchema = {
   },
   skills: {
     title: 'Skills',
-    headline: 'Five capabilities, one thread.',
+    headline: 'Five capabilities, one thread',
     groups: [
       {
         heading: 'Business Translation',
@@ -215,7 +215,7 @@ export const en: I18nSchema = {
   },
   education: {
     title: 'Education',
-    headline: 'Master of Mechanical Engineering.',
+    headline: 'Master of Mechanical Engineering',
     items: [
       { school: 'Tongji University', degree: 'Master of Mechanical Engineering' },
       { school: 'University of Shanghai for Science and Technology', degree: 'Bachelor of Mechanical Engineering' },
@@ -223,7 +223,7 @@ export const en: I18nSchema = {
   },
   languages: {
     title: 'Languages',
-    headline: 'Three working languages.',
+    headline: 'Three working languages',
     items: [
       { name: 'Mandarin Chinese', level: 'Native' },
       { name: 'English', level: 'Professional Working (CET-6 / TOEFL)' },
@@ -232,7 +232,7 @@ export const en: I18nSchema = {
   },
   contact: {
     title: 'Contact',
-    headline: 'Send a message.',
+    headline: 'Send a message',
     body: 'Open to conversations on collaboration, interviews, consulting.',
     emailLabel: 'Email',
     obfuscationNote: 'Obfuscated by JS — not crawlable',
