@@ -214,10 +214,6 @@ export const zh = {
         school: '同济大学',
         degree: '机械工程硕士',
       },
-      {
-        school: '上海理工大学',
-        degree: '机械工程学士',
-      },
     ],
   },
   languages: {
