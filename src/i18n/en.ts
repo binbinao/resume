@@ -34,7 +34,7 @@ export const en: I18nSchema = {
   },
   about: {
     title: 'About',
-    headline: 'A translator, not a bystander.',
+    headline: 'A translator,<br />not a bystander',
     body: [
       '18+ years walking the industrial-software value chain: CAD/CAE tools vendor → PLM platform → shop-floor MES → digital thread → CAE enterprise account management → automotive full-stack digitalization → cloud + AI infrastructure.',
       'My core skill is converting engineering problems into systems that scale — wind-turbine structural issues, battery-pack quality concerns, GPU cluster capacity — solved through architecture.',
