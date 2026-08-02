@@ -213,7 +213,7 @@ export const zh = {
   },
   education: {
     title: '教育',
-    headline: '机械工程硕士。',
+    headline: '机械工程硕士',
     items: [
       {
         school: '同济大学',
@@ -227,7 +227,7 @@ export const zh = {
   },
   languages: {
     title: '语言',
-    headline: '三语可工作。',
+    headline: '三语可工作',
     items: [
       { name: '中文（普通话）', level: '母语' },
       { name: 'English', level: '专业工作水平（CET-6 / TOEFL）' },
