@@ -12,7 +12,7 @@ const t = pickDict(locale);
 <section id="experience" class="section border-t border-slate-200/80 dark:border-slate-800">
   <div class="container-prose">
     <p class="section-eyebrow">{t.experience.title}</p>
-    <h2 class="section-title text-balance">{t.experience.headline}</h2>
+    <h2 class="section-title text-balance" set:html={t.experience.headline} />
 
     <ol class="mt-12 divide-y divide-slate-200 border-y border-slate-200 dark:divide-slate-800 dark:border-slate-800">
       {t.experience.sections.map((entry, index) => (

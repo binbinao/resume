@@ -69,7 +69,7 @@ export const en: I18nSchema = {
   },
   experience: {
     title: 'Experience',
-    headline: 'Across three eras: industrial software, cloud, and AI',
+    headline: 'Across three eras:<br />industrial software, cloud, and AI',
     sections: [
       {
         period: '2020 — Now',
