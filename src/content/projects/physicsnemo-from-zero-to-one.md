@@ -3,6 +3,7 @@ name: 'PhysicsNeMo: From Zero to One'
 tagline: 'NVIDIA PhysicsNeMo 中文教程书 · 8 章 + 4 附录'
 taglineEn: 'Hands-on tutorial book for NVIDIA PhysicsNeMo · 8 chapters + 4 appendices'
 role: 'Tech Author / 教材主编（个人项目）'
+roleEn: 'Tech Author / Lead Editor (personal project)'
 period: '2026-05 — 2026-08'
 stack:
   - 'Python ≥3.10'
@@ -10,18 +11,34 @@ stack:
   - 'NVIDIA PhysicsNeMo 2.0'
   - 'DDP + AMP'
   - 'Multi-Agent 编排'
+stackEn:
+  - 'Python ≥3.10'
+  - 'PyTorch ≥2.3'
+  - 'NVIDIA PhysicsNeMo 2.0'
+  - 'DDP + AMP'
+  - 'Multi-Agent Orchestration'
 repo: 'https://github.com/binbinao/physicsnemo-from-zero-to-one'
 metrics:
   - { value: '8 章 + 4 附录', label: '教材规模' }
   - { value: '3 变体/章', label: '裸 PyTorch / SDK / GPU' }
   - { value: '30+ commits', label: '跨 3 个月迭代' }
   - { value: '2 周', label: 'multi-agent 编排产出' }
+metricsEn:
+  - { value: '8 ch + 4 app', label: 'textbook size' }
+  - { value: '3 variants/ch', label: 'raw PyTorch / SDK / GPU' }
+  - { value: '30+ commits', label: 'over 3 months' }
+  - { value: '2 weeks', label: 'multi-agent output' }
 highlights:
   - 'PINN 与神经算子三层教学：每章给出 raw PyTorch（教育）/ PhysicsNeMo SDK（CPU 验证）/ GPU production（DDP+AMP）三种实现'
   - '配套 6 周学习路径 + 云 GPU 部署指南 + 50 问踩坑 + Colab quickstart'
   - '教材全书双语（book/ + book_en/），LaTeX 公式混排友好'
   - 'CAE 审阅 round 1/2/3：3 阶段外部 CAE 专家反馈迭代（含 CFD 批跑 / 联合反演 / 多目标优化）'
   - 'README 自述 multi-agent 编排 2 周产出全文 + 配图'
+highlightsEn:
+  - 'PINN and neural-operator three-layer teaching: each chapter delivers raw PyTorch (educational) / PhysicsNeMo SDK (CPU-verified) / GPU production (DDP+AMP)'
+  - '6-week study path + cloud-GPU deployment guide + 50-question troubleshooting + Colab quickstart'
+  - 'Fully bilingual textbook (book/ + book_en/), LaTeX-formula friendly'
+  - 'CAE review rounds 1/2/3: 3-stage external CAE expert feedback iteration (CFD batch run / joint inversion / multi-objective optimization)'
 featured: true
 order: 1
 ---

@@ -3,24 +3,40 @@ name: 'document-superpowers'
 tagline: '为 AI 编程工具设计的 4 阶段文档写作技能集'
 taglineEn: '4-stage document-writing skillset for AI coding tools'
 role: '全栈（个人项目）'
+roleEn: 'Full-stack (personal project)'
 period: '2026-03'
 stack:
   - 'Markdown'
   - 'Cursor Skill 体系'
   - 'CodeBuddy Skill 体系'
   - 'Claude Code Skill 体系'
+stackEn:
+  - 'Markdown'
+  - 'Cursor Skill system'
+  - 'CodeBuddy Skill system'
+  - 'Claude Code Skill system'
 repo: 'https://github.com/binbinao/document-superpowers'
 metrics:
   - { value: '44★', label: 'GitHub stars' }
   - { value: '12 forks', label: '社区 fork' }
   - { value: '1 PR', label: '外部贡献' }
   - { value: 'Top 5%', label: '自建项目排名' }
+metricsEn:
+  - { value: '44★', label: 'GitHub stars' }
+  - { value: '12 forks', label: 'community forks' }
+  - { value: '1 PR', label: 'external contribution' }
+  - { value: 'Top 5%', label: 'self-built ranking' }
 highlights:
   - '4 阶段工作流：Brainstorm → Plan → Execute → Review'
   - 'Cursor / CodeBuddy / Claude Code 三平台兼容'
   - '中英双语 README'
   - '跨平台文件名兼容（Windows 字符处理 fix 来自社区 PR）'
   - 'github.com/binbinao 自建项目中出圈最远（其余 61 个项目 stars 总和才 51）'
+highlightsEn:
+  - '4-stage workflow: Brainstorm → Plan → Execute → Review'
+  - 'Cursor / CodeBuddy / Claude Code — three-platform compatible'
+  - 'Bilingual README (Chinese + English)'
+  - 'Cross-platform filename compatibility (Windows char-handling fix from community PR)'
 featured: true
 order: 4
 ---

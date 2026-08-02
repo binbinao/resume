@@ -3,6 +3,7 @@ name: 'excel-ai-connector'
 tagline: 'Excel Office Add-in · 多 Provider AI 通用接入'
 taglineEn: 'Excel Office Add-in · multi-provider AI gateway'
 role: '全栈（个人项目）'
+roleEn: 'Full-stack (personal project)'
 period: '2026-07'
 stack:
   - 'Office.js'
@@ -10,17 +11,32 @@ stack:
   - 'Node.js Bridge'
   - 'Provider Adapter 模式'
   - 'localStorage'
+stackEn:
+  - 'Office.js'
+  - 'JavaScript / TypeScript'
+  - 'Node.js Bridge'
+  - 'Provider Adapter pattern'
+  - 'localStorage'
 repo: 'https://github.com/binbinao/excel-ai-connector'
 metrics:
   - { value: '4 Provider', label: '模型支持' }
   - { value: '3 输出', label: '模式' }
   - { value: '1 天 6 fix', label: '密集迭代' }
+metricsEn:
+  - { value: '4 Providers', label: 'model support' }
+  - { value: '3 outputs', label: 'modes' }
+  - { value: '6 fixes/day', label: 'intensive iteration' }
 highlights:
   - 'OpenAI-compatible / Azure OpenAI / Anthropic / Gemini 统一 Adapter'
   - '任务窗格前端 + Node.js Bridge 后端（API Key 不暴露给浏览器）'
   - '三种输出模式：覆盖选区 / 写入新工作表 / 输出到结果框'
   - '配置锁定避免误改 Endpoint / Model / API Key'
   - 'MVP 阶段，"1 天内修复 6 个边界 bug"是工程产出证明'
+highlightsEn:
+  - 'OpenAI-compatible / Azure OpenAI / Anthropic / Gemini unified Adapter'
+  - 'Task-pane frontend + Node.js Bridge backend (API key never exposed to browser)'
+  - 'Three output modes: overwrite selection / write new sheet / output to result box'
+  - 'Config lock prevents accidental edits to Endpoint / Model / API Key'
 featured: true
 order: 5
 ---

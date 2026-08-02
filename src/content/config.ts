@@ -12,8 +12,10 @@ const projects = defineCollection({
     tagline: z.string(),
     taglineEn: z.string().optional(),
     role: z.string(),
+    roleEn: z.string().optional(),
     period: z.string(),
     stack: z.array(z.string()),
+    stackEn: z.array(z.string()).optional(),
     repo: z.string().url().optional(),
     metrics: z
       .array(
@@ -23,7 +25,16 @@ const projects = defineCollection({
         })
       )
       .default([]),
+    metricsEn: z
+      .array(
+        z.object({
+          value: z.string(),
+          label: z.string(),
+        })
+      )
+      .optional(),
     highlights: z.array(z.string()),
+    highlightsEn: z.array(z.string()).optional(),
     featured: z.boolean().default(false),
     order: z.number().default(99),
   }),

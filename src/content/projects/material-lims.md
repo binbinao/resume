@@ -3,8 +3,17 @@ name: 'Material-LIMS'
 tagline: '材料实验室信息管理系统 · 工业软件全栈代表作'
 taglineEn: 'Material lab information system · flagship industrial-software full-stack project'
 role: '全栈 / Tech Lead（个人项目）'
+roleEn: 'Full-stack / Tech Lead (personal project)'
 period: '2026-06 — 2026-07'
 stack:
+  - 'Java 17 + Spring Boot 3.2'
+  - 'Flowable BPMN 2.0'
+  - 'PostgreSQL 15 + Redis 7'
+  - 'MinIO'
+  - 'React 18 + TypeScript'
+  - 'Ant Design Pro 6'
+  - 'Azure AD + Microsoft Graph API'
+stackEn:
   - 'Java 17 + Spring Boot 3.2'
   - 'Flowable BPMN 2.0'
   - 'PostgreSQL 15 + Redis 7'
@@ -17,12 +26,21 @@ metrics:
   - { value: '8 模块', label: '业务覆盖' }
   - { value: '50 commits', label: '代码产出' }
   - { value: '10.0 commits/周', label: '节奏' }
+metricsEn:
+  - { value: '8 modules', label: 'domain coverage' }
+  - { value: '50 commits', label: 'code output' }
+  - { value: '10.0 commits/wk', label: 'pace' }
 highlights:
   - '委托 → 分析 → 报告 → 工作流 → 审计 → 设备 → 校准 → SSO 全链路'
   - 'BPMN 2.0 工作流引擎替代硬编码状态机'
   - 'Microsoft 365 在线编辑（Word）+ Azure AD SSO'
   - '不可变审计跟踪 + 电子签名基础（FDA 21 CFR Part 11 合规导向）'
   - '结构化测试结果 + 规范化判定域（行业 Know-How）'
+highlightsEn:
+  - 'Full workflow: commission → analysis → report → workflow → audit → equipment → calibration → SSO'
+  - 'BPMN 2.0 workflow engine replacing hardcoded state machines'
+  - 'Microsoft 365 online editing (Word) + Azure AD SSO'
+  - 'Immutable audit trail + e-signature foundation (FDA 21 CFR Part 11 compliance-oriented)'
 featured: true
 order: 3
 ---

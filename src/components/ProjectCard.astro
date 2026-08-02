@@ -11,7 +11,12 @@ const { project, locale } = Astro.props;
 const t = pickDict(locale);
 const { data } = project;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const tagline = locale === 'en' ? (data.taglineEn ?? data.tagline) : data.tagline;
+const isEn = locale === 'en';
+const tagline = isEn ? (data.taglineEn ?? data.tagline) : data.tagline;
+const role = isEn ? (data.roleEn ?? data.role) : data.role;
+const stack = isEn ? (data.stackEn ?? data.stack) : data.stack;
+const metrics = isEn && data.metricsEn ? data.metricsEn : data.metrics;
+const highlights = isEn && data.highlightsEn ? data.highlightsEn : data.highlights;
 ---
 
 <article class="card flex h-full flex-col gap-4">
@@ -36,7 +41,7 @@ const tagline = locale === 'en' ? (data.taglineEn ?? data.tagline) : data.taglin
   </header>
 
   <div class="flex flex-wrap gap-1.5">
-    {data.metrics.map((m) => (
+    {metrics.map((m) => (
       <span class="pill">
         <strong class="mr-1 font-semibold">{m.value}</strong>
         <span class="text-slate-500 dark:text-slate-400">{m.label}</span>
@@ -45,19 +50,19 @@ const tagline = locale === 'en' ? (data.taglineEn ?? data.tagline) : data.taglin
   </div>
 
   <ul class="space-y-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-    {data.highlights.slice(0, 4).map((h) => (
+    {highlights.slice(0, 4).map((h) => (
       <li class="text-pretty"><span class="mr-2 text-accent-500">▸</span>{h}</li>
     ))}
   </ul>
 
   <div class="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 dark:border-slate-800">
-    {data.stack.map((s) => (
+    {stack.map((s) => (
       <span class="pill font-mono text-[11px]">{s}</span>
     ))}
   </div>
 
   <footer class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-    <span>{data.role} · {data.period}</span>
+    <span>{role} · {data.period}</span>
     {data.repo && (
       <a href={`${base}/projects/${project.slug}/`} class="link-soft font-medium">{t.projects.viewDetail} →</a>
     )}

@@ -3,18 +3,29 @@ name: 'DeepDraw'
 tagline: '面向钣金/机加工行业的 DFM 多 Agent 系统'
 taglineEn: 'DFM multi-Agent system for sheet-metal & machining'
 role: '全栈（个人项目）'
+roleEn: 'Full-stack (personal project)'
 period: '2026-06 — 2026-07'
 stack: ['Python', 'LangGraph', 'ChromaDB', 'Vision-LLM', 'PDF/DXF 解析']
+stackEn: ['Python', 'LangGraph', 'ChromaDB', 'Vision-LLM', 'PDF/DXF parsing']
 repo: 'https://github.com/binbinao/DeepDraw'
 metrics:
   - { value: '5-Agent', label: '协作流水线' }
   - { value: 'Phase 1-7', label: '阶段交付' }
   - { value: '8.8 commits/周', label: '节奏' }
+metricsEn:
+  - { value: '5-Agent', label: 'pipeline' }
+  - { value: 'Phase 1–7', label: 'delivery' }
+  - { value: '8.8 commits/wk', label: 'pace' }
 highlights:
   - 'Spec Interpreter → Drawing Auditor → BOM Generator → Process Recommender → Chief Verifier 五 Agent 协作'
   - 'LangGraph 编排 + TypedDict 状态机 + 自博弈 Reflection Loop（最多 3 轮）'
   - 'ChromaDB 企业标准 RAG，metadata filter 适配现场部署'
   - 'PoC 验证 5 个真实场景'
+highlightsEn:
+  - 'Spec Interpreter → Drawing Auditor → BOM Generator → Process Recommender → Chief Verifier — 5-Agent collaboration'
+  - 'LangGraph orchestration + TypedDict state machine + self-play Reflection Loop (max 3 rounds)'
+  - 'ChromaDB enterprise-standard RAG, metadata filter for on-site deployment'
+  - 'PoC validated across 5 real scenarios'
 featured: true
 order: 2
 ---
