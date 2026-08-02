@@ -153,7 +153,7 @@ export const zh = {
   },
   projects: {
     title: '项目',
-    subtitle: '从工业软件到 AI Agent —— 选 4 个代表作。',
+    subtitle: '从工业软件到 AI Agent —— 选 5 个代表作。',
     viewMore: '查看全部',
     viewDetail: '详情',
     visitRepo: '访问仓库',

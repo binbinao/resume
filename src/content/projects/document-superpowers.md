@@ -22,7 +22,7 @@ highlights:
   - '跨平台文件名兼容（Windows 字符处理 fix 来自社区 PR）'
   - 'github.com/binbinao 自建项目中出圈最远（其余 61 个项目 stars 总和才 51）'
 featured: true
-order: 3
+order: 4
 ---
 
 **这是什么**：把"写文档"从"凭感觉写"升级为 4 阶段工序，让 AI 编程工具从"打字工具"变成"写作搭子"。

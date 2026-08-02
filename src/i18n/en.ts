@@ -155,7 +155,7 @@ export const en: I18nSchema = {
   },
   projects: {
     title: 'Projects',
-    subtitle: 'From industrial software to AI agents — 4 picks.',
+    subtitle: 'From industrial software to AI agents — 5 picks.',
     viewMore: 'View all',
     viewDetail: 'Detail',
     visitRepo: 'Visit repo',

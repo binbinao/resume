@@ -24,7 +24,7 @@ highlights:
   - '不可变审计跟踪 + 电子签名基础（FDA 21 CFR Part 11 合规导向）'
   - '结构化测试结果 + 规范化判定域（行业 Know-How）'
 featured: true
-order: 2
+order: 3
 ---
 
 Material-LIMS 是"机械背景 + 工业软件"路线上最大的单体项目。

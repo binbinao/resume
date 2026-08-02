@@ -22,7 +22,7 @@ highlights:
   - '配置锁定避免误改 Endpoint / Model / API Key'
   - 'MVP 阶段，"1 天内修复 6 个边界 bug"是工程产出证明'
 featured: true
-order: 4
+order: 5
 ---
 
 **痛点**：Excel 用户想用 AI 处理数据，但单一 Provider 绑定切换成本高；办公场景常需要"按任务选模型"（分析 GPT / 对话 Claude / 视觉 Gemini）。

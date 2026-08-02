@@ -16,7 +16,7 @@ highlights:
   - 'ChromaDB 企业标准 RAG，metadata filter 适配现场部署'
   - 'PoC 验证 5 个真实场景'
 featured: true
-order: 1
+order: 2
 ---
 
 DFM-Copilot Squad 是把"钣金/机加工图纸审核"这件老师傅凭经验做的事，用多 Agent 系统重做一遍。
