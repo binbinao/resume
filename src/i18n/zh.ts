@@ -15,6 +15,9 @@ export const zh = {
     highlights: '亮点',
     skills: '技能',
     contact: '联系',
+    menu: '导航',
+    themeToLight: '切换到浅色模式',
+    themeToDark: '切换到深色模式',
     switchLang: 'EN',
   },
   hero: {
@@ -245,6 +248,8 @@ export const zh = {
   },
   footer: {
     copy: '本站不挂任何追踪脚本。开源代码，按需自取。',
+    homePath: '/',
+    enPath: '/en/',
   },
 } as const;
 

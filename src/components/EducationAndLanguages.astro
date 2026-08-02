@@ -9,28 +9,32 @@ const { locale } = Astro.props;
 const t = pickDict(locale);
 ---
 
-<section class="section border-t border-slate-200 dark:border-slate-800">
-  <div class="container-prose grid gap-12 md:grid-cols-2">
+<section class="section border-t border-slate-200/80 dark:border-slate-800">
+  <div class="container-prose grid gap-14 lg:grid-cols-2">
     <div>
       <p class="section-eyebrow">{t.education.title}</p>
-      <h2 class="section-title text-3xl">{t.education.headline}</h2>
-      <ul class="mt-6 space-y-4">
-        {t.education.items.map((e) => (
-          <li class="card">
-            <p class="text-base font-semibold tracking-tight">{e.school}</p>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{e.degree}</p>
+      <h2 class="section-title text-balance">{t.education.headline}</h2>
+      <ul class="mt-8 space-y-4">
+        {t.education.items.map((item) => (
+          <li class="card flex items-baseline justify-between gap-4">
+            <div>
+              <p class="text-base font-semibold tracking-tight">{item.school}</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{item.degree}</p>
+            </div>
+            <span class="font-mono text-[10px] font-bold text-slate-400 dark:text-slate-500">EDU</span>
           </li>
         ))}
       </ul>
     </div>
+
     <div>
       <p class="section-eyebrow">{t.languages.title}</p>
-      <h2 class="section-title text-3xl">{t.languages.headline}</h2>
-      <ul class="mt-6 space-y-3">
-        {t.languages.items.map((l) => (
-          <li class="card flex items-baseline justify-between gap-4">
-            <span class="font-medium">{l.name}</span>
-            <span class="text-sm text-slate-500 dark:text-slate-400">{l.level}</span>
+      <h2 class="section-title text-balance">{t.languages.headline}</h2>
+      <ul class="mt-8 divide-y divide-slate-200 border-y border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+        {t.languages.items.map((item) => (
+          <li class="flex items-baseline justify-between gap-4 py-4">
+            <span class="font-medium text-slate-900 dark:text-slate-100">{item.name}</span>
+            <span class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{item.level}</span>
           </li>
         ))}
       </ul>

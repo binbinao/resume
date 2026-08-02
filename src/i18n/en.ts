@@ -17,6 +17,9 @@ export const en: I18nSchema = {
     highlights: 'Highlights',
     skills: 'Skills',
     contact: 'Contact',
+    menu: 'Menu',
+    themeToLight: 'Switch to light mode',
+    themeToDark: 'Switch to dark mode',
     switchLang: '中文',
   },
   hero: {
@@ -241,5 +244,7 @@ export const en: I18nSchema = {
   },
   footer: {
     copy: 'No tracking scripts. Open source, fork freely.',
+    homePath: '/',
+    enPath: '/en/',
   },
 };

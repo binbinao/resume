@@ -6,11 +6,8 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Inter',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
+          '"Avenir Next"',
+          '"Segoe UI Variable"',
           '"PingFang SC"',
           '"Hiragino Sans GB"',
           '"Microsoft YaHei"',

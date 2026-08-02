@@ -21,10 +21,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isEn = locale === 'en';
 const otherLocaleHref = isEn ? `${base}/` : `${base}/en/`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://binbinao.github.io').toString();
+const isHome = Astro.url.pathname === `${base}/` || Astro.url.pathname === `${base}/en/`;
 ---
 
 <!doctype html>
-<html lang={isEn ? 'en' : 'zh-CN'} class="scroll-smooth">
+<html lang={isEn ? 'en' : 'zh-CN'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,19 +34,56 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://binbinao.gi
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="canonical" href={canonical} />
+    {isHome && <link rel="alternate" hreflang={isEn ? 'zh-CN' : 'en'} href={new URL(isEn ? `${base}/` : `${base}/en/`, Astro.site ?? 'https://binbinao.github.io')} />}
+    {isHome && <link rel="alternate" hreflang="x-default" href={new URL(`${base}/`, Astro.site ?? 'https://binbinao.github.io')} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={isEn ? 'en_US' : 'zh_CN'} />
     <meta property="profile:first_name" content="Robin" />
     <meta property="profile:last_name" content="Ji" />
-    <meta name="theme-color" content="#1d3f8f" />
+    <meta name="theme-color" content="#0b1018" />
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('resume-theme');
+          const dark = stored === 'dark' || (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (_) {
+          // Keep the light theme when storage is unavailable.
+        }
+      })();
+    </script>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="flex min-h-screen flex-col">
+    <a href="#main-content" class="sr-only z-50 rounded-md bg-accent-700 px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+      {isEn ? 'Skip to content' : '跳到正文'}
+    </a>
     <Nav locale={locale} otherLocaleHref={otherLocaleHref} pathPrefix={pathPrefix} />
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
-    <Footer copy={t.footer.copy} />
+    <Footer copy={t.footer.copy} locale={locale} />
+    <script is:inline>
+      (() => {
+        const button = document.querySelector('[data-theme-toggle]');
+        if (!button) return;
+        const update = () => {
+          const dark = document.documentElement.classList.contains('dark');
+          button.setAttribute('aria-pressed', String(dark));
+          button.setAttribute('aria-label', dark ? button.getAttribute('data-label-light') || 'Switch to light mode' : button.getAttribute('data-label-dark') || 'Switch to dark mode');
+          button.querySelector('[data-theme-icon-sun]')?.classList.toggle('hidden', !dark);
+          button.querySelector('[data-theme-icon-moon]')?.classList.toggle('hidden', dark);
+        };
+        button.addEventListener('click', () => {
+          const dark = !document.documentElement.classList.contains('dark');
+          document.documentElement.classList.toggle('dark', dark);
+          try { localStorage.setItem('resume-theme', dark ? 'dark' : 'light'); } catch (_) {}
+          update();
+        });
+        update();
+      })();
+    </script>
   </body>
 </html>

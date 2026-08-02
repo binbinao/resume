@@ -14,13 +14,18 @@ const projects = (await getCollection('projects', ({ data }) => data.featured))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="projects" class="section border-t border-slate-200 dark:border-slate-800">
+<section id="projects" class="section border-t border-slate-200/80 dark:border-slate-800">
   <div class="container-prose">
     <p class="section-eyebrow">{t.projects.title}</p>
-    <h2 class="section-title text-balance">{t.projects.subtitle}</h2>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2">
-      {projects.map((p) => (
-        <ProjectCard project={p} locale={locale} />
+    <div class="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+      <h2 class="section-title text-balance">{t.projects.subtitle}</h2>
+      <a href="https://github.com/binbinao" target="_blank" rel="noopener noreferrer" class="link-soft inline-flex items-center gap-2 self-start text-sm font-semibold lg:self-auto">
+        {locale === 'en' ? 'All repositories' : '全部仓库'} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+      {projects.map((project, index) => (
+        <ProjectCard project={project} locale={locale} layout={index < 2 ? 'wide' : 'standard'} />
       ))}
     </div>
   </div>
