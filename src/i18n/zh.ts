@@ -41,7 +41,7 @@ export const zh = {
   },
   highlights: {
     title: '亮点',
-    headline: '用数字说话。',
+    headline: '用数字说话',
     items: [
       {
         metric: '44★',

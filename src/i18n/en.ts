@@ -43,7 +43,7 @@ export const en: I18nSchema = {
   },
   highlights: {
     title: 'Highlights',
-    headline: 'By the numbers.',
+    headline: 'By the numbers',
     items: [
       {
         metric: '44★',
