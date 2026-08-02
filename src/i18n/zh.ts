@@ -67,7 +67,7 @@ export const zh = {
   },
   experience: {
     title: '经历',
-    headline: '从工具厂商到云架构师，七年一跨度。',
+    headline: '在工业软件、云计算与 AI 三个时代之间',
     sections: [
       {
         period: '2020 — 现在',

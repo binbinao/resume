@@ -69,7 +69,7 @@ export const en: I18nSchema = {
   },
   experience: {
     title: 'Experience',
-    headline: 'From vendor to cloud architect — 7 years per leap.',
+    headline: 'Across three eras: industrial software, cloud, and AI',
     sections: [
       {
         period: '2020 — Now',
