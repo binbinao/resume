@@ -13,7 +13,7 @@ const t = pickDict(locale);
   <div class="container-prose grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
     <header>
       <p class="section-eyebrow">{t.about.title}</p>
-      <h2 class="section-title text-balance">{t.about.headline}</h2>
+      <h2 class="section-title text-balance" set:html={t.about.headline} />
       <p class="mt-6 font-mono text-xs uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
         Industrial software → Cloud → AI
       </p>
