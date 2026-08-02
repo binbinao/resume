@@ -13,14 +13,14 @@ const t = pickDict(locale);
 <section id="contact" class="section border-t border-slate-200 dark:border-slate-800">
   <div class="container-prose">
     <p class="section-eyebrow">{t.contact.title}</p>
-    <h2 class="section-title text-balance">来一封邮件。</h2>
+    <h2 class="section-title text-balance">{t.contact.headline}</h2>
     <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700 dark:text-slate-300">{t.contact.body}</p>
 
     <div class="mt-10 grid gap-6 md:grid-cols-2">
       <div class="card flex flex-col gap-3">
         <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t.contact.emailLabel}</span>
         <EmailObfuscated user="duobinji" domain="outlook.com" />
-        <p class="text-xs text-slate-500 dark:text-slate-400">JS 混淆 · 爬虫初筛不到</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">{t.contact.obfuscationNote}</p>
       </div>
 
       <ul class="space-y-3">

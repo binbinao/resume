@@ -38,6 +38,7 @@ export const zh = {
   },
   highlights: {
     title: '亮点',
+    headline: '用数字说话。',
     items: [
       {
         metric: '44★',
@@ -63,6 +64,7 @@ export const zh = {
   },
   experience: {
     title: '经历',
+    headline: '从工具厂商到云架构师，七年一跨度。',
     sections: [
       {
         period: '2020 — 现在',
@@ -158,6 +160,7 @@ export const zh = {
   },
   skills: {
     title: '技能',
+    headline: '五种能力，一条主线。',
     groups: [
       {
         heading: '工程翻译',
@@ -205,6 +208,7 @@ export const zh = {
   },
   education: {
     title: '教育',
+    headline: '机械工程硕士。',
     items: [
       {
         school: '同济大学',
@@ -218,6 +222,7 @@ export const zh = {
   },
   languages: {
     title: '语言',
+    headline: '三语可工作。',
     items: [
       { name: '中文（普通话）', level: '母语' },
       { name: 'English', level: '专业工作水平（CET-6 / TOEFL）' },
@@ -226,8 +231,10 @@ export const zh = {
   },
   contact: {
     title: '联系',
+    headline: '来一封邮件。',
     body: '合作、面试、咨询，欢迎邮件。',
     emailLabel: '邮箱',
+    obfuscationNote: 'JS 混淆 · 爬虫初筛不到',
     channels: [
       { label: 'GitHub', url: 'https://github.com/binbinao', handle: 'binbinao' },
       { label: 'YouTube', url: 'https://www.youtube.com/@binbinao', handle: '@binbinao' },

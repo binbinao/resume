@@ -11,13 +11,14 @@ const { project, locale } = Astro.props;
 const t = pickDict(locale);
 const { data } = project;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tagline = locale === 'en' ? (data.taglineEn ?? data.tagline) : data.tagline;
 ---
 
 <article class="card flex h-full flex-col gap-4">
   <header class="flex items-start justify-between gap-4">
     <div>
       <h3 class="text-xl font-semibold tracking-tight">{data.name}</h3>
-      <p class="mt-1 text-pretty text-sm leading-relaxed text-slate-600 dark:text-slate-400">{data.tagline}</p>
+      <p class="mt-1 text-pretty text-sm leading-relaxed text-slate-600 dark:text-slate-400">{tagline}</p>
     </div>
     {data.repo && (
       <a

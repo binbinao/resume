@@ -1,6 +1,7 @@
 ---
 name: 'DeepDraw'
 tagline: '面向钣金/机加工行业的 DFM 多 Agent 系统'
+taglineEn: 'DFM multi-Agent system for sheet-metal & machining'
 role: '全栈（个人项目）'
 period: '2026-06 — 2026-07'
 stack: ['Python', 'LangGraph', 'ChromaDB', 'Vision-LLM', 'PDF/DXF 解析']

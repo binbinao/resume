@@ -13,7 +13,7 @@ const t = pickDict(locale);
   <div class="container-prose grid gap-12 md:grid-cols-2">
     <div>
       <p class="section-eyebrow">{t.education.title}</p>
-      <h2 class="section-title text-3xl">{t.education.items[0].degree.split(' ').slice(0, 2).join(' ')}.</h2>
+      <h2 class="section-title text-3xl">{t.education.headline}</h2>
       <ul class="mt-6 space-y-4">
         {t.education.items.map((e) => (
           <li class="card">
@@ -25,7 +25,7 @@ const t = pickDict(locale);
     </div>
     <div>
       <p class="section-eyebrow">{t.languages.title}</p>
-      <h2 class="section-title text-3xl">三语可工作。</h2>
+      <h2 class="section-title text-3xl">{t.languages.headline}</h2>
       <ul class="mt-6 space-y-3">
         {t.languages.items.map((l) => (
           <li class="card flex items-baseline justify-between gap-4">

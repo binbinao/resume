@@ -1,6 +1,7 @@
 ---
 name: 'document-superpowers'
 tagline: '为 AI 编程工具设计的 4 阶段文档写作技能集'
+taglineEn: '4-stage document-writing skillset for AI coding tools'
 role: '全栈（个人项目）'
 period: '2026-03'
 stack:

@@ -1,6 +1,7 @@
 ---
 name: 'excel-ai-connector'
 tagline: 'Excel Office Add-in · 多 Provider AI 通用接入'
+taglineEn: 'Excel Office Add-in · multi-provider AI gateway'
 role: '全栈（个人项目）'
 period: '2026-07'
 stack:

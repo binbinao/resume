@@ -1,6 +1,7 @@
 ---
 name: 'Material-LIMS'
 tagline: '材料实验室信息管理系统 · 工业软件全栈代表作'
+taglineEn: 'Material lab information system · flagship industrial-software full-stack project'
 role: '全栈 / Tech Lead（个人项目）'
 period: '2026-06 — 2026-07'
 stack:
