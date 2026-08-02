@@ -18,9 +18,9 @@ const t = pickDict(locale);
         Industrial software → Cloud → AI
       </p>
     </header>
-    <div class="reading-width space-y-6 border-l border-slate-200 pl-6 text-lg leading-relaxed text-slate-700 sm:pl-10 dark:border-slate-800 dark:text-slate-300">
-      {t.about.body.map((paragraph, index) => (
-        <p class:list={["text-pretty", index === 0 && "text-xl font-medium leading-relaxed text-slate-900 dark:text-slate-100"]}>{paragraph}</p>
+    <div class="reading-width space-y-5 border-l border-slate-200 pl-6 text-lg leading-relaxed text-slate-700 sm:pl-10 dark:border-slate-800 dark:text-slate-300">
+      {t.about.body.map((paragraph) => (
+        <p class="text-pretty">{paragraph}</p>
       ))}
     </div>
   </div>
