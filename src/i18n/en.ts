@@ -26,8 +26,7 @@ export const en: I18nSchema = {
     eyebrow: 'Industrial AI Infrastructure Architect',
     name: 'Robin Ji',
     nameCN: '纪多斌',
-    tagline:
-      'Translating engineering pain points into executable technical systems — across industrial software, cloud, and AI infrastructure.',
+    tagline: '18 years. 7 industries. One thread.',
     location: 'Shanghai, China',
     ctaPrimary: 'See projects',
     ctaSecondary: 'Contact',

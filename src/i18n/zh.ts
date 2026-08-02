@@ -24,8 +24,7 @@ export const zh = {
     eyebrow: 'Industrial AI Infrastructure Architect',
     name: 'Robin Ji',
     nameCN: '纪多斌',
-    tagline:
-      '把工程师的工艺痛点翻译成可落地的技术系统。跨越工业软件、云计算、AI 基础设施三个时代。',
+    tagline: '18 年 · 7 个行业 · 一条主线',
     location: 'Shanghai, China',
     ctaPrimary: '看项目',
     ctaSecondary: '联系我',
