@@ -13,10 +13,12 @@ interface Props {
   description: string;
   locale: Locale;
   pathPrefix?: string;
+  profile?: 'cio' | 'caio';
+  showLang?: boolean;
 }
 
-const { title, description, locale, pathPrefix = '' } = Astro.props;
-const t = pickDict(locale);
+const { title, description, locale, pathPrefix = '', profile, showLang = true } = Astro.props;
+const t = pickDict(locale, profile);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isEn = locale === 'en';
 const otherLocaleHref = isEn ? `${base}/` : `${base}/en/`;
@@ -60,7 +62,7 @@ const isHome = Astro.url.pathname === `${base}/` || Astro.url.pathname === `${ba
     <a href="#main-content" class="sr-only z-50 rounded-md bg-accent-700 px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
       {isEn ? 'Skip to content' : '跳到正文'}
     </a>
-    <Nav locale={locale} otherLocaleHref={otherLocaleHref} pathPrefix={pathPrefix} />
+    <Nav locale={locale} otherLocaleHref={otherLocaleHref} pathPrefix={pathPrefix} showLang={showLang} />
     <main id="main-content" class="flex-1">
       <slot />
     </main>

@@ -4,12 +4,13 @@ import { pickDict, type Locale } from '../i18n';
 interface Props {
   locale: Locale;
   pathPrefix?: string;
+  profile?: 'cio' | 'caio';
 }
 
-const { locale, pathPrefix = '' } = Astro.props;
-const t = pickDict(locale);
+const { locale, pathPrefix = '', profile } = Astro.props;
+const t = pickDict(locale, profile);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const pathSteps = locale === 'en'
+const defaultSteps = locale === 'en'
   ? [
       { index: '01', title: 'Industrial software', sub: 'CAD · CAE · PLM · MES' },
       { index: '02', title: 'Cloud & HPC', sub: 'Simulation cloud · GPU systems' },
@@ -20,6 +21,7 @@ const pathSteps = locale === 'en'
       { index: '02', title: '云与高性能计算', sub: '仿真云 · GPU 系统' },
       { index: '03', title: '工业 AI', sub: 'AI for Engineering · Agents' },
     ];
+const pathSteps = (t.hero as { pathSteps?: typeof defaultSteps }).pathSteps ?? defaultSteps;
 ---
 
 <section class="relative isolate overflow-hidden border-b border-slate-200/80 dark:border-slate-800">

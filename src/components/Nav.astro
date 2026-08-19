@@ -5,9 +5,10 @@ interface Props {
   locale: Locale;
   otherLocaleHref: string;
   pathPrefix?: string;
+  showLang?: boolean;
 }
 
-const { locale, otherLocaleHref, pathPrefix = '' } = Astro.props;
+const { locale, otherLocaleHref, pathPrefix = '', showLang = true } = Astro.props;
 const t = pickDict(locale);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -59,7 +60,10 @@ const links = [
 
       <a
         href={otherLocaleHref}
-        class="grid min-h-9 min-w-9 place-items-center rounded-full border border-slate-300 bg-white/70 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-accent-400 hover:text-accent-700 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:border-accent-500 dark:hover:text-accent-300"
+        class:list={[
+          "grid min-h-9 min-w-9 place-items-center rounded-full border border-slate-300 bg-white/70 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-accent-400 hover:text-accent-700 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:border-accent-500 dark:hover:text-accent-300",
+          !showLang && "hidden",
+        ]}
         aria-label={locale === 'en' ? '切换到中文' : 'Switch to English'}
       >
         {t.nav.switchLang}

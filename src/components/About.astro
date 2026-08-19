@@ -3,10 +3,12 @@ import { pickDict, type Locale } from '../i18n';
 
 interface Props {
   locale: Locale;
+  profile?: 'cio' | 'caio';
 }
 
-const { locale } = Astro.props;
-const t = pickDict(locale);
+const { locale, profile } = Astro.props;
+const t = pickDict(locale, profile);
+const aboutEyebrow = (t.about as { eyebrow?: string }).eyebrow ?? 'Industrial software → Cloud → AI';
 ---
 
 <section id="about" class="section">
@@ -15,7 +17,7 @@ const t = pickDict(locale);
       <p class="section-eyebrow">{t.about.title}</p>
       <h2 class="section-title text-balance" set:html={t.about.headline} />
       <p class="mt-6 font-mono text-xs uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
-        Industrial software → Cloud → AI
+        {aboutEyebrow}
       </p>
     </header>
     <div class="reading-width space-y-5 border-l border-slate-200 pl-6 text-lg leading-relaxed text-slate-700 sm:pl-10 dark:border-slate-800 dark:text-slate-300">

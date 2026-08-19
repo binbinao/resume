@@ -3,10 +3,11 @@ import { pickDict, type Locale } from '../i18n';
 
 interface Props {
   locale: Locale;
+  profile?: 'cio' | 'caio';
 }
 
-const { locale } = Astro.props;
-const t = pickDict(locale);
+const { locale, profile } = Astro.props;
+const t = pickDict(locale, profile);
 ---
 
 <section id="experience" class="section border-t border-slate-200/80 dark:border-slate-800">
