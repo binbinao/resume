@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import About from '../../../components/About.astro';
+import Highlights from '../../../components/Highlights.astro';
+import Timeline from '../../../components/Timeline.astro';
+import Projects from '../../../components/Projects.astro';
+import Skills from '../../../components/Skills.astro';
+import EducationAndLanguages from '../../../components/EducationAndLanguages.astro';
+import Contact from '../../../components/Contact.astro';
+import { pickDict } from '../../../i18n';
+
+const t = pickDict('en', 'caio');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const profile = 'caio';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  locale="en"
+  pathPrefix="/caio/en"
+  profile="caio"
+  showLang={false}
+>
+  <div class="border-b border-slate-200/70 bg-accent-50/60 text-center text-xs dark:border-slate-200 dark:bg-accent-950/20">
+    <div class="container-prose flex flex-wrap items-center justify-center gap-x-3 gap-y-1 py-2">
+      <span class="font-semibold text-slate-500 dark:text-slate-400">Resume version:</span>
+      <a href={`${base}/`} class="link-soft">Industrial AI Architect (main)</a>
+      <span class="text-slate-300">·</span>
+      <a href={`${base}/cio/`} class="link-soft">CIO · 中文</a>
+      <span class="text-slate-300">·</span>
+      <a href={`${base}/cio/en/`} class="link-soft">CIO · EN</a>
+      <span class="text-slate-300">·</span>
+      <a href={`${base}/caio/`} class="link-soft">CAIO · 中文</a>
+      <span class="text-slate-300">·</span>
+      <span class="font-semibold text-accent-700 dark:text-accent-300">CAIO · EN</span>
+    </div>
+  </div>
+
+  <Hero locale="en" profile="caio" />
+  <About locale="en" profile="caio" />
+  <Highlights locale="en" profile="caio" />
+  <Timeline locale="en" profile="caio" />
+  <Projects locale="en" />
+  <Skills locale="en" profile="caio" />
+  <EducationAndLanguages locale="en" />
+  <Contact locale="en" />
+</BaseLayout>

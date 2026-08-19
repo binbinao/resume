@@ -21,9 +21,13 @@ const { title, description, locale, pathPrefix = '', profile, showLang = true } 
 const t = pickDict(locale, profile);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isEn = locale === 'en';
-const otherLocaleHref = isEn ? `${base}/` : `${base}/en/`;
+// Profile-aware language toggle: keep the user on the same profile page when
+// switching language (e.g. /cio/ -> /cio/en/, /caio/en/ -> /caio/). Pages
+// outside any profile fall back to the main zh <-> en swap.
+const profileSegment = profile ? `/${profile}` : '';
+const otherLocaleHref = isEn ? `${base}${profileSegment}/` : `${base}${profileSegment}/en/`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://binbinao.github.io').toString();
-const isHome = Astro.url.pathname === `${base}/` || Astro.url.pathname === `${base}/en/`;
+const isHome = !profile && (Astro.url.pathname === `${base}/` || Astro.url.pathname === `${base}/en/`);
 ---
 
 <!doctype html>

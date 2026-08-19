@@ -421,3 +421,396 @@ const caioProfile: Profile = {
 };
 
 export const profiles: Record<'cio' | 'caio', Profile> = { cio: cioProfile, caio: caioProfile };
+
+/**
+ * EN counterparts — same shape, IB / overseas HR framing.
+ * Kept in a separate map so picking by (locale, profile) is symmetric.
+ */
+const cioEnProfile: Profile = {
+  meta: {
+    title: 'Robin Ji — Industrial Group CIO / Digital Transformation Head',
+    description:
+      'Industrial Group CIO / Digital Transformation Head — 18+ years across industrial software → engineering IT → enterprise architecture. Siemens, GE, Ansys, Chery Jaguar Land Rover, leading Chinese cloud. Hands-on PLM / MES / Digital Thread / HPC and TOGAF ADM.',
+  },
+  hero: {
+    eyebrow: 'Industrial Group · CIO / Digital Transformation Head',
+    name: 'Robin Ji',
+    nameCN: '纪多斌',
+    tagline: '18 years · 7 industrial giants · Engineering IT → Enterprise Architecture',
+    location: 'Shanghai, China',
+    ctaPrimary: 'See projects',
+    ctaSecondary: 'Contact',
+    pathSteps: [
+      { index: '01', title: 'Engineering IT', sub: 'PLM · MES · Digital Thread · HPC' },
+      { index: '02', title: 'Enterprise Architecture', sub: 'TOGAF ADM · Infra → Apps' },
+      { index: '03', title: 'Group CIO', sub: 'China-side independently operable IT' },
+    ],
+  },
+  about: {
+    eyebrow: 'Engineering IT → Enterprise Architecture → CIO',
+    headline: 'The hardest 50% of<br />industrial IT — already shipped',
+    body: [
+      '18+ years across the industrial digitalization stack: CAD/CAE vendors → PLM platforms → shop-floor MES → digital thread → automotive full-stack digitalization → cloud & AI infrastructure. At Chery Jaguar Land Rover and GE I operated as the owner, not the consultant.',
+      'The hardest half of a manufacturing CIO mandate — engineering IT (PLM / MES / digital engineering / HPC) — I delivered directly as Engineering IT Director at Chery Jaguar Land Rover and as Digital Thread lead at GE. The remaining IT estate (ERP / CRM / finance IT / security org) is a portable layer on top.',
+      'My value: I translate engineering and manufacturing pain into operable IT systems. 18 months to stand up 5 new systems, build a "China-side independently operable" IT foundation, and lay down a TOGAF ADM blueprint across infra / data / system / app domains — surfaced through a management BI cockpit for monthly reviews.',
+    ],
+  },
+  highlights: {
+    title: 'Highlights',
+    headline: 'By the numbers',
+    tagline: 'Evidence over adjectives',
+    items: [
+      {
+        metric: '12 ppl',
+        label: 'Engineering IT + Architecture team (JLR)',
+        sub: 'Led 6 architects + Engineering & Quality IT (12 total); built the "China-side independently operable" IT capability foundation for the JV.',
+      },
+      {
+        metric: '5 systems',
+        label: 'Newly built in 18 months',
+        sub: 'Teamcenter (PLM) / OTA / HPC cluster / 3-electric traceability / compliance-SAP integration — supporting NEV BEV launch in China.',
+      },
+      {
+        metric: 'TOGAF',
+        label: 'Group enterprise architecture blueprint',
+        sub: 'Infra → ESB → 4 Capability Pillars; a unified technical language for group-wide digital transformation.',
+      },
+      {
+        metric: '$6M+',
+        label: '3-year legacy savings (Carestream)',
+        sub: 'Aras PLM deployed across China / US / France — 16 modules, 10 legacy systems retired in 3 years, $2M+/yr maintenance saved.',
+      },
+    ],
+  },
+  experience: {
+    title: 'Experience',
+    headline: 'Between engineering IT and group architecture',
+    sections: [
+      {
+        period: '2020 — Now',
+        company: 'Leading Chinese Cloud Vendor',
+        role: 'Head of Computing Architecture / Simulation Cloud Product Owner',
+        location: 'Shanghai',
+        bullets: [
+          'Productized GPU / HPC infrastructure for enterprise IT: validated cloud-HPC feasibility via Shanghai Electric Wind Power, then crystallized it into a reusable simulation cloud product (CloudSim v1.0 → v1.7, 7 releases).',
+          'Built a "GPU for the business problem" methodology for enterprise rollouts — IT-asset thinking that maps directly to a CIO view of compute as a managed capability.',
+          'End-to-end AI stack understanding (training / inference / application) — judgement for industrial-AI infrastructure planning.',
+        ],
+      },
+      {
+        period: '2018 — 2020',
+        company: 'Chery Jaguar Land Rover',
+        role: 'Director, Enterprise Architecture & Engineering Digitalization',
+        location: 'Shanghai',
+        bullets: [
+          'As Engineering IT Director: led 6 architects + Engineering & Quality IT (12 total); imported engineering capability from the UK side to support NEV BEV launch in China (Range Rover Evoque / Discovery Sport).',
+          'Built 5 systems in 18 months: Teamcenter (PLM) / OTA / HPC cluster / 3-electric traceability / compliance-SAP integration.',
+          'Promoted to Enterprise Architecture Director: blueprint covering Infra → ESB → 4 Capability Pillars (Engineering IT / Manufacturing IT / Corporate Operation / Sales & Marketing DMS); laid the "China-side independently operable" IT foundation.',
+          'Designed TOGAF ADM blueprint across infra / data / system / app domains; built a PD Tableau BI cockpit (progress / cost / ROI / budget overrun) for monthly management reviews.',
+        ],
+      },
+      {
+        period: '2018',
+        company: 'ANSYS (now Synopsys)',
+        role: 'Senior Technical Account Manager (Enterprise)',
+        location: 'Shanghai',
+        bullets: [
+          'Owned digital-twin engagements with ABB / Bosch Automotive Electronics / Continental Automotive Electronics — 7+ Fortune-500 enterprises under mixed strategic-cooperation and standard-service models.',
+          'ABB dry-type transformer auto-design coupling system: shortened product-development cycle by 50%; Continental IGBT-box digital twin: design cycle shortened by 30%+.',
+          'Bridged industrial CAE practice with SJTU / Tongji academic research; drove ANSYS China localization.',
+        ],
+      },
+      {
+        period: '2016 — 2017',
+        company: 'GE China Global Research Center',
+        role: 'Senior Technical PM · Digital Thread',
+        location: 'Shanghai',
+        bullets: [
+          'Led Digital Thread strategic planning, built the "Digital Engineering → Digital Manufacturing" technology matrix — a unified digital foundation for GE China coal-power and wind-power business lines.',
+          'Wind-power digital verification platform (highest-value deliverable): full-system simulation cycle 75 → 15 days (↓80%); coal-power digital factory ramp-up 45 → 15 days (↓67%).',
+          'Led 7-person digital product team (simulation engineers + data scientists + full-stack developers).',
+        ],
+      },
+      {
+        period: '2014 — 2016',
+        company: 'TE Connectivity',
+        role: 'IT Program Manager, Smart Manufacturing',
+        location: 'Shanghai',
+        bullets: [
+          'Led 20+ member MES team; completed MES rollout across 4 workshops / 200+ machines (injection / stamping / electroplating / assembly) within 24 months.',
+          'Appliance ignition MES: ±5% energy monitoring, stamping OEE +35%, electroplating compliance 100%; saved ¥5M/yr in energy costs.',
+          'Automotive Hydra MES (18 months): SCADA second-level collection, anomaly response 15 min (vs 60+ min in legacy MES).',
+        ],
+      },
+      {
+        period: '2011 — 2014',
+        company: 'Carestream Health',
+        role: 'PLM Solution Lead / R&D Effectiveness Director',
+        location: 'Shanghai',
+        bullets: [
+          'Independently led Aras PLM deployment across China / US / France: 16 modules, 10 legacy systems retired in 3 years.',
+          'Innovated "Week-1 Onsite Agile Support" — sat side-by-side with customers the entire first week to overcome cross-timezone / cross-cultural friction.',
+          'Change cycle 14 days → 72 hours (↓79%), design release efficiency +40%; saved $2M+/yr in legacy maintenance ($6M+ cumulative 3-year ROI).',
+        ],
+      },
+      {
+        period: '2007 — 2011',
+        company: 'Siemens PLM Software',
+        role: 'Senior Application Engineer · NX CAD/CAM/CAE & Teamcenter',
+        location: 'Greater China',
+        bullets: [
+          'NX CAD/CAM/CAE + Teamcenter technical support and promotion across Greater China: 100+ customers (Foxconn / BYD), 20+ trainings/yr.',
+          'Designed Teamcenter multi-version user-testing system; built requirement funnel connecting field feedback with global PMs — mechanism adopted by Teamcenter global product line.',
+        ],
+      },
+    ],
+  },
+  skills: {
+    title: 'Skills',
+    headline: 'Five capabilities, one thread',
+    groups: [
+      {
+        heading: 'Engineering IT',
+        items: [
+          'PLM (Teamcenter / Aras): product data → digital thread.',
+          'MES (Hydra / Ignition): shop-floor digitalization and OEE uplift.',
+          'Digital engineering / HPC: simulation on cloud and compute operations.',
+          'The hardest 50% of manufacturing CIO already shipped; the rest is portable.',
+        ],
+      },
+      {
+        heading: 'Enterprise Architecture',
+        items: [
+          'TOGAF ADM: infra / data / system / app domains.',
+          'ESB and 4 Capability Pillars planning.',
+          'Digital strategy → roadmap → governance.',
+          'Unified technical language across business and IT.',
+        ],
+      },
+      {
+        heading: 'IT Governance & Delivery',
+        items: [
+          '12–20+ cross-functional teams (architecture / engineering IT / data / full-stack).',
+          'Program management / management-review BI cockpit.',
+          'Cross-timezone, cross-cultural deployment (CN / US / FR).',
+          'Legacy decommission and service-oriented refactoring.',
+        ],
+      },
+      {
+        heading: 'Cloud & Infrastructure',
+        items: [
+          'GPU / HPC cluster design & tuning.',
+          'Bare-metal & virtualization.',
+          'CI/CD, DevOps (CloudSim across 7 releases).',
+          'Compute as a managed, scenario-driven asset.',
+        ],
+      },
+      {
+        heading: 'Business Translation',
+        items: [
+          'Convert engineering / manufacturing / R&D pain into operable IT systems.',
+          'Business communication → architecture → delivery, end to end.',
+          'Industrial context across 7 industries.',
+          'Building IT foundations the China side can run independently.',
+        ],
+      },
+    ],
+  },
+};
+
+const caioEnProfile: Profile = {
+  meta: {
+    title: 'Robin Ji — Chief AI Officer (CAIO) / Industrial AI Infrastructure Lead',
+    description:
+      'Chief AI Officer (CAIO) candidate — engineering AI + agentic AI double thread: 18+ years across industrial software → AI for Engineering → agent orchestration. Siemens, GE, Ansys, Chery Jaguar Land Rover, leading Chinese cloud. Hands-on GPU/HPC and agentic AI planning.',
+  },
+  hero: {
+    eyebrow: 'Industrial AI · Chief AI Officer (CAIO) / AI Infrastructure Lead',
+    name: 'Robin Ji',
+    nameCN: '纪多斌',
+    tagline: '18 years · Engineering AI · Agentic AI planning',
+    location: 'Shanghai, China',
+    ctaPrimary: 'See projects',
+    ctaSecondary: 'Contact',
+    pathSteps: [
+      { index: '01', title: 'Engineering AI', sub: 'CAE · Digital Twin · AI for Engineering' },
+      { index: '02', title: 'Agentic AI', sub: 'Multi-Agent · MCP · LangGraph' },
+      { index: '03', title: 'Industrial CAIO', sub: 'AI strategy · Org · Governance' },
+    ],
+  },
+  about: {
+    eyebrow: 'Engineering AI → Agentic AI → CAIO',
+    headline: 'Engineering AI plus agentic AI,<br />a rare double thread',
+    body: [
+      '18+ years across the industrial software value chain: CAD/CAE vendors → PLM platforms → shop-floor MES → digital thread → automotive full-stack digitalization → cloud & AI infrastructure. Today this converges into one line — engineering AI.',
+      'The rarest CAIO in industrial organizations is the person who understands both ends: engineering problems and AI capability. One end is engineering AI (CAE / digital twin / AI for Engineering, hands-on with Ansys SimAI™ 2026). The other is agentic AI orchestration (Multi-Agent / MCP / LangGraph — including my own hermes / WorkBuddy / A3 builds).',
+      'I solve engineering compute gaps with architecture: H800 1,000-card training, H20 inference, GPU/HPC infrastructure — plus the end-to-end ability to translate engineering pain into shipped AI systems. This is exactly what 2026 industrial CAIO JDs call "agentic AI planning".',
+    ],
+  },
+  highlights: {
+    title: 'Highlights',
+    headline: 'By the numbers',
+    tagline: 'Evidence over adjectives',
+    items: [
+      {
+        metric: '1,000 cards',
+        label: 'H800 training / H20 inference',
+        sub: 'End-to-end AI stack understanding (training / inference / application) developed through enterprise GPU rollouts — the foundation for industrial AI infrastructure.',
+      },
+      {
+        metric: 'Agentic',
+        label: 'Multi-Agent / MCP / LangGraph',
+        sub: 'Built hermes (skill-based agent framework) / WorkBuddy / A3 (PBOM → work instruction) — the methodology layer for engineering AI delivery.',
+      },
+      {
+        metric: 'Ansys SimAI™',
+        label: '2026 AI for Engineering hands-on',
+        sub: 'From CAE vendor to digital twin: coupling simulation and AI to shorten product development cycles 30%–50%.',
+      },
+      {
+        metric: '↓80%',
+        label: 'Wind-power simulation cycle (GE Digital Engineering)',
+        sub: 'Full-system simulation 75 → 15 days; widely applied to GE wind-farm bidding during China\'s installation rush.',
+      },
+    ],
+  },
+  experience: {
+    title: 'Experience',
+    headline: 'Between engineering AI and agentic AI',
+    sections: [
+      {
+        period: '2020 — Now',
+        company: 'Leading Chinese Cloud Vendor',
+        role: 'Head of Computing Architecture / Simulation Cloud Product Owner',
+        location: 'Shanghai',
+        bullets: [
+          'Led enterprise GPU scenario rollouts: Bosch autonomous-driving training / ARM China EDA scheduling / Novita.ai elastic inference — starting AI-infrastructure planning from "what GPU can solve", not hardware specs.',
+          'CloudSim simulation cloud v1.0 → v1.7 (7 releases) across finance / education / automotive / industrial — a repeatable AI / HPC infrastructure delivery system.',
+          'End-to-end AI stack understanding (training / inference / application) — judgement for industrial AI strategy.',
+        ],
+      },
+      {
+        period: '2018 — 2020',
+        company: 'Chery Jaguar Land Rover',
+        role: 'Director, Enterprise Architecture & Engineering Digitalization',
+        location: 'Shanghai',
+        bullets: [
+          'As Engineering IT Director: imported PLM / HPC / digital engineering capability to China, supporting NEV BEV R&D — the on-prem base for engineering AI.',
+          'Built 5 systems in 18 months (Teamcenter / OTA / HPC cluster / 3-electric traceability / SAP integration); the HPC cluster directly serves engineering simulation and AI training.',
+          'As Enterprise Architecture Director: blueprinted the data / system / infra interfaces that subsequent AI capabilities plug into.',
+        ],
+      },
+      {
+        period: '2018',
+        company: 'ANSYS (now Synopsys)',
+        role: 'Senior Technical Account Manager (Enterprise)',
+        location: 'Shanghai',
+        bullets: [
+          'Owned digital-twin engagements with ABB / Bosch / Continental — coupling simulation with AI: ABB auto-design cut development cycle 50%, Continental IGBT digital twin cut 30%+.',
+          'Drove ANSYS China localization; bridged industrial CAE practice with academic research — a template for engineering AI landing.',
+        ],
+      },
+      {
+        period: '2016 — 2017',
+        company: 'GE China Global Research Center',
+        role: 'Senior Technical PM · Digital Thread',
+        location: 'Shanghai',
+        bullets: [
+          'Wind-power digital verification platform (highest-value deliverable): built on Ansys, full-system simulation 75 → 15 days (↓80%); widely applied to GE wind-farm bidding.',
+          'Led Digital Thread strategy, built the "Digital Engineering → Digital Manufacturing" technology matrix; coal-power digital factory ramp-up 45 → 15 days (↓67%).',
+          'Led 7-person digital product team (simulation + data science + full-stack) — an AI / data-driven delivery model.',
+        ],
+      },
+      {
+        period: '2014 — 2016',
+        company: 'TE Connectivity',
+        role: 'IT Program Manager, Smart Manufacturing',
+        location: 'Shanghai',
+        bullets: [
+          'MES rollout (4 workshops / 200+ machines) brought data-driven manufacturing: stamping OEE +35%, electroplating compliance 100%, ¥5M/yr energy savings.',
+          'SCADA second-level collection compressed production-anomaly response to 15 min — the manufacturing data foundation for AI quality / predictive maintenance.',
+        ],
+      },
+      {
+        period: '2011 — 2014',
+        company: 'Carestream Health',
+        role: 'PLM Solution Lead / R&D Effectiveness Director',
+        location: 'Shanghai',
+        bullets: [
+          'Aras PLM deployed across China / US / France (16 modules) — single source of truth for product data, the data foundation for digital thread and AI training.',
+          'Change cycle 14 days → 72 hours (↓79%), design release efficiency +40%.',
+        ],
+      },
+      {
+        period: '2007 — 2011',
+        company: 'Siemens PLM Software',
+        role: 'Senior Application Engineer · NX CAD/CAM/CAE & Teamcenter',
+        location: 'Greater China',
+        bullets: [
+          'NX CAD/CAM/CAE + Teamcenter promotion across Greater China: 100+ customers (Foxconn / BYD).',
+          'Designed Teamcenter multi-version user-testing system; built requirement funnel connecting field feedback with global PMs.',
+        ],
+      },
+    ],
+  },
+  skills: {
+    title: 'Skills',
+    headline: 'Five capabilities, one thread',
+    groups: [
+      {
+        heading: 'Agentic AI Orchestration',
+        items: [
+          'Multi-Agent / MCP / LangGraph orchestration.',
+          'Built hermes (skill-based agent framework) / WorkBuddy / A3.',
+          'Engineering task decomposition → self-play reflection → verification loop.',
+          'Skill-based, reusable agent methodology.',
+        ],
+      },
+      {
+        heading: 'AI for Engineering',
+        items: [
+          'CAE (ANSYS Mechanical / Fluent / LS-DYNA / Icepak).',
+          'Digital twin / digital thread.',
+          'Ansys SimAI™ 2026 hands-on.',
+          'Simulation + AI coupling to shorten R&D cycles 30%–50%.',
+        ],
+      },
+      {
+        heading: 'AI Infrastructure',
+        items: [
+          'GPU / HPC cluster design & tuning (H800 / H20).',
+          'Training / inference / application end-to-end.',
+          'Scenario-driven compute operations (Bosch / ARM / Novita).',
+          'CloudSim\'s 7-release AI / HPC delivery system.',
+        ],
+      },
+      {
+        heading: 'Business Translation',
+        items: [
+          'Engineering / manufacturing pain → shipped AI systems.',
+          'Business communication → architecture → delivery.',
+          'Industrial context across 7 industries.',
+          'Bridging engineering AI and agentic AI in one person.',
+        ],
+      },
+      {
+        heading: 'AI Org & Governance',
+        items: [
+          '5–20+ cross-functional AI teams.',
+          'AI strategy / roadmap / governance.',
+          'Pre-wired interfaces for AI in the enterprise architecture.',
+          'Transparent, auditable AI delivery.',
+        ],
+      },
+    ],
+  },
+};
+
+/**
+ * Profile lookup map keyed by (profile, locale). The zh entries are the
+ * original CIO/CAIO profiles; en entries are the English counterparts above.
+ */
+export const profilesByLocale: Record<'cio' | 'caio', Record<'zh' | 'en', Profile>> = {
+  cio: { zh: cioProfile, en: cioEnProfile },
+  caio: { zh: caioProfile, en: caioEnProfile },
+};

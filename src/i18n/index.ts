@@ -1,6 +1,6 @@
 import { zh, type I18nSchema } from './zh';
 import { en } from './en';
-import { profiles, type Profile } from './profiles';
+import { profilesByLocale, type Profile } from './profiles';
 
 export const dictionaries: Record<'zh' | 'en', I18nSchema> = { zh, en };
 
@@ -33,11 +33,15 @@ function deepMerge<T>(base: T, override: unknown): T {
 
 /**
  * Resolve the i18n dictionary for a locale, with an optional CIO/CAIO content
- * profile layered on top. Profiles are authored in zh copy only, so they apply
- * to the zh locale; requesting a profile with `en` simply returns the base dict.
+ * profile layered on top. Each profile is available in both zh and en; passing
+ * the locale lets the lookup pick the matching override.
  */
 export function pickDict(locale: Locale | undefined, profile?: 'cio' | 'caio'): I18nSchema {
-  const base = dictionaries[locale ?? defaultLocale];
-  if (!profile || locale === 'en' || !profiles[profile]) return base;
-  return deepMerge(base, profiles[profile] as Profile);
+  const resolvedLocale: Locale = locale ?? defaultLocale;
+  const base = dictionaries[resolvedLocale];
+  if (!profile) return base;
+  const perLocale = profilesByLocale[profile];
+  const override = perLocale?.[resolvedLocale];
+  if (!override) return base;
+  return deepMerge(base, override as Profile);
 }
