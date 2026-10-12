@@ -23,9 +23,9 @@ const projects = (await getCollection('projects', ({ data }) => data.featured))
         {locale === 'en' ? 'All repositories' : '全部仓库'} <span aria-hidden="true">↗</span>
       </a>
     </div>
-    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
-      {projects.map((project, index) => (
-        <ProjectCard project={project} locale={locale} layout={index < 2 ? 'wide' : 'standard'} />
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => (
+        <ProjectCard project={project} locale={locale} />
       ))}
     </div>
   </div>
