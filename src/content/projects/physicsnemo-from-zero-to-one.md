@@ -29,17 +29,15 @@ metricsEn:
   - { value: '30+ commits', label: 'over 3 months' }
   - { value: '2 weeks', label: 'multi-agent output' }
 highlights:
-  - 'PINN 与神经算子三层教学：每章给出 raw PyTorch（教育）/ PhysicsNeMo SDK（CPU 验证）/ GPU production（DDP+AMP）三种实现'
-  - '配套 6 周学习路径 + 云 GPU 部署指南 + 50 问踩坑 + Colab quickstart'
-  - '教材全书双语（book/ + book_en/），LaTeX 公式混排友好'
-  - 'CAE 审阅 round 1/2/3：3 阶段外部 CAE 专家反馈迭代（含 CFD 批跑 / 联合反演 / 多目标优化）'
-  - 'README 自述 multi-agent 编排 2 周产出全文 + 配图'
+  - 'README 自述 multi-agent 编排 2 周产出全文 + 配图（5★）'
+  - 'PINN 与神经算子三层教学：每章 raw PyTorch（教育）/ PhysicsNeMo SDK（CPU 验证）/ GPU production（DDP+AMP）'
+  - 'CAE 审阅 round 1/2/3：3 阶段外部 CAE 专家反馈迭代（CFD 批跑 / 联合反演 / 多目标优化）'
+  - '配套 6 周学习路径 + 云 GPU 部署指南 + 50 问踩坑 + Colab quickstart + 教材双语'
 highlightsEn:
-  - 'PINN and neural-operator three-layer teaching: each chapter delivers raw PyTorch (educational) / PhysicsNeMo SDK (CPU-verified) / GPU production (DDP+AMP)'
-  - '6-week study path + cloud-GPU deployment guide + 50-question troubleshooting + Colab quickstart'
-  - 'Fully bilingual textbook (book/ + book_en/), LaTeX-formula friendly'
+  - 'README self-states: multi-agent orchestration produced full text + figures in 2 weeks (5★)'
+  - 'PINN and neural-operator three-layer teaching: raw PyTorch (educational) / PhysicsNeMo SDK (CPU-verified) / GPU production (DDP+AMP)'
   - 'CAE review rounds 1/2/3: 3-stage external CAE expert feedback iteration (CFD batch run / joint inversion / multi-objective optimization)'
-  - 'README self-states: multi-agent orchestration produced full text + figures in 2 weeks'
+  - '6-week study path + cloud-GPU deployment guide + 50-question troubleshooting + Colab quickstart + bilingual textbook'
 featured: true
 order: 1
 ---

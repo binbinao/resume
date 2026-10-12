@@ -27,17 +27,15 @@ metricsEn:
   - { value: '3 outputs', label: 'modes' }
   - { value: '6 fixes/day', label: 'intensive iteration' }
 highlights:
-  - 'OpenAI-compatible / Azure OpenAI / Anthropic / Gemini 统一 Adapter'
-  - '任务窗格前端 + Node.js Bridge 后端（API Key 不暴露给浏览器）'
-  - '三种输出模式：覆盖选区 / 写入新工作表 / 输出到结果框'
+  - 'MVP 阶段 — "1 天内修复 6 个边界 bug"是工程产出证明（密集迭代 ≠ 前期测试不够）'
+  - 'OpenAI / Azure OpenAI / Anthropic / Gemini 4 Provider 统一 Adapter（任务窗格前端 + Node.js Bridge 后端，API Key 不暴露给浏览器）'
+  - '3 输出模式：覆盖选区 / 写入新工作表 / 输出到结果框'
   - '配置锁定避免误改 Endpoint / Model / API Key'
-  - 'MVP 阶段，"1 天内修复 6 个边界 bug"是工程产出证明'
 highlightsEn:
-  - 'OpenAI-compatible / Azure OpenAI / Anthropic / Gemini unified Adapter'
-  - 'Task-pane frontend + Node.js Bridge backend (API key never exposed to browser)'
-  - 'Three output modes: overwrite selection / write new sheet / output to result box'
+  - 'MVP-stage proof — "6 boundary bugs fixed in 1 day" demonstrates engineering output (dense iteration, not prior-test skip)'
+  - 'OpenAI / Azure OpenAI / Anthropic / Gemini unified 4-Provider Adapter (task-pane frontend + Node.js Bridge backend, API key never exposed)'
+  - '3 output modes: overwrite selection / write new sheet / output to result box'
   - 'Config lock prevents accidental edits to Endpoint / Model / API Key'
-  - 'MVP proof — "6 boundary bugs fixed in 1 day" demonstrates engineering output'
 featured: true
 order: 5
 ---

@@ -35,17 +35,15 @@ metricsEn:
   - { value: '4.1x', label: 'end-to-end Qwen3-0.6B' }
   - { value: '17.5/wk', label: 'commit pace' }
 highlights:
-  - '零第三方运行时依赖 — 仅 C++20 标准库 + POSIX，无需 Boost / Crow / cpp-httplib'
-  - '13 种 GGML 量化格式全覆盖：F32/F16/Q4_0/Q4_1/Q5_0/Q5_1/Q8_0/Q8_1/Q2_K/Q3_K/Q4_K/Q5_K/Q6_K'
-  - 'mmap 零拷贝量化推理 — 0.5B Q4_K_M 常驻 ~430MB（对比全量反量化缓存 ~3GB）'
+  - 'WeightMode 三模式（Quant/Fp32/Fp16）模型级基准对比，140+ 单元测试断言'
+  - '零第三方运行时依赖 + 13 种 GGML 量化全覆盖 — C++20 标准库 + POSIX 即可编译；F32/F16/Q4_0-1/Q5_0-1/Q8_0-1/Q2_K-Q6_K'
+  - 'mmap 零拷贝量化推理 — 0.5B Q4_K_M 常驻 ~430MB（vs 全量反量化缓存 ~3GB，7x 内存下降）'
   - 'OpenAI 兼容 HTTP + SSE 流式 + 单文件 Web UI，支持 qwen2/qwen3/llama 三大架构'
-  - '附带 WeightMode 三模式（Quant/Fp32/Fp16）模型级基准对比，140+ 单元测试断言'
 highlightsEn:
-  - 'Zero third-party runtime dependency — only C++20 stdlib + POSIX, no Boost / Crow / cpp-httplib'
-  - 'Full 13 GGML quantization formats: F32/F16/Q4_0/Q4_1/Q5_0/Q5_1/Q8_0/Q8_1/Q2_K/Q3_K/Q4_K/Q5_K/Q6_K'
-  - 'mmap zero-copy quantized inference — 0.5B Q4_K_M resident ~430MB (vs ~3GB dequant cache)'
-  - 'OpenAI-compatible HTTP + SSE streaming + single-file Web UI, qwen2 / qwen3 / llama support'
   - 'WeightMode tri-mode (Quant/Fp32/Fp16) model-level benchmark, 140+ unit-test assertions'
+  - 'Zero third-party runtime dependency + full 13 GGML quantization — C++20 stdlib + POSIX only; F32/F16/Q4_0-1/Q5_0-1/Q8_0-1/Q2_K-Q6_K'
+  - 'mmap zero-copy quantized inference — 0.5B Q4_K_M resident ~430MB (vs ~3GB dequant cache, 7x memory drop)'
+  - 'OpenAI-compatible HTTP + SSE streaming + single-file Web UI, qwen2 / qwen3 / llama support'
 featured: true
 order: 6
 ---

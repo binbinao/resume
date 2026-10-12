@@ -31,17 +31,15 @@ metricsEn:
   - { value: '50 commits', label: 'code output' }
   - { value: '10.0 commits/wk', label: 'pace' }
 highlights:
-  - '委托 → 分析 → 报告 → 工作流 → 审计 → 设备 → 校准 → SSO 全链路'
-  - 'BPMN 2.0 工作流引擎替代硬编码状态机'
-  - 'Microsoft 365 在线编辑（Word）+ Azure AD SSO'
-  - '不可变审计跟踪 + 电子签名基础（FDA 21 CFR Part 11 合规导向）'
-  - '结构化测试结果 + 规范化判定域（行业 Know-How）'
+  - '结构化测试结果 + 规范化判定域（行业 Know-How — 写一次就成壁垒）'
+  - '委托 → 分析 → 报告 → BPMN 工作流 → 审计 → 设备 → 校准 → SSO 全链路'
+  - 'Flowable BPMN 2.0 工作流引擎替代硬编码状态机'
+  - 'Microsoft 365 在线编辑（Word）+ Azure AD SSO + 不可变审计跟踪 + 电子签名基础（FDA 21 CFR Part 11 合规导向）'
 highlightsEn:
-  - 'Full workflow: commission → analysis → report → workflow → audit → equipment → calibration → SSO'
-  - 'BPMN 2.0 workflow engine replacing hardcoded state machines'
-  - 'Microsoft 365 online editing (Word) + Azure AD SSO'
-  - 'Immutable audit trail + e-signature foundation (FDA 21 CFR Part 11 compliance-oriented)'
-  - 'Structured test results + normalized judgment domain (industry know-how)'
+  - 'Structured test results + normalized judgment domain (industry know-how — written once, becomes moat)'
+  - 'Full workflow: commission → analysis → report → BPMN workflow → audit → equipment → calibration → SSO'
+  - 'Flowable BPMN 2.0 workflow engine replacing hardcoded state machines'
+  - 'Microsoft 365 online editing (Word) + Azure AD SSO + immutable audit trail + e-signature foundation (FDA 21 CFR Part 11)'
 featured: true
 order: 3
 ---

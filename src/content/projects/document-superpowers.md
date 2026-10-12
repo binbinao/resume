@@ -27,17 +27,15 @@ metricsEn:
   - { value: '1 PR', label: 'external contribution' }
   - { value: 'Top 5%', label: 'self-built ranking' }
 highlights:
+  - 'github.com/binbinao 自建项目中出圈最远（**44★ / 12 forks / 1 个 external PR**，其余 61 个项目 stars 总和才 51）'
   - '4 阶段工作流：Brainstorm → Plan → Execute → Review'
-  - 'Cursor / CodeBuddy / Claude Code 三平台兼容'
-  - '中英双语 README'
+  - 'Cursor / CodeBuddy / Claude Code 三平台兼容 + 中英双语 README'
   - '跨平台文件名兼容（Windows 字符处理 fix 来自社区 PR）'
-  - 'github.com/binbinao 自建项目中出圈最远（其余 61 个项目 stars 总和才 51）'
 highlightsEn:
+  - 'Far-reaching self-built project on github.com/binbinao — 44★ / 12 forks / 1 external PR (other 61 self-built repos total only 51 stars)'
   - '4-stage workflow: Brainstorm → Plan → Execute → Review'
-  - 'Cursor / CodeBuddy / Claude Code — three-platform compatible'
-  - 'Bilingual README (Chinese + English)'
+  - 'Cursor / CodeBuddy / Claude Code — three-platform compatible, bilingual README (CN + EN)'
   - 'Cross-platform filename compatibility (Windows char-handling fix from community PR)'
-  - 'Far-reaching self-built project on github.com/binbinao (other 61 self-built repos total only 51 stars)'
 featured: true
 order: 4
 ---
