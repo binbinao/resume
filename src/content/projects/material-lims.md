@@ -41,6 +41,7 @@ highlightsEn:
   - 'BPMN 2.0 workflow engine replacing hardcoded state machines'
   - 'Microsoft 365 online editing (Word) + Azure AD SSO'
   - 'Immutable audit trail + e-signature foundation (FDA 21 CFR Part 11 compliance-oriented)'
+  - 'Structured test results + normalized judgment domain (industry know-how)'
 featured: true
 order: 3
 ---

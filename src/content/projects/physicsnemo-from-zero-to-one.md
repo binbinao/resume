@@ -39,6 +39,7 @@ highlightsEn:
   - '6-week study path + cloud-GPU deployment guide + 50-question troubleshooting + Colab quickstart'
   - 'Fully bilingual textbook (book/ + book_en/), LaTeX-formula friendly'
   - 'CAE review rounds 1/2/3: 3-stage external CAE expert feedback iteration (CFD batch run / joint inversion / multi-objective optimization)'
+  - 'README self-states: multi-agent orchestration produced full text + figures in 2 weeks'
 featured: true
 order: 1
 ---

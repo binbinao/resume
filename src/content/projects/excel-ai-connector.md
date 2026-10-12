@@ -37,6 +37,7 @@ highlightsEn:
   - 'Task-pane frontend + Node.js Bridge backend (API key never exposed to browser)'
   - 'Three output modes: overwrite selection / write new sheet / output to result box'
   - 'Config lock prevents accidental edits to Endpoint / Model / API Key'
+  - 'MVP proof — "6 boundary bugs fixed in 1 day" demonstrates engineering output'
 featured: true
 order: 5
 ---

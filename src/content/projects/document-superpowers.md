@@ -37,6 +37,7 @@ highlightsEn:
   - 'Cursor / CodeBuddy / Claude Code — three-platform compatible'
   - 'Bilingual README (Chinese + English)'
   - 'Cross-platform filename compatibility (Windows char-handling fix from community PR)'
+  - 'Far-reaching self-built project on github.com/binbinao (other 61 self-built repos total only 51 stars)'
 featured: true
 order: 4
 ---
