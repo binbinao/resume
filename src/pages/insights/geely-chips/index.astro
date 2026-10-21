@@ -1,0 +1,434 @@
+---
+/**
+ * /insights/geely-chips/ — 吉利造芯分析页
+ *
+ * 分析框架：Competitive analysis + 产业链位置分析
+ * 数据来源：芯擎科技官网、财新、界面、OFweek、SAE-China、Gasgoo、
+ *          Arm 官方 case study、亿咖通 IR 公告、36Kr
+ * 数据截至：2026 上半年公开信息
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = '吉利造芯 · Robin Ji';
+const description =
+  '吉利/芯擎科技汽车芯片布局深度分析 — 从 7nm 座舱到智驾芯片的完整时间线、量产规模、客户矩阵与产业链位置判断。';
+
+/* ---------- 股权与组织架构 ---------- */
+const org = [
+  {
+    entity: '吉利控股集团',
+    role: '李书福创立，最终控制人',
+    detail: '旗下拥有吉利汽车、沃尔沃、极星、路特斯、smart 等品牌矩阵',
+  },
+  {
+    entity: '亿咖通 ECARX',
+    role: 'Nasdaq: ECX · 2017 成立 · 李书福 + 沈子瑜创办',
+    detail: '智能化整合商：做计算平台 + 车机操作系统 + 全栈软件方案，通过芯擎 SoC 装配自有平台对外销售',
+  },
+  {
+    entity: '芯擎科技 SiEngine',
+    role: '2018 由亿咖通 + Arm 中国合资成立 · 武汉',
+    detail: '芯片设计公司。亿咖通持股约 30.97%（2022-06 口径）。股东含红杉中国、博世旗下博原资本、中芯聚源、一汽集团等',
+  },
+];
+
+/* ---------- 产品线 ---------- */
+const chips = [
+  {
+    name: '龍鹰一号 SE1000',
+    type: '智能座舱 SoC',
+    process: '7nm',
+    specs: '8 核 CPU / 14 核 GPU / NPU 8 TOPS / 88 亿晶体管 / ASIL-D 安全岛 / LPDDR5-6400',
+    benchmark: '对标高通 8155（同为 7nm）；第三方测评称 AI 算力为 8155 的两倍',
+    launch: '2021-12 发布',
+    mass: '2022 Q3 量产 → 2022 年底前装上车',
+    volume: '2023 出货 20 万+ → 2024 累计突破 100 万片',
+    status: 'status-ok',
+  },
+  {
+    name: '星辰一号 AD1000',
+    type: '高阶辅助驾驶 SoC',
+    process: '7nm',
+    specs: '单颗 512 TOPS（首发宣称 256 TOPS 稠密）/ 多芯片协同最高 2048 TOPS / 内存带宽 204 GB/s / EVITA Full / 独立安全岛',
+    benchmark: '厂商称 CPU、ISP、存储等关键指标全面超越国际先进主流产品；对标 Nvidia Orin',
+    launch: '2024-03 发布',
+    mass: '2025-12 宣布量产',
+    volume: '2026 起大规模上车',
+    status: 'status-new',
+  },
+  {
+    name: '星辰一号 Lite AD800',
+    type: '入门辅助驾驶 SoC',
+    process: '7nm',
+    specs: 'AD1000 的入门版本，平台化支持 L2 智驾',
+    benchmark: '—',
+    launch: '2025-12 随 AD1000 同步宣布',
+    mass: '2025-12 量产',
+    volume: '—',
+    status: 'status-new',
+  },
+  {
+    name: '龍鹰一号 Lite / Pro / 龍鹰二号',
+    type: '产品线扩展',
+    process: '—',
+    specs: 'Lite 满足基础座舱需求；Pro 舱行泊一体（已在吉利银河系列搭载）；龍鹰二号预计 2026 年推出',
+    benchmark: '舱行泊一体首创双 NPU 方案，为车企节省 20%-30% 成本',
+    launch: '2025-03 生态科技日首次官宣',
+    mass: '滚动推进',
+    volume: '—',
+    status: 'status-plan',
+  },
+];
+
+/* ---------- 里程碑时间线 ---------- */
+const timeline = [
+  { date: '2018-09', event: '芯擎科技在武汉成立，亿咖通与 Arm 中国合资', note: '台积电 7nm 产线资格是后来所有优势的根源' },
+  { date: '2021-10', event: 'SE1000 首次流片成功并点亮', note: '87 层电路、88 亿晶体管，83mm²，一次点亮' },
+  { date: '2021-12', event: '龍鹰一号正式发布', note: '国内首颗 7nm 车规级座舱 SoC，对标高通 8155' },
+  { date: '2022', event: '完成近 5 亿元 A+ 轮融资，估值超 70 亿', note: '2022 年内第三轮融资，新晋独角兽' },
+  { date: '2022 Q3', event: 'SE1000 量产启动', note: '年底按计划前装上车' },
+  { date: '2023-03', event: '量产发布会，正式供货', note: '当年出货 20 万+；领克 08 首批搭载' },
+  { date: '2023-02', event: '与一汽红旗达成战略合作', note: '首个非吉利系整车客户' },
+  { date: '2024-03', event: 'AD1000 智驾芯片发布', note: '7nm、256 TOPS 稠密算力，对标 Orin' },
+  { date: '2024', event: 'SE1000 累计出货突破 100 万片', note: '国产智能座舱芯片市占率第一；打入欧美、东南亚' },
+  { date: '2025-03', event: '获德国大众大额订单', note: '国产座舱芯片首次正式走向海外' },
+  { date: '2025-08', event: '完成超 10 亿元 B 轮融资', note: '国资产业基金 + 险资参与，整体估值约 95 亿元' },
+  { date: '2025-10', event: '银河 EX5 在英国上市', note: 'Antora 1000 + SE1000 进入欧洲 33 国' },
+  { date: '2025-12', event: 'AD1000 + AD800 宣布量产', note: '单颗 512 TOPS，四芯协同 2048 TOPS' },
+  { date: '2026 上半年', event: '融资总额超 2 亿美元', note: '含超 1 亿美元新一轮（宇通集团等参与）' },
+];
+
+/* ---------- 客户矩阵 ---------- */
+const customers = [
+  { group: '吉利系', names: '吉利、领克、银河、极氪、几何', note: '基本盘' },
+  { group: '传统自主车企', names: '一汽（红旗）、长安（启源）、东风', note: '破圈关键' },
+  { group: '合资 / 外资', names: '沃尔沃、长安启源', note: '借吉利平台外溢' },
+  { group: '海外 OEM', names: '德国大众（海外车型）', note: '首个国产座舱芯片海外订单' },
+  { group: '海外市场', names: '英国、东南亚、欧美', note: '通过银河 EX5 等车型进入' },
+];
+
+/* ---------- 产业链位置分析 ---------- */
+const position = [
+  {
+    role: '芯片设计',
+    who: '芯擎科技',
+    status: '自研',
+    detail: '台积电代工 7nm，国内唯一具备车规 7nm 产线资格的汽车芯片企业',
+  },
+  {
+    role: 'IP 授权',
+    who: 'Arm 中国（AE 架构）',
+    status: '合资引入',
+    detail: 'Cortex-A / Cortex-R CPU + Mali GPU + Arm ISP；ASIL-D 认证安全岛',
+  },
+  {
+    role: '计算平台',
+    who: '亿咖通（Antora / Makalu / Cloudpeak）',
+    status: '自研',
+    detail: '把芯擎 SoC 封装成完整计算平台方案，对外销售给车企',
+  },
+  {
+    role: '操作系统',
+    who: '亿咖通 + 魅族 Flyme Auto',
+    status: '自研 + 合作',
+    detail: 'Flyme Auto 深度协同，计算层到应用层全链路打通，算力节约约 8%',
+  },
+  {
+    role: '整车应用',
+    who: '吉利汽车集团',
+    status: '自研',
+    detail: 'SEA / GEA 架构 + G-Pilot 智驾系统 + 千里浩瀚',
+  },
+  {
+    role: '制造 / 代工',
+    who: '台积电',
+    status: '外部依赖',
+    detail: '⚠️ 7nm 产能与地缘政治风险是最大单点',
+  },
+];
+
+/* ---------- 与竞品对比 ---------- */
+const peers = [
+  { player: '特斯拉', chips: 'HW3.0 / HW4.0 / AI5', approach: '整车闭环自研', moat: '数据闭环 + 纯视觉路线', note: '全球唯一全栈自闭环' },
+  { player: '吉利 / 芯擎', chips: 'SE1000 / AD1000 / AD800', approach: '座舱 + 智驾双线自研', moat: '国内唯一 7nm 车规双线量产', note: '中国车企里唯一走通全栈' },
+  { player: '比亚迪', chips: '自研部分域控 SoC', approach: '整车自研 + 部分外采', moat: '垂直整合成本优势', note: '座舱芯片未独立品牌化' },
+  { player: '蔚来 / 小鹏 / 理想', chips: '智驾自研，座舱外采', approach: '智驾单点突破', moat: '算法与数据', note: '制程多在 12nm 或外采' },
+  { player: '地平线 / 黑芝麻 / 芯驰', chips: 'J5 / J6 / AC8 / E3', approach: '独立芯片公司', moat: '算法 IP + 出货量', note: '芯驰累计出货 1100 万片，规模更大但无自研整车背书' },
+  { player: '高通 / 英伟达', chips: '8155 / 8295 / Orin / Thor', approach: '平台供应商', moat: '生态 + 通用算力', note: '仍是国产替代的主要目标' },
+];
+
+/* ---------- 关键洞察 ---------- */
+const insights = [
+  {
+    n: '01',
+    title: '路线唯一性',
+    body: '中国车企里，吉利是唯一走通"自研 7nm 座舱 + 自研 7nm 智驾芯片 + 自研计算平台 + 自研车机系统"全栈的玩家。特斯拉是全球唯一，吉利是中国唯一。',
+  },
+  {
+    n: '02',
+    title: '制造唯一性',
+    body: '国内唯一能拿到台积电 7nm 车规产线的汽车芯片企业。这不是有钱就能解决的——车规认证周期以年计，且需要流片成功率验证。首次流片即成功是关键证据。',
+  },
+  {
+    n: '03',
+    title: '国际突破已发生，不是将要',
+    body: '2025 年获德国大众海外车型订单，是国产座舱芯片首次正式进入欧洲 OEM 供应链。2025 年 10 月银河 EX5 在英国上市，方案已在 33 国落地。这已经发生，不是 PPT。',
+  },
+  {
+    n: '04',
+    title: '跨域融合是差异化打法',
+    body: '芯擎在"舱泊一体 / 舱行泊一体"方向是国内先行者。舱行泊一体通过双 NPU 设计可为车企节省 20%-30% 成本 —— 这直接命中整车厂降本压力，是比"性能更强"更有效的卖点。',
+  },
+  {
+    n: '05',
+    title: '资本认可度已建立',
+    body: '2022 年 A+ 轮估值超 70 亿，2025 年 8 月 B 轮超 10 亿、整体估值约 95 亿元，2026 上半年融资总额超 2 亿美元。股东含红杉、博世博原资本、国资产业基金、险资。公开预期 IPO。',
+  },
+  {
+    n: '06',
+    title: '单点依赖风险',
+    body: '7nm 完全依赖台积电代工。一旦出现产能分配优先级变化或出口管制收紧（如同 AMD/NVIDIA 遭遇），整条产品线没有替代方案。这是所有"自研芯片"叙事的共同软肋。',
+  },
+  {
+    n: '07',
+    title: '5nm 超算平台未见落地',
+    body: '2021 年规划中提到 2024-2025 推出 5nm 车载一体化超算平台芯片，目前未见公开落地。实际推进的是"7nm 双线（座舱 + 智驾）+ 舱行泊一体单芯片"。路线已经调整。',
+  },
+  {
+    n: '08',
+    title: '对做工业 AI 的人意味着什么',
+    body: '吉利证明了"自研芯片 + 自研平台 + 自研软件"的闭环能走通，但这个闭环的门槛是整车集团级的资本和 18 年产业积累。中小工业软件/AI 公司的可复制点不在芯片，而在"芯片之上的数据、算力调度、AI 应用"这一层 —— 这正是数据湖仓与 AI 训练平台的定位。',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} locale="zh" pathPrefix="/insights/geely-chips" showLang={false}>
+  <section class="border-b border-slate-200/80 bg-gradient-to-b from-slate-50 to-transparent py-16 dark:border-slate-800 dark:from-slate-900/50">
+    <div class="container-prose">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-700 dark:text-accent-400">Industry Insight · Automotive Chips</p>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl dark:text-white">吉利造芯：从 7nm 座舱到智驾芯片的完整解剖</h1>
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        吉利是中国车企里唯一走通"自研座舱芯片 + 自研智驾芯片 + 自研计算平台 + 自研车机系统"全栈的玩家。
+        本文拆解其组织架构、四条产品线、14 年里程碑时间线、客户矩阵、产业链位置，以及与特斯拉、
+        比亚迪、蔚小理、芯驰地平线的横向对比。
+      </p>
+      <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+        数据来源：芯擎科技官网、财新、界面新闻、OFweek、SAE-China、Gasgoo、Arm 官方案例、亿咖通 IR 公告 · 截至 2026 上半年
+      </p>
+    </div>
+  </section>
+
+  <!-- 组织架构 -->
+  <section class="py-16">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">一、组织架构：三层实体，四种角色</h2>
+      <p class="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        关键理解：亿咖通是智能化整合商，芯擎是被投的芯片公司，两者并非同一实体。吉利系企业是最大单一股东集团，但不是全资控股。
+      </p>
+      <div class="mt-8 space-y-4">
+        {org.map((o) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">{o.entity}</h3>
+              <p class="text-sm font-medium text-accent-700 dark:text-accent-400">{o.role}</p>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{o.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 产品线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">二、四条产品线</h2>
+      <div class="mt-8 space-y-4">
+        {chips.map((c) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <h3 class="text-lg font-bold text-slate-950 dark:text-white">{c.name}</h3>
+                <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  {c.process}
+                </span>
+                <span class="rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-800 dark:bg-accent-900/40 dark:text-accent-300">
+                  {c.type}
+                </span>
+              </div>
+            </div>
+
+            <dl class="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">规格</dt>
+                <dd class="mt-1 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{c.specs}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">对标</dt>
+                <dd class="mt-1 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{c.benchmark}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">发布 / 量产</dt>
+                <dd class="mt-1 text-sm text-slate-700 dark:text-slate-300">{c.launch} → {c.mass}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">规模</dt>
+                <dd class="mt-1 text-sm text-slate-700 dark:text-slate-300">{c.volume}</dd>
+              </div>
+            </dl>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">三、里程碑时间线（2018 – 2026）</h2>
+      <ol class="mt-8 space-y-0 border-l-2 border-slate-200 pl-6 dark:border-slate-800">
+        {timeline.map((t) => (
+          <li class="relative pb-6">
+            <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-accent-600 bg-white dark:bg-slate-950"></span>
+            <p class="text-sm font-bold tabular-nums text-accent-700 dark:text-accent-400">{t.date}</p>
+            <p class="mt-1 text-base font-semibold text-slate-950 dark:text-white">{t.event}</p>
+            <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 客户矩阵 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">四、客户矩阵：从吉利基本盘到欧洲 OEM</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {customers.map((c) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">{c.group}</p>
+            <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">{c.names}</p>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{c.note}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 rounded-2xl border border-emerald-300 bg-emerald-50 p-5 text-sm leading-relaxed text-slate-800 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-slate-100">
+        <span class="font-semibold">关键信号：</span>
+        真正有价值的不是吉利系内部的量产，而是三个外部突破 —— 一汽红旗（首个非吉利整车客户）、
+        德国大众（国产座舱芯片首次进入欧洲 OEM 供应链）、英国市场（方案已在 33 国落地）。
+        这三个证明产品已通过国际头部客户的技术验证。
+      </p>
+    </div>
+  </section>
+
+  <!-- 产业链位置 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">五、产业链位置：什么自研，什么依赖</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[640px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">环节</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">承担者</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">性质</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            {position.map((p) => (
+              <tr class="border-b border-slate-200 dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{p.role}</td>
+                <td class="px-3 py-3 text-slate-700 dark:text-slate-300">{p.who}</td>
+                <td class="px-3 py-3">
+                  <span class:list={[
+                    'rounded-full px-2 py-0.5 text-xs font-semibold',
+                    p.status === '自研' && 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
+                    p.status === '外部依赖' && 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
+                    (p.status === '合资引入' || p.status === '自研 + 合作') && 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+                  ]}>{p.status}</span>
+                </td>
+                <td class="px-3 py-3 text-slate-600 dark:text-slate-300">{p.detail}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 横向对比 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">六、与竞品横向对比</h2>
+      <div class="mt-8 space-y-3">
+        {peers.map((p) => (
+          <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 lg:grid-cols-[180px_200px_1fr]">
+            <p class="text-sm font-bold text-slate-950 dark:text-white">{p.player}</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300">{p.chips}</p>
+            <div>
+              <p class="text-sm text-slate-700 dark:text-slate-300">{p.approach} · {p.moat}</p>
+              <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{p.note}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 洞察 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">七、八条洞察</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {insights.map((i) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{i.n}</p>
+            <h3 class="mt-2 text-base font-bold text-slate-950 dark:text-white">{i.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{i.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 证据边界 -->
+  <section class="border-t border-slate-200 py-12 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">证据边界</h2>
+      <div class="mt-5 grid gap-5 sm:grid-cols-3">
+        <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+          <p class="text-sm font-bold text-emerald-800 dark:text-emerald-400">已确凿</p>
+          <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+            <li>· 三颗 SoC 存在且已量产</li>
+            <li>· 2024 年 SE1000 出货破 100 万片</li>
+            <li>· 搭载 30 余款车型</li>
+            <li>· 2025 年德国大众订单</li>
+            <li>· 2025-10 银河 EX5 进入英国</li>
+            <li>· B 轮超 10 亿、估值约 95 亿</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-amber-200 bg-amber-50/60 p-5 dark:border-amber-900/50 dark:bg-amber-950/20">
+          <p class="text-sm font-bold text-amber-800 dark:text-amber-400">厂商宣称待验</p>
+          <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+            <li>· "关键指标全面超越国际主流"</li>
+            <li>· "AI 算力为 8155 两倍"</li>
+            <li>· "未来 2-3 年占 25% 份额"</li>
+            <li>· 舱行泊一体节省 20-30% 成本</li>
+            <li>· 均为芯擎自述，无第三方实测</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900">
+          <p class="text-sm font-bold text-slate-800 dark:text-slate-300">未公开</p>
+          <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <li>· 芯擎具体营收 / 利润</li>
+            <li>· 亿咖通 vs 芯擎 vs 吉利结算机制</li>
+            <li>· 研发投入 / 团队规模构成</li>
+            <li>· 大众订单的车型 / 数量 / 时间表</li>
+            <li>· 5nm 超算平台是否彻底取消</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
