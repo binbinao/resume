@@ -1,0 +1,440 @@
+---
+/**
+ * /insights/byd-chips/ — 比亚迪造芯分析页
+ *
+ * 分析框架：对标 /insights/geely-chips/ 的同款结构，便于横向比较
+ * 核心差异：比亚迪是"功率半导体起家 + 智驾芯片后发"，吉利是"座舱先行 + 智驾跟进"
+ * 数据来源：新华网、凤凰网、新京报、财联社、OFweek、集邦、证券时报、中商情报网、比亚迪官网
+ * 数据截至：2026-05 璇玑 A3 发布会
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = '比亚迪造芯 · Robin Ji';
+const description =
+  '比亚迪芯片布局深度分析 — 从 IGBT/SiC 功率半导体到中国首款 4nm 智驾芯片璇玑 A3，与吉利造芯路线的正面对比。';
+
+/* ---------- 组织架构 ---------- */
+const org = [
+  {
+    entity: '比亚迪股份有限公司',
+    role: '002594.SZ / 1211.HK · 王传福',
+    detail: '连续 24 年投入芯片，2026 年宣布智能化下半场投入超 1000 亿元研发资金',
+  },
+  {
+    entity: '比亚迪半导体股份有限公司',
+    role: '比亚迪持股 72.3%',
+    detail: '功率半导体（IGBT / SiC / FRD）+ 智能控制 IC + 智能传感器 + 光电半导体。四度中止 IPO 后撤回，估值曾达 102 亿（一级市场）→ 中金给出 300 亿',
+  },
+  {
+    entity: '旗下制造基地',
+    role: '宁波 / 扬州 / 济南 / 深圳',
+    detail: '宁波：SiC 24 万片/年（2025-11 验收）· 扬州：月产 15 万套 IGBT 模组，2024 开票 22 亿 · 济南：功率半导体产能（IPO 中止期间投产）',
+  },
+];
+
+/* ---------- 双产品线 ---------- */
+const lines = [
+  {
+    name: '功率半导体线（1998 起 / 24 年）',
+    type: 'IGBT / SiC / FRD',
+    badge: '基本盘',
+    specs: [
+      'IGBT：自主研发至 IGBT 4.0，与刀片电池 PACK 集成降本约 15%',
+      'SiC：宁波基地 24 万片/年新型功率半导体产能（含 TVS / SBD / PD / CMOS）',
+      '混合产能：7.8 万片 IGBT + 7.8 万片 FRD',
+      '全球首款 1500V 高耐压大功率 SiC 芯片，2025-03 批量装车（超级 e 平台）',
+    ],
+    position: '2024 年全球功率半导体市场份额 3.1%，位列全球第七（英飞凌财报口径）',
+    note: '支撑超级 e 平台全域千伏架构：1000V 电压 / 1000A 电流 / 1000kW 功率，兆瓦闪充',
+  },
+  {
+    name: '智驾芯片线（2026 突破）',
+    type: '璇玑 A3 · 4nm 车规级 SoC',
+    badge: '新突破',
+    specs: [
+      '中国首款 4nm 制程车规级智驾芯片，2026-05-28 发布并开启规模化量产',
+      '16 核 CPU，DMIPS 达 420K，带宽 273 GB/s',
+      'ASIL-D 最高功能安全等级',
+      '单车三颗协同总算力超 2100 TOPS，支持 L3 / L4 级自动驾驶',
+      '单位算力功耗较同级低约 20%，算力利用率较行业常规提升 100%',
+    ],
+    position: '王传福表述：车规 4nm 相当于消费级 2nm，研发制造难度极大',
+    note: '配套天神之眼 DiPilot 系统，已实现端到端大模型无图化 CNOA（取消高精地图依赖）',
+  },
+];
+
+/* ---------- 里程碑 ---------- */
+const timeline = [
+  { date: '1998 起', event: '开始自研芯片之路', note: '王传福 2026 年表述：深耕芯片二十四年' },
+  { date: '2019-09', event: '比亚迪半导体完成天使轮融资', note: '正式启动资本化运作' },
+  { date: '2020-05', event: 'A 轮融资 19 亿元', note: '红杉中国、中金资本、国投创新、喜马拉雅资本等参与，估值近百亿' },
+  { date: '2020-06', event: 'A+ 轮融资，估值 102.04 亿元', note: 'SK 中国、小米、招银国际、联想、CPE 源峰、Arm、中芯国际、上汽投资等数十家参与' },
+  { date: '2020 底', event: '启动分拆上市筹划', note: '目标创业板' },
+  { date: '2021-06', event: '首次递交招股书', note: '2018-2020 营收 13.40 / 10.96 / 14.41 亿元，净利 1.04 / 0.85 / 0.59 亿元' },
+  { date: '2022-11', event: '四度中止后主动撤回 IPO', note: '官方理由：晶圆产能成为瓶颈，需加快济南项目建设，"快到不能优先上市"' },
+  { date: '2023', event: '重启融资，估值近 300 亿元', note: '中金公司口径；传 2024 年申报创业板，至今未落地' },
+  { date: '2024', event: '全球功率半导体份额 3.1%，全球第七', note: '同期士兰微 3.3% 全球第六；市场规模反而缩小至 323 亿美元' },
+  { date: '2024', event: '扬州基地开票 22 亿元', note: '月均产 15 万套 IGBT 模组，较 2023 年 10 亿增长 120%' },
+  { date: '2025-02', event: '发布"天神之眼"DiPilot，全民智驾', note: '高快领航下探至 10 万元级车型' },
+  { date: '2025-03', event: '超级 e 平台发布 + 1500V SiC 芯片批量装车', note: '全球首个量产乘用车"全域千伏高压架构"' },
+  { date: '2025-08', event: '获 2025 国产 SiC 模块 TOP 企业奖', note: '车规级功率半导体领域持续深耕' },
+  { date: '2025-11', event: '宁波 SiC 芯片项目通过竣工环保验收', note: '总投资 7.44 亿元技改，24 万片/年产能；目标月产 1 万片（年 12 万片）仍有翻倍空间' },
+  { date: '2026-05-28', event: '璇玑 A3 发布并规模化量产', note: '中国首款 4nm 智驾芯片，单车三颗超 2100 TOPS，支持 L3/L4' },
+  { date: '2026-05', event: '天神之眼全面无图化', note: '端到端大模型 CNOA 全国开通，承诺城市领航 1 年安全兜底' },
+];
+
+/* ---------- 动力电池之外的第二曲线数据 ---------- */
+const secondCurve = [
+  { metric: '24 年', label: '持续投入芯片', detail: '从 2000 年代自研 IGBT 起步，跨越三代技术周期' },
+  { metric: '3.1%', label: '全球功率半导体份额', detail: '2024 年，全球第七。前一名士兰微 3.3%' },
+  { metric: '2100 TOPS', label: '单车智驾总算力', detail: '三颗璇玑 A3 协同，支撑 L3/L4' },
+  { metric: '1000 亿+', label: '智能化下半场研发投入', detail: '王传福 2026 年承诺' },
+];
+
+/* ---------- 与吉利正面对比 ---------- */
+const vsGeely = {
+  title: '比亚迪 vs 吉利：两条完全不同的造芯路线',
+  headers: ['维度', '比亚迪', '吉利 / 芯擎'],
+  rows: [
+    { dim: '起点', byd: '功率半导体（IGBT/SiC），24 年前开始', geely: '智能座舱 SoC，2021 年开始' },
+    { dim: '当前制程', byd: '4nm（智驾，2026 已量产）', geely: '7nm（座舱 + 智驾）' },
+    { dim: '领先维度', byd: '功率器件 + 智驾制程', geely: '座舱 SoC 完整度 + 出货规模' },
+    { dim: '战略优势', byd: '垂直整合：电池 + 电机 + 电控 + 芯片', geely: '生态协同：Arm IP + 台积电 + 亿咖通平台' },
+    { dim: '商业化', byd: '主要自供（也有外供，如给士兰微下过订单）', geely: '外供为主，覆盖 30+ 款车型 + 德国大众' },
+    { dim: '资本化', byd: '半导体 IPO 四次中止后撤回，估值 102-300 亿区间', geely: '芯擎 2025 B 轮 10 亿，估值约 95 亿，公开预期 IPO' },
+    { dim: '核心壁垒', byd: '整车规模（年产数百万辆）带来的成本摊薄', geely: '台积电 7nm 车规产线资格 + 首次流片即成功' },
+  ],
+};
+
+/* ---------- 两条路径的优劣 ---------- */
+const tradeoff = [
+  {
+    adv: '比亚迪的优势',
+    items: [
+      '制程领先一代：4nm 已量产 vs 吉利 7nm，这是硬差距',
+      '垂直整合最深：电池 + 电机 + 电控 + 芯片全自研，成本摊薄能力最强',
+      '整车规模巨大：数百万辆年销量提供了其他公司没有的量产摊薄基数',
+      '功率半导体 24 年积累，不是从零开始的新玩家',
+    ],
+  },
+  {
+    adv: '比亚迪的短板',
+    items: [
+      '资本化受阻：半导体 IPO 四度中止后撤回，一级市场估值长期停在 102-300 亿',
+      '外供能力弱：主要自供，"去比亚迪化"尝试效果有限，外部客户接受度存疑',
+      '智驾起步晚：2026 年才出第一颗高算力智驾芯片，比吉利晚 2 年',
+      '数据资产未独立：芯片能力与整车强绑定，难以单独变现为 B2B 业务',
+    ],
+  },
+  {
+    adv: '吉利的优势',
+    items: [
+      '座舱 SoC 完整度高：从 2021 年起 7 代迭代，SE1000 出货破 100 万片',
+      '外供能力强：30+ 款车型，含一汽、长安、沃尔沃、德国大众',
+      '台积电 7nm 车规产线资格 + 首次流片即成功，工艺验证充分',
+      '独立融资能力强：B 轮 10 亿，估值 95 亿，2026 上半年再融超 2 亿美元',
+    ],
+  },
+  {
+    adv: '吉利的短板',
+    items: [
+      '制程落后一代：7nm vs 比亚迪 4nm，在智驾高算力场景上受限',
+      '依赖台积电：无替代代工方案，地缘政治风险敞口大',
+      '缺整车规模：芯片出货虽 100 万片级，但远不及比亚迪的量产摊薄能力',
+      '缺电池/电控协同：无法做"三电 + 芯片"的整车级成本闭环',
+    ],
+  },
+];
+
+/* ---------- 8 条洞察 ---------- */
+const insights = [
+  {
+    n: '01',
+    title: '比亚迪的芯片叙事是"电动化红利"，不是"芯片能力"',
+    body: '比亚迪芯片能活下来，根本原因是它是全球销量前列的车企。IGBT / SiC 的出货量由自身数百万辆整车消化，不需要像芯擎那样去外面找市场。造芯能力是结果，销量才是原因。',
+  },
+  {
+    n: '02',
+    title: '4nm 璇玑 A3 是真正的战略转折',
+    body: '从 2000 年代自研 IGBT 到 2026 年智驾 4nm，比亚迪走完了"电动化上半场看电池，智能化下半场看芯片"的完整闭环。24 年投入在 2026 年第一次拿到可对外展示的智驾算力成果。',
+  },
+  {
+    n: '03',
+    title: 'IPO 四度中止暴露了资本化难题',
+    body: '2020 底启动 → 2021-06 递表 → 四次中止 → 2022-11 撤回，理由是"产能瓶颈、快到等不及上市"。这个理由本身说明问题：芯片产能建设周期太长，资本市场的耐心跟不上产能爬坡速度。',
+  },
+  {
+    n: '04',
+    title: '"去比亚迪化"是行业共同难题',
+    body: '比亚迪半导体一度想摆脱对母公司销量周期的依赖，但效果有限。目前仍有少量外供（如给士兰微下过订单）。这与"工业软件创业公司做甲方定制还是做标准产品"是同一个悖论。',
+  },
+  {
+    n: '05',
+    title: 'SiC 价格雪崩正在重塑竞争格局',
+    body: '2025 Q1 6 英寸 SiC 衬底均价从 4000-4500 元跌至 2500-2800 元（-40%），部分价格已低于 IGBT。国产 6 并 SiC 模块低至 1500 元 vs 国际厂商 2000 元。技术优势正在被价格战部分抵消。',
+  },
+  {
+    n: '06',
+    title: '对做工业 AI 的人意味着什么',
+    body: '比亚迪的芯片能力封闭在整车体系内，几乎不对外输出平台能力。吉利通过亿咖通 + 芯擎对外开放完整计算平台方案。这意味着：如果你的业务需要"汽车芯片 + 算力 + AI"的组合方案，吉利的生态位比比亚迪更开放。',
+  },
+  {
+    n: '07',
+    title: '两条路线的收敛点',
+    body: '吉利在追制程（龙鹰二号、可能的 5nm），比亚迪在补外供（IPO 重启传闻）。未来 2-3 年两条路线会趋同——吉利会加强整车协同，比亚迪会加强平台输出能力。届时竞争焦点会从"谁芯片做得好"转向"谁能把芯片卖给更多外部客户"。',
+  },
+  {
+    n: '08',
+    title: '对赛力斯的直接启示',
+    body: '赛力斯目前芯片全外购（华为 / 高通 / Mobileye）。比亚迪和吉利都证明了自研能活，但都需要 20 年以上投入 + 数百万辆销量基数。赛力斯的现实选项不是自研芯片，而是像吉利那样先做"平台整合者"——把外部芯片 + 自研软件 + 自己的 AI 能力组装成完整方案卖给客户。',
+  },
+];
+
+/* ---------- 证据边界 ---------- */
+const evidence = [
+  {
+    tag: '已确凿',
+    tone: 'ok',
+    items: [
+      '璇玑 A3 为中国首款 4nm 智驾芯片，2026-05-28 发布并规模化量产（新华网等）',
+      '单车三颗超 2100 TOPS，16 核 CPU，420K DMIPS，273 GB/s，ASIL-D',
+      '2024 年全球功率半导体份额 3.1%，全球第七（英飞凌财报）',
+      '宁波 SiC 项目 24 万片/年产能，2025-11 通过验收，总投资 7.44 亿元',
+      '2024 年扬州基地开票 22 亿元，同比 +120%',
+      '半导体 IPO 已正式撤回（2022-11 公告）',
+    ],
+  },
+  {
+    tag: '厂商宣称待验',
+    tone: 'warn',
+    items: [
+      '"算力利用率较行业常规提升 100%"',
+      '"单位算力功耗较同级降低约 20%"',
+      '"全球首款 1500V 高耐压大功率 SiC 芯片"',
+      '"IGBT 4.0 与刀片电池集成降本 15%"',
+      '均为比亚迪自述，无第三方实测对比',
+    ],
+  },
+  {
+    tag: '未公开 / 不确定',
+    tone: 'none',
+    items: [
+      '比亚迪半导体 2024 / 2025 具体营收与净利润',
+      '半导体 IPO 是否会重启、什么时点',
+      '璇玑 A3 的实际装车量与产能爬坡节奏',
+      '外供业务占比（相对自供的比例）',
+      '扬州 / 宁波基地的实际利用率（非产能数字）',
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} locale="zh" pathPrefix="/insights/byd-chips" showLang={false}>
+  <section class="border-b border-slate-200/80 bg-gradient-to-b from-slate-50 to-transparent py-16 dark:border-slate-800 dark:from-slate-900/50">
+    <div class="container-prose">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-700 dark:text-accent-400">Industry Insight · Automotive Chips</p>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl dark:text-white">比亚迪造芯：24 年功率半导体，与首款 4nm 智驾芯片</h1>
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        比亚迪的芯片故事与吉利截然不同：它从功率半导体（IGBT / SiC）起步，靠自身数百万辆整车消化产能，
+        2026 年 5 月发布中国首款 4nm 车规级智驾芯片璇玑 A3。本文拆解其双产品线、15 段里程碑、
+        全球第七的功率半导体份额，以及与吉利路线的正面对比。
+      </p>
+      <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+        数据来源：新华网、凤凰网、新京报、财联社、OFweek、集邦咨询、证券时报、中商情报网、比亚迪官网 · 截至 2026-05
+      </p>
+      <p class="mt-4 text-sm">
+        <a href="../geely-chips/" class="font-semibold text-accent-700 underline underline-offset-4 hover:text-accent-800 dark:text-accent-400">
+          对照阅读：吉利造芯 →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 4 个关键数字 -->
+  <section class="py-12">
+    <div class="container-prose">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {secondCurve.map((s) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{s.metric}</p>
+            <p class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{s.label}</p>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{s.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 组织架构 -->
+  <section class="py-16">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">一、组织架构：一层架构，三类角色</h2>
+      <div class="mt-8 space-y-4">
+        {org.map((o) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">{o.entity}</h3>
+              <p class="text-sm font-medium text-accent-700 dark:text-accent-400">{o.role}</p>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{o.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 双产品线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">二、双产品线：功率半导体（24 年基本盘）+ 智驾芯片（2026 突破）</h2>
+      <div class="mt-8 space-y-5">
+        {lines.map((l) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">{l.name}</h3>
+              <span class="rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-800 dark:bg-accent-900/40 dark:text-accent-300">
+                {l.type}
+              </span>
+              <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                {l.badge}
+              </span>
+            </div>
+            <ul class="mt-5 space-y-2">
+              {l.specs.map((sp) => (
+                <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-600"></span>
+                  <span>{sp}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-4 rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <span class="font-semibold">行业位置：</span>{l.position}
+            </p>
+            <p class="mt-2 rounded-xl bg-accent-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-accent-950/30 dark:text-slate-300">
+              <span class="font-semibold">配套应用：</span>{l.note}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">三、里程碑时间线（1998 – 2026）</h2>
+      <ol class="mt-8 space-y-0 border-l-2 border-slate-200 pl-6 dark:border-slate-800">
+        {timeline.map((t) => (
+          <li class="relative pb-6">
+            <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-accent-600 bg-white dark:bg-slate-950"></span>
+            <p class="text-sm font-bold tabular-nums text-accent-700 dark:text-accent-400">{t.date}</p>
+            <p class="mt-1 text-base font-semibold text-slate-950 dark:text-white">{t.event}</p>
+            <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 与吉利对比 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">{vsGeely.title}</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[760px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              {vsGeely.headers.map((h, i) => (
+                <th
+                  class:list={[
+                    'px-3 py-3 font-semibold',
+                    i === 0 && 'text-left text-slate-900 dark:text-slate-100',
+                    i === 1 && 'text-left text-amber-700 dark:text-amber-400',
+                    i === 2 && 'text-left text-emerald-700 dark:text-emerald-400',
+                  ]}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {vsGeely.rows.map((r) => (
+              <tr class="border-b border-slate-200 align-top dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{r.dim}</td>
+                <td class="px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300">{r.byd}</td>
+                <td class="px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300">{r.geely}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 优劣权衡 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">四、两条路径的优劣权衡</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {tradeoff.map((t) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-base font-bold text-slate-950 dark:text-white">{t.adv}</h3>
+            <ul class="mt-4 space-y-2.5">
+              {t.items.map((it) => (
+                <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400"></span>
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 洞察 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">五、八条洞察</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {insights.map((i) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{i.n}</p>
+            <h3 class="mt-2 text-base font-bold text-slate-950 dark:text-white">{i.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{i.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 证据边界 -->
+  <section class="border-t border-slate-200 py-12 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">证据边界</h2>
+      <div class="mt-5 grid gap-5 sm:grid-cols-3">
+        {evidence.map((e) => (
+          <div
+            class:list={[
+              'rounded-2xl border p-5',
+              e.tone === 'ok' && 'border-emerald-200 bg-emerald-50/60 dark:border-emerald-900/50 dark:bg-emerald-950/20',
+              e.tone === 'warn' && 'border-amber-200 bg-amber-50/60 dark:border-amber-900/50 dark:bg-amber-950/20',
+              e.tone === 'none' && 'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900',
+            ]}
+          >
+            <p
+              class:list={[
+                'text-sm font-bold',
+                e.tone === 'ok' && 'text-emerald-800 dark:text-emerald-400',
+                e.tone === 'warn' && 'text-amber-800 dark:text-amber-400',
+                e.tone === 'none' && 'text-slate-800 dark:text-slate-300',
+              ]}
+            >{e.tag}</p>
+            <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+              {e.items.map((i) => <li>· {i}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
