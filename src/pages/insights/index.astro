@@ -1,0 +1,437 @@
+---
+/**
+ * /insights/ — 行业洞察页（独立于简历主线）
+ *
+ * 设计原则：
+ *  - 不改 Nav 结构，不动现有 profile 覆盖机制，零回归风险
+ *  - 内容是"思考资产"，不是"经历陈述"——招聘方看到战略判断力比多一行经历更有价值
+ *  - 数据全部标注来源年份，不编数字
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = '行业洞察 · Robin Ji';
+const description =
+  '国内工业软件创业公司的收入结构、商业模式与生存特征分析 — 基于 2025 年上市公司年报与行业调查数据的红蓝辩论。';
+
+/* ---------- 数据层：全部来自公开可查来源 ---------- */
+
+const revenueStreams = [
+  {
+    type: '工程仿真软件（纯 license）',
+    share: '42.5%',
+    margin: '86.3%',
+    nature: '卖软件许可 — 高毛利、可复制',
+    source: '索辰科技 2025 年报',
+  },
+  {
+    type: '工业自动化软件产品',
+    share: '37.8%',
+    margin: '85.6%',
+    nature: '卖标准产品 — 高毛利',
+    source: '索辰科技 2025 年报',
+  },
+  {
+    type: '生产管控一体化解决方案',
+    share: '13.8%',
+    margin: '14.5%',
+    nature: '卖集成 — 低毛利、不可复制',
+    source: '索辰科技 2025 年报',
+  },
+  {
+    type: '仿真产品开发（定制交付）',
+    share: '9.1%',
+    margin: '19.6%',
+    nature: '卖人力 — 低毛利、不可复制',
+    source: '索辰科技 2025 年报',
+  },
+  {
+    type: '开物系列（物理 AI）',
+    share: '12.0%',
+    margin: '76.0%',
+    nature: '新业务线 — 卖物理模型 + 行业数据',
+    source: '索辰科技 2025 年报',
+  },
+];
+
+const industryPains = [
+  {
+    metric: '64.7%',
+    label: 'A 股 243 家 2B 软件公司亏损面',
+    detail: '2021 年 20% → 2025 年 64.7%',
+  },
+  {
+    metric: '-176.8 亿',
+    label: '全行业扣非净利润（2025）',
+    detail: '从 2021 年盈利 178.9 亿转为亏损',
+  },
+  {
+    metric: '7.9%',
+    label: '四年收入累计增幅（2021→2025）',
+    detail: '同期扣非净利由正转负',
+  },
+  {
+    metric: '24%',
+    label: '中国工业数字化渗透率',
+    detail: '约为美国的 2/3、德国的 1/2',
+  },
+];
+
+const modes = [
+  { name: '永久 license 一次性', players: '中望（早期）、传统 CAD', margin: '90%+', sustain: '续费无收入，靠新客' },
+  { name: '订阅制 SaaS', players: '用友、金山', margin: '70-80%', sustain: '最优，但工业客户抵触' },
+  { name: 'license + 年度维护费', players: 'CAE、Dassault（国内）', margin: '85-90%', sustain: '欧美主流，中国正在转' },
+  { name: '定制开发 + 运维', players: '大量中小工业软件商', margin: '15-40%', sustain: '规模不经济，天花板低' },
+  { name: '软件 + 硬件捆绑', players: '宝信、和利时、中控', margin: '30-45%', sustain: '现金流好，被硬件拖累' },
+  { name: '按效果 / 项目交付收费', players: '部分 AI 工业软件', margin: '不定', sustain: '难标准化' },
+];
+
+const redTeam = [
+  { title: '结构性缺陷：软件在制造业里是赠品', body: '客户采购逻辑是"设备/物料值钱，软件是附赠"，软件预算优先级最低 → 卖软件永远被压价，除非绑定硬件或人力。' },
+  { title: '项目制诅咒：永远做不成规模', body: '工业流程非标 + 客户要求定制 → 每个项目重做 → 边际成本不降 → 营收增长 = 线性堆人，毛利永远被摊薄。' },
+  { title: '国产替代不是市场，是价格战', body: '政策强制推替代 → 客户预期"同功能必须更便宜" → 替代量涨了、单价腰斩、总营收不涨。' },
+  { title: '人才与资本双杀', body: '研发费用率国际头部 10-35%，现金流撑不到产品成熟 → 64.7% 亏损面不是偶然，是必然。' },
+  { title: 'AI 是伪变量', body: 'AI 让"做软件"更便宜，也让"卖软件"更难 → 中间被挤压的正是"纯软件"这层。' },
+];
+
+const blueTeam = [
+  { title: '毛利 86% 是真实存在的，不是理论', body: '索辰纯软件线 86.33%、开物 98.58% → 只要卖 license 而不是人天，工业软件毛利和 SaaS 一样高。毛利被摊薄是模式选择，不是行业宿命。' },
+  { title: '渗透率 24% = 还有 3-4 倍空间', body: '研发设计类国产化率仅 5-10%（最大洼地），生产管控类中低端 50%/高端 30%，管理运营类中低端 70%/高端 40%。' },
+  { title: '技术外溢已在发生：AI 正在重开牌桌', body: '索辰开物系列（物理 AI）毛利 76%，已过激励考核线 → AI 卖的是"不用算/算得准"，是价值增量而非替代。' },
+  { title: '欧美已证明这条路能走通', body: 'CAE Inc FY2025 收入 C$4.7B（+9.9%）、净利 C$405.3M；欧美工业软件毛利率普遍 85-90%，是软件业最赚钱的细分。' },
+  { title: '结构性需求：政策 + 地缘', body: '"十五五"把工业软件写入"关键核心技术攻坚战"，美国对 CAD/CAE/EDA 出口管制持续 → 这是必选项，不是可选项。' },
+];
+
+const debates = [
+  {
+    q: '定制化到底是护城河还是诅咒？',
+    red: '定制化 = 客户粘性 = 护城河。',
+    blue: '定制化 = 毛利 15-20% = 诅咒，永远做不成规模。',
+    verdict: '无对错 —— 关键是它是否为过渡形态。索辰"仿真开发（19.6% 毛利）占 9%，工程仿真软件（86.3%）占 42%"，用定制喂标准，这个比例结构健康。',
+  },
+  {
+    q: '国产替代是红利还是陷阱？',
+    red: '替代 = 逼客户买国产 = 免费获客。',
+    blue: '替代 = 客户预期"便宜 50%" = 价格战死路。',
+    verdict: '短期是陷阱，长期是红利，但只有活过价格战的公司吃得到。关键指标不是替代了多少家，是替代后客单价降了多少、毛利率有没有守住。',
+  },
+  {
+    q: 'AI 是机会还是伪变量？',
+    red: 'AI 降低开发成本 → 中小公司也能做 → 竞争加剧 → 更难活。',
+    blue: 'AI 创造新品类（物理 AI、工业基础模型）→ 高毛利新品类 → 新空间。',
+    verdict: '对"卖工具"的玩家 AI 是威胁；对"卖工业知识"的玩家 AI 是杠杆。分水岭：产品里通用软件功能越多，AI 越容易吃掉你。',
+  },
+];
+
+const survival = [
+  { n: 1, title: '收入结构必须是 license 为主', metric: '纯软件 ≥ 60%，定制交付 ≤ 25%', why: '索辰 80.3% 软件 / 19.7% 服务是健康标杆。定制 > 50% 就不是软件公司，是人天生意。' },
+  { n: 2, title: '毛利率必须守住 70%+', metric: '连续两年下滑 = 已滑向定制化深渊', why: '纯软件毛利率 85%+ 属正常（国际同行 85-90%）。中望软件行业口径 95.97% 是天花板。' },
+  { n: 3, title: '必须锁一个窄到能赢的场景', metric: '不是"做工业软件"，是"某行业某环节"', why: '好：汽车 Tier 1 的 IGBT 热-流耦合仿真；坏：通用 PLM（对标西门子必输）。' },
+  { n: 4, title: '护城河必须是资产型，不是功能型', metric: '行业数据 / 物理模型 / know-how', why: '功能会被抄，资产抄不走。索辰开物系列卖的不是软件，是"物理模型 + 行业数据"。' },
+  { n: 5, title: '客户结构必须纺锤形', metric: '5-10 个中型客户各占 5-15%，总量 60-70%', why: '1 个大客户占 50% 意味着一走就死。中型客户有预算、决策快、不会突然断供。' },
+  { n: 6, title: '现金流转正必须有明确路径', metric: 'license 收入覆盖固定成本 ≥ 50%', why: '研发费用率国际头部 10-35%，靠融资续命的公司在 A 股有 64.7% 亏损面。' },
+  { n: 7, title: '标准化一次，复用多次', metric: '第二个同类项目复用 ≥ 70%', why: '这是区分"软件公司"和"外包公司"的唯一标准。第二个项目还在重做，你就是外包。' },
+  { n: 8, title: '必须有出海这条腿（可选但加分）', metric: '欧美毛利更高、客户更少付费意愿更强', why: '欧美市场付费意愿更强、竞争对手更少。中望 90+ 国家、设序已签西门子生态合作都在走这条路。' },
+];
+
+const scoreboard = {
+  criteria: ['license 为主', '毛利率 70%+', '窄场景', '资产护城河', '客户纺锤形', '现金流转正', '标准化交付', '出海能力'],
+  rows: [
+    { name: '设序科技', scores: [5, 5, 5, 5, 4, 1, 5, 5], total: 35, note: '工业世界模型 + Agent，比亚迪/本田/上海电气/商飞；一年三轮融资累计超 1 亿；已签西门子生态合作（2026.03）', risk: 'Pre-B 烧钱期，无盈利路径证据' },
+    { name: '中望软件', scores: [5, 5, 4, 3, 5, 2, 5, 5], total: 34, note: 'A 股 688083，2025 营收 8.93 亿（+0.60%），软件毛利率 95.97%，90+ 国家', risk: '连续多年亏损；研发烧掉近 1 亿；营收基本原地踏步' },
+    { name: '索辰科技', scores: [4, 3, 5, 5, 3, 3, 4, 3], total: 30, note: 'A 股 688507，CAE 极窄场景 + 开物物理 AI（毛利 98.58%）', risk: '整体毛利 68.16% 且同比 -3.70pp；军工客户集中' },
+    { name: '华天软件', scores: [4, 4, 4, 3, 4, 2, 4, 4], total: 29, note: 'C+ 轮超 1 亿（中网投），IDC 2025 国产 CAD 第一阵营，全球营销布局中', risk: '未披露营收/毛利，财务透明度低' },
+    { name: '雪浪云', scores: [3, 3, 4, 5, 5, 2, 3, 2], total: 27, note: 'B 轮 3 亿（国调基金），50+ 央企客户（商飞/中煤/中信泰富），工业知识库护城河', risk: '集成重、标准化弱；基本只做国内市场' },
+  ],
+};
+
+const sources = [
+  '索辰科技 2025 年年度报告（688507）+ 2026-04-30 投资者关系活动记录表',
+  '中望软件 2025 年年度报告（688083）',
+  'IDC《中国设计研发类工业软件之 CAD 市场份额，2025》（2026-08）',
+  '虎嗅 / 腾讯新闻《为责任和尊严而战：中国软件业还要亏多久？》（2026-10-19）— A 股 243 家 2B 软件公司财务调查',
+  'IIM《全球及中国工业软件产业白皮书（2025）》',
+  '艾瑞咨询《中国企业级 SaaS 行业研究报告》、36Kr《2023 年中国企业级 SaaS 行业发展研究报告》',
+  'CAE Inc FY2025 业绩公告（Nasdaq: CAE, 2026-05-13）',
+  '36 氪 / 投资界 — 设序科技 Pre-B 融资、雪浪云 B 轮融资、华天软件 C+ 轮融资报道',
+];
+---
+
+<BaseLayout title={title} description={description} locale="zh" pathPrefix="/insights" showLang={false}>
+  <section class="border-b border-slate-200/80 bg-gradient-to-b from-slate-50 to-transparent py-16 dark:border-slate-800 dark:from-slate-900/50">
+    <div class="container-prose">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-700 dark:text-accent-400">Industry Insight</p>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl dark:text-white">工业软件创业公司的商业模式解剖</h1>
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        国内工业软件创业公司靠什么赚钱？这些商业模式有什么结构性缺陷？为什么在 A 股 64.7% 亏损面之下，
+        仍然有公司能活下来？本文用索辰科技 2025 年报的真实收入结构做解剖，用红蓝两方辩论拆解争议，最后给出 8 条可验证的生存特征。
+      </p>
+      <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+        分析框架：Business Model Canvas + 红蓝对抗 · 数据截至 2025 年报 / 2026 年行业调查
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== 1. 收入结构 ========== -->
+  <section class="py-16">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">一、收入来源：同一家公司毛利差 5 倍</h2>
+      <p class="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        索辰科技（A 股 688507）是国内最干净的 CAE 样本。2025 年报显示，它不同业务线的毛利率差异巨大——
+        差别不在技术能力，而在"卖 license 还是卖人天"。
+      </p>
+
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[680px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">收入类型</th>
+              <th class="px-3 py-3 text-right font-semibold text-slate-900 dark:text-slate-100">占比</th>
+              <th class="px-3 py-3 text-right font-semibold text-slate-900 dark:text-slate-100">毛利率</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">本质</th>
+            </tr>
+          </thead>
+          <tbody>
+            {revenueStreams.map((r) => (
+              <tr class="border-b border-slate-200 dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{r.type}</td>
+                <td class="px-3 py-3 text-right tabular-nums text-slate-700 dark:text-slate-300">{r.share}</td>
+                <td class:list={[
+                  'px-3 py-3 text-right tabular-nums font-semibold',
+                  parseFloat(r.margin) >= 70 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400',
+                ]}>{r.margin}</td>
+                <td class="px-3 py-3 text-slate-600 dark:text-slate-300">{r.nature}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">真相 1</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            毛利差的不是技术，是交付方式。同一批工程师、同样的技术，卖 license 毛利 86%，卖人天毛利 15-20%。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">真相 2</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            定制化既是救命绳也是规模诅咒。早期靠定制活下来，但毛利被杀；做标准产品毛利回来，客户又抗拒迁移。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">真相 3</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            行业系统性亏损：2025 年 A 股 243 家 2B 软件公司扣非净利 -176.8 亿，亏损面 64.7%。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. 商业模式谱系 ========== -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">二、六种商业模式与可持续性</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[720px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">模式</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">典型玩家</th>
+              <th class="px-3 py-3 text-right font-semibold text-slate-900 dark:text-slate-100">毛利率区间</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">可持续性</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modes.map((m) => (
+              <tr class="border-b border-slate-200 dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{m.name}</td>
+                <td class="px-3 py-3 text-slate-600 dark:text-slate-300">{m.players}</td>
+                <td class="px-3 py-3 text-right tabular-nums text-slate-700 dark:text-slate-300">{m.margin}</td>
+                <td class="px-3 py-3 text-slate-600 dark:text-slate-300">{m.sustain}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {industryPains.map((p) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-rose-600 dark:text-rose-400">{p.metric}</p>
+            <p class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{p.label}</p>
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{p.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3. 红蓝辩论 ========== -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">三、红蓝辩论</h2>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-2xl border border-rose-200 bg-rose-50/60 p-6 dark:border-rose-900/50 dark:bg-rose-950/20">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-rose-700 dark:text-rose-400">红方 · 看空</p>
+          <h3 class="mt-2 text-lg font-bold text-slate-950 dark:text-white">工业软件创业公司活不下来</h3>
+          <ul class="mt-5 space-y-4">
+            {redTeam.map((a) => (
+              <li>
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{a.title}</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{a.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-5 border-t border-rose-200 pt-4 text-sm font-medium text-rose-800 dark:border-rose-900 dark:text-rose-300">
+            结论：政策正确但商业跑不通——公司活不下来，最后靠被并购或政策续命。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-400">蓝方 · 看多</p>
+          <h3 class="mt-2 text-lg font-bold text-slate-950 dark:text-white">有人正在活下来，而且活得不错</h3>
+          <ul class="mt-5 space-y-4">
+            {blueTeam.map((a) => (
+              <li>
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{a.title}</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{a.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-5 border-t border-emerald-200 pt-4 text-sm font-medium text-emerald-800 dark:border-emerald-900 dark:text-emerald-300">
+            结论：跑通的关键是"模式选择"而非"行业好坏"——卖 license 的能活，卖人天的活不好。
+          </p>
+        </div>
+      </div>
+
+      <h3 class="mt-14 text-xl font-bold tracking-tight text-slate-950 dark:text-white">交锋三回合</h3>
+      <div class="mt-6 space-y-4">
+        {debates.map((d, i) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-accent-700 dark:text-accent-400">交锋 {i + 1}</p>
+            <h4 class="mt-2 text-base font-bold text-slate-950 dark:text-white">{d.q}</h4>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              <p class="rounded-xl bg-rose-50 p-3 text-sm text-slate-700 dark:bg-rose-950/30 dark:text-slate-300">
+                <span class="font-semibold text-rose-700 dark:text-rose-400">红：</span>{d.red}
+              </p>
+              <p class="rounded-xl bg-emerald-50 p-3 text-sm text-slate-700 dark:bg-emerald-950/30 dark:text-slate-300">
+                <span class="font-semibold text-emerald-700 dark:text-emerald-400">蓝：</span>{d.blue}
+              </p>
+            </div>
+            <p class="mt-3 rounded-xl border-l-4 border-accent-600 bg-slate-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              <span class="font-semibold">裁决：</span>{d.verdict}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. 生存特征 ========== -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">四、能活下去的 8 条硬特征</h2>
+      <p class="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        每条都带可验证的量化标准，不是"要有客户价值"这种正确的废话。
+      </p>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {survival.map((s) => (
+          <div class="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent-700 text-sm font-bold text-white dark:bg-accent-600">
+              {s.n}
+            </span>
+            <div>
+              <h3 class="text-base font-bold text-slate-950 dark:text-white">{s.title}</h3>
+              <p class="mt-1 text-sm font-semibold text-accent-700 dark:text-accent-400">{s.metric}</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{s.why}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-8 rounded-2xl border border-accent-300 bg-accent-50 p-5 text-base font-medium leading-relaxed text-slate-800 dark:border-accent-800 dark:bg-accent-950/30 dark:text-slate-100">
+        一句话总结：一家用 AI 加速研发、但护城河在行业数据、只卖 license 不卖人天、锁一个窄到能赢的场景、
+        客户是 5-10 个中型制造商、并且有一个能出海的 CTO 或销售的工业软件公司。
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== 5. 打分表 ========== -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">五、五家候选公司的 8 特征打分</h2>
+      <p class="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        按 8 条特征逐家打分（每项 1-5 分，满分 40）。打分依据是公开年报、融资报道、IDC 份额报告。
+      </p>
+
+      <div class="mt-8 space-y-4">
+        {scoreboard.rows.map((r, idx) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">
+                <span class="mr-2 text-sm font-semibold text-accent-700 dark:text-accent-400">#{idx + 1}</span>{r.name}
+              </h3>
+              <p class="text-xl font-bold tabular-nums text-slate-950 dark:text-white">
+                {r.total}<span class="text-sm font-normal text-slate-400">/40</span>
+              </p>
+            </div>
+
+            <div class="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-8">
+              {r.scores.map((s, j) => (
+                <div class="rounded-lg border border-slate-200 p-2 text-center dark:border-slate-800">
+                  <p class="text-[10px] font-medium leading-tight text-slate-500 dark:text-slate-400">{scoreboard.criteria[j]}</p>
+                  <p class:list={[
+                    'mt-1 text-base font-bold tabular-nums',
+                    s >= 4 ? 'text-emerald-600 dark:text-emerald-400' : s === 3 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400',
+                  ]}>{s}</p>
+                </div>
+              ))}
+            </div>
+
+            <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{r.note}</p>
+            <p class="mt-2 rounded-xl bg-rose-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-rose-950/30 dark:text-slate-300">
+              <span class="font-semibold text-rose-700 dark:text-rose-400">风险：</span>{r.risk}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">读这张表的三个结论</h3>
+        <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          <li>
+            <span class="font-semibold text-slate-900 dark:text-slate-100">分数高 ≠ 现在就该投。</span>
+            设序科技 35 分排第一，但唯一 1 分项是"现金流转正"——Pre-B 阶段烧钱是事实，
+            它证明的是模式健康，不是财务健康。
+          </li>
+          <li>
+            <span class="font-semibold text-slate-900 dark:text-slate-100">中望 34 分但风险最实。</span>
+            95.97% 毛利率 + 90 国客户 = 模式极健康；但营收 +0.60% 原地踏步 + 连续亏损 = 已在验证"模式对，但增长引擎没找到"。
+          </li>
+          <li>
+            <span class="font-semibold text-slate-900 dark:text-slate-100">最该关注的不是分数，是 AI 线。</span>
+            设序（工业世界模型）、索辰开物（物理 AI）都有真正的资产型 AI 线；
+            中望/华天的 AI 更像功能增强。这是"AI 威胁"vs"AI 杠杆"的分水岭。
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. 来源 ========== -->
+  <section class="border-t border-slate-200 py-12 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">数据来源</h2>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-400">
+        {sources.map((s) => <li>· {s}</li>)}
+      </ul>
+      <p class="mt-6 text-xs text-slate-400 dark:text-slate-500">
+        打分为框架化主观判断（1-5 分），基于上述公开数据，非投资建议。
+      </p>
+    </div>
+  </section>
+</BaseLayout>
