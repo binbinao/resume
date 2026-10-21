@@ -1,0 +1,518 @@
+---
+/**
+ * /insights/horizon-robotics/ — 地平线机器人分析页
+ *
+ * 分析框架：对标 /insights/geely-chips/ 与 /insights/byd-chips/ 的同款结构
+ * 核心差异：地平线不是车企，不是Tier1，是"第三方智驾芯片+方案商"
+ *           ——它同时是吉利/比亚迪/理想/奇瑞的芯片供应商，又是它们的竞争对手
+ * 数据来源：地平线官方新闻稿、经济参考报（新华社）、中国经济网、21世纪经济报道、
+ *          招银国际研报、OFweek、界面新闻、易车榜、百度第一电动网
+ * 数据截至：2026-09 半年报 + HSD V2.1 发布
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = '地平线机器人 · Robin Ji';
+const description =
+  '地平线机器人（9660.HK）深度分析 — 千万级智驾芯片出货、64.5% 毛利率、HSD 全场景方案，与车企自研芯片的正面博弈。';
+
+/* ---------- 组织架构 ---------- */
+const org = [
+  {
+    entity: '地平线机器人-W',
+    role: '9660.HK · 余凯（创始人兼 CEO）',
+    detail: '2024-10-24 港交所主板上市。2025 年完成两次配售，合计募资超百亿港元。2026 年 4 月以 3904 万港元回购 557.7 万股，用于员工股权激励 —— 目标是把增速指引从 50% 上调到 60%',
+  },
+  {
+    entity: 'BPU® 纳什架构（自研基座）',
+    role: '十年三代迭代',
+    detail: '智驾专用计算架构，非通用 GPU 架构。官方口径：计算性能十年提升超 1000 倍，超越摩尔定律演进速度。征程全系搭载，原生支持大参数 Transformer',
+  },
+  {
+    entity: '征程® 芯片家族（四代）',
+    role: '累计出货超 1000 万套',
+    detail: '征程2（4 TOPS，2020 长安 UNI-T 首量产）→ 征程3（理想 one 改款）→ 征程5（理想 L8 Pro 首发）→ 征程6（10-560 TOPS 全阶覆盖，2025-02 大规模量产）',
+  },
+  {
+    entity: 'HSD（Horizon SuperDrive）',
+    role: '2025-04 发布 · 已迭代至 V2.1',
+    detail: 'L2 全场景城区辅助驾驶系统，基于征程6P（560 TOPS）+ Horizon Cell 弹夹系统。一段式端到端架构，不依赖高精地图。首搭车型星途 ET5，量产上市 8 周交付 2.5 万套',
+  },
+];
+
+/* ---------- 双业务线 ---------- */
+const lines = [
+  {
+    name: '产品解决方案业务',
+    type: '芯片 + HSD 系统一体化交付',
+    badge: '高增长',
+    specs: [
+      '2025 年营收 16.2 亿元，同比 +144.2%，占比从 2024 年 28% 提升至 43%',
+      'HSD 是核心增量：已获 10 家 OEM 品牌累计 20 余款车型定点',
+      '2026 目标：HSD 出货量 40 万套，以 J6P/J6H 为主，覆盖奇瑞、大众、比亚迪',
+      '首个 HSD 车型星途 ET5 已下探至 15 万元级主流市场',
+    ],
+    position: '2026-01 理想 AD Pro 4.0 推送 —— 行业首个基于单颗征程6M（128 TOPS）的端到端城市 NOA 量产上车',
+    note: '从"卖芯片"向"卖系统"转型，这是 ASP 提升 75% 的来源',
+  },
+  {
+    name: '授权及服务业务',
+    type: 'IP 授权 + 生态服务',
+    badge: '基本盘',
+    specs: [
+      '2025 年营收 19.4 亿元，同比 +17.4%，占总营收 52%',
+      '2026 上半年超过一半收入来自授权及服务',
+      '与车企深度绑定，输出 IP 与生态而非完整硬件',
+      '招银国际观点：软硬一体价值重估的关键变量',
+    ],
+    position: '汽车业务占总营收近 95%，汽车业务毛利率 67.2%',
+    note: '收入稳定但增速慢于产品解决方案，是"授权"模式的典型特征 —— 一次授权长期收租，但难有爆发式增长',
+  },
+];
+
+/* ---------- 财务时间线 ---------- */
+const timeline = [
+  { date: '2019', event: '发布首颗车规级智驾芯片征程2（J2），算力 4 TOPS', note: '从算法公司转向芯片公司' },
+  { date: '2020', event: '征程2 量产，首款车型长安 UNI-T', note: '合作伙伴福瑞泰克。首颗国产车规智驾芯片量产' },
+  { date: '2021', event: '征程3（J3）搭载理想 one 改款车型', note: '理想 one 早期方案为 Mobileye，地平线证明了自己能替代国际供应商' },
+  { date: '2023-11', event: '征程6 广州车展首次官宣', note: '算力覆盖 10-560 TOPS，唯一覆盖全阶需求的系列方案' },
+  { date: '2024-04', event: '征程6 正式发布，官宣 10 家首批量产合作车企', note: '上汽、大众、比亚迪、理想、广汽、深蓝、北汽、奇瑞、星途、岚图' },
+  { date: '2024-10-24', event: '港交所主板上市', note: '首批 18A 上市企业之一，市值一度破千亿' },
+  { date: '2025-02-13', event: '征程6 全球首发上车比亚迪天神之眼', note: '比亚迪两家核心智驾芯片供应商之一。另覆盖上百万台比亚迪车型' },
+  { date: '2025-02-08', event: '征程6 宣布进入大规模量产', note: '设计工艺 DTCO + 系统技术 STCO 协同优化' },
+  { date: '2025-04-18', event: '发布征程6P/6H + HSD 全场景系统', note: '与奇瑞达成 HSD 首个量产合作。6P：560 TOPS，18 核 A78AE + 4 核 BPU' },
+  { date: '2025-08-29', event: '征程累计量产突破 1000 万套', note: '国内首家千万级出货智驾科技企业。第 1000 万套为征程6M，客户吉利（千里浩瀚 H3 标配）' },
+  { date: '2025 全年', event: '营收 37.6 亿元 +57.7%，毛利 24.3 亿，毛利率 64.5%', note: '征程出货超 400 万套 +39%。中高阶 180 万套 +近 5 倍，占比升至 48%，贡献 80%+ 收入' },
+  { date: '2025 全年', event: '经调整经营亏损 23.7 亿元，同比扩大 58.7%', note: '主动加大研发投入，尤其云端训练费用。现金及等价物超 200 亿元' },
+  { date: '2026-01-21', event: '理想 AD Pro 4.0 推送，行业首个单颗征程6M 城市 NOA', note: '128 TOPS 实现越级城市 NOA，理想主导研发 + 轻舟智航共创' },
+  { date: '2026-04-22', event: 'HSD V1.6 发布', note: '' },
+  { date: '2026-06-29', event: 'HSD V2.0 发布 —— 世界模型 + 端到端强化学习', note: '首批 iCAR V27，6-30 起分批 OTA。首个采用世界模型架构的量产城区方案' },
+  { date: '2026 上半年', event: '营收 20.55 亿元 +32.9%，毛利率 66%，出货 221.8 万套', note: '中国乘用车销量下降 20% 背景下实现增长。自主品牌 ADAS 份额首破 50%，约为第二名两倍' },
+  { date: '2026 上半年', event: '归母净利 37.84 亿元"扭亏为盈"，但经调整净亏损 16.71 亿元', note: '盈利来自可转换借款公允价值变动收益 52.4 亿元 —— 会计调整，无现金流，不改变经营' },
+  { date: '2026-09-09', event: '征程6P 获京东物流无人车定点', note: 'L4 级"独狼"第六代智能配送车 Plus 版。未来 3-5 年该场景部署有望达百万辆' },
+  { date: '2026-09-30', event: 'HSD V2.1 发布，提供端到端倒车功能', note: '' },
+];
+
+/* ---------- 关键数字 ---------- */
+const kpis = [
+  { metric: '1000 万+', label: '征程累计出货', detail: '国内首家千万级出货智驾科技企业。每三台智能车就有一台搭载地平线' },
+  { metric: '64.5%', label: '2025 毛利率', detail: '汽车业务毛利率 67.2%。2026 H1 综合毛利率 66%' },
+  { metric: '50%+', label: '自主品牌 ADAS 份额', detail: '2026 H1 首次突破 50%，约为第二名两倍。支持城区 NOA 芯片份额 22.8%' },
+  { metric: '37.6 亿', label: '2025 年营收', detail: '同比 +57.7%。2026 增速指引从 50% 上调至 60%' },
+];
+
+/* ---------- 三方竞争格局 ---------- */
+const landscape = {
+  title: '竞争格局：芯片市占率 vs 系统装载量 —— 两个完全不同的榜',
+  headers: ['榜单口径', '第 1', '第 2', '第 3', '第 4', '第 5', '地平线'],
+  rows: [
+    {
+      metric: 'L2+ 第三方智驾方案市占率（易车榜 2026H1）',
+      cells: ['华为乾崑 25.5%', '千里科技 24.2%', 'Momenta 18.3%', '卓驭 9.8%', '—', '第 5 · 8.4%'],
+      note: '按方案商口径，地平线只排第五',
+    },
+    {
+      metric: '城市 NOA 市占率（易车榜 2026H1）',
+      cells: ['华为乾崑 33.7%', 'Momenta 23.4%', '千里科技 21.6%', '元戎启行 10.5%', '—', '未进前四'],
+      note: '系统口径地平线不在前列',
+    },
+    {
+      metric: '按装机量（第一电动网 2026H1）',
+      cells: ['华为 32.3 万辆', 'Momenta 21.4 万辆', '千里 16.4 万辆', '元戎启行 13.4 万辆', '卓驭 4.4 万辆', '第 6 · 3.3 万辆'],
+      note: '车载系统口径垫底',
+    },
+    {
+      metric: '中高阶智驾芯片（2025 全年）',
+      cells: ['华为 15.2%', '地平线 14.4%', '英伟达 —', '—', '—', '第 2 · 与华为英伟达合计 89%'],
+      note: '芯片口径地平线第二，仅次于华为；与华为、英伟达合计 89% 构成第一梯队',
+    },
+    {
+      metric: '自主 ADAS 芯片（2026H1）',
+      cells: ['地平线 ~50%', '第 2 名 ~25%', '—', '—', '—', '第 1 · 约第二名两倍'],
+      note: '自主芯片口径优势最明显',
+    },
+  ],
+};
+
+/* ---------- 三方对标：地平线 vs 吉利 vs 比亚迪 ---------- */
+const vsOEM = {
+  title: '第三方供应商 vs 车企自研：地平线的位置最尴尬，也最关键',
+  headers: ['维度', '地平线', '吉利 / 芯擎', '比亚迪半导体'],
+  rows: [
+    { dim: '角色', hz: '第三方供应商（既供货又竞争）', geely: '车企自研 + 外供', byd: '车企自研为主，基本自供' },
+    { dim: '客户关系', hz: '40+ 车企及品牌，400+ 车型，600 万车主', geely: '30+ 款车型 + 德国大众', byd: '母公司为主，少量外供' },
+    { dim: '制程/算力', hz: '征程6P 560 TOPS，纳什架构（制程未公开）', geely: '7nm（座舱 + 智驾）', byd: '4nm 璇玑 A3（智驾）' },
+    { dim: '出货规模', hz: '1000 万+ 累计，2025 年 400 万套', geely: '座舱 100 万片（2024）', byd: '不公开' },
+    { dim: '商业模式', hz: '芯片 + HSD 系统 + IP 授权（三层）', geely: '芯片外供 + 亿咖通平台', byd: '纯自供，不做 B2B' },
+    { dim: '财务状况', hz: '37.6 亿营收 / 64.5% 毛利 / 调整后亏 23.7 亿', geely: '未上市（芯擎估值 95 亿）', byd: '半导体 IPO 撤回，估值 102-300 亿' },
+    { dim: '核心风险', hz: '车企自研替代 + HSD 量产晚了华为/Momenta', geely: '台积电单点依赖', byd: '资本化受阻 + 外供能力弱' },
+    { dim: '最大优势', hz: '中立性 —— 车企不忌惮用它的芯片', geely: '唯一全栈自研 + 台积电资格', byd: '整车规模 + 4nm 制程' },
+  ],
+};
+
+/* ---------- 核心争议：车企自研会不会杀死地平线 ---------- */
+const debate = {
+  question: '核心争议：车企自研芯片，会不会杀死地平线？',
+  blue: {
+    label: '多方（招银国际）：不会',
+    points: [
+      '车企全栈自研是"次要因素" —— 智驾平权要求降本，标准芯片是成本最优解',
+      '从主力车型 10-20 万元价格带看，第三方方案是二三线车企的最优选',
+      '招银国际预测头部第三方供应商潜在市场份额约为全部新车销量的 50%',
+      '地平线基本盘稳固：芯片出货量与方案市占率是两个独立赛道，装车量垫底不代表芯片份额下滑',
+      '软硬一体正在重估价值：从卖芯片到卖系统（HSD），ASP 提升 75%',
+      '远期新曲线：订阅收费、Robotaxi、具身智能 —— 都还没定价',
+    ],
+  },
+  red: {
+    label: '空方：结构性风险真实存在',
+    points: [
+      '蔚来、小鹏、理想、比亚迪纷纷自研芯片，2025 年起市场就在质疑替代',
+      '小鹏为 L3 配了 2200+ TOPS（3 颗自研图灵芯片），L4 Robotaxi 达 3000 TOPS',
+      '英伟达双 Orin-X（508 TOPS）已难支撑端到端 + VLA，高阶算力需求飞涨',
+      'HSD 量产时间偏晚：面对华为乾崑（搭载量超 100 万台）和 Momenta 两座大山',
+      '2026H1 按装机量口径只排第六（3.3 万辆），与"千万级出货"的宣传形成落差',
+      '持续亏损扩大：2025 调整后经营亏损 23.7 亿（+58.7%），2026H1 调整后净亏 16.71 亿（+25.4%）',
+    ],
+  },
+  verdict: {
+    label: '综合判断',
+    text: '两个风险不是同一量级。车企自研替代的是"高算力 L3/L4 那一层"，地平线真正稳固的位置是"10-20 万元价格带的智驾平权"—— 这个市场反而在扩大，且不需要车企自研就能满足。真正的软肋是 HSD 系统量产晚于华为和 Momenta：芯片份额第一不等于系统话语权。2026H1 归母净利 37.84 亿元的"扭亏为盈"来自可转换借款公允价值变动收益 52.4 亿元，是会计调整、无现金流、不改变经营，这个数字不能当成盈利拐点。',
+  },
+};
+
+/* ---------- 8 条洞察 ---------- */
+const insights = [
+  {
+    n: '01',
+    title: '地平线的真实身份：不是车企，也不是 Tier1',
+    body: '它同时是吉利、比亚迪、理想、奇瑞的芯片供应商，又是它们在智驾方案上的竞争对手。这个双重身份是它最大的资产也是最大的约束：中立性让车企愿意用它的芯片，但也意味着车企永远不会有动力帮它推系统。',
+  },
+  {
+    n: '02',
+    title: '两个榜单的落差就是它的核心矛盾',
+    body: '芯片口径：中高阶智驾芯片份额 14.4% 第一梯队、自主 ADAS 芯片份额超 50% 约第二名两倍。系统口径：L2+ 第三方方案市占率 8.4% 排第五、按装机量 3.3 万辆排第六。芯片赢了，方案输了。',
+  },
+  {
+    n: '03',
+    title: '2025 年的 ASP 提升 75% 是最被低估的信号',
+    body: '营收 +57.7% 而出货只 +39%，差额来自产品组合优化。从"卖 J5"到"卖 J6P + HSD"，单车价值大幅提升。这说明市场愿意为"芯片 + 系统"付费，而不只买裸芯片。这是它从硬件公司走向平台公司的关键证据。',
+  },
+  {
+    n: '04',
+    title: '比亚迪同时是它最大的客户和它在比亚迪的竞争对手',
+    body: '比亚迪两家核心智驾芯片供应商之一，天神之眼 C 用征程6M，覆盖上百万台比亚迪车型。但比亚迪同时自研璇玑 A3（4nm，2100 TOPS）。地平线在比亚迪车型上的份额，取决于比亚迪自研芯片的爬坡速度 —— 这是一个结构性的倒计时。',
+  },
+  {
+    n: '05',
+    title: 'HSD 的技术路线选了最难的一条',
+    body: '一段式端到端 + 世界模型 + 强化学习 + 不依赖高精地图，V2.0 是国内首个量产世界模型架构的城区方案。技术方向正确但量产时点晚了：华为乾崑搭载量已超 100 万台，Momenta 也在放量。算法领先能否转化成量产领先？',
+  },
+  {
+    n: '06',
+    title: '那 37.84 亿元净利润不能当盈利拐点',
+    body: '它来自可转换借款公允价值变动收益 52.4 亿元，属于会计调整，不带来任何现金流，也不改变日常经营。剔除后经调整净亏损 16.71 亿元，同比还扩大了 25.4%。看这家公司必须看调整后口径。',
+  },
+  {
+    n: '07',
+    title: '真正的增长曲线在汽车之外',
+    body: '征程6P 拿京东物流 L4 无人配送车定点，官方预期 3-5 年该场景百万辆部署。招银国际把"具身智能"列为远期催化剂。这条线的逻辑与乘用车完全不同 —— 乘用车是价格战，机器人是无人物流规模效应。若成立，地平线的估值逻辑要重写。',
+  },
+  {
+    n: '08',
+    title: '对做工业 AI 的人意味着什么',
+    body: '地平线走通了"不依附任何单一甲方，靠标准化产品 + 中立位置打进多个甲方"的路径 —— 这恰好回答了工业软件那个悖论（做甲方定制还是标准产品）。答案是：做标准产品，但必须找到那个"多甲方都愿意用"的位置。自主品牌 ADAS 份额 50% 就是这个位置的证明。',
+  },
+];
+
+/* ---------- 证据边界 ---------- */
+const evidence = [
+  {
+    tag: '已确凿（年报/官方）',
+    tone: 'ok',
+    items: [
+      '2025 年营收 37.6 亿元 +57.7%，毛利 24.3 亿，毛利率 64.5%',
+      '征程系列 2025 出货超 400 万套 +39%，中高阶 180 万套 +近 5 倍',
+      '累计出货突破 1000 万套（2025-08），40+ 车企，400+ 车型',
+      '2026H1 营收 20.55 亿 +32.9%，出货 221.8 万套，调整后净亏 16.71 亿',
+      '2026H1 自主品牌 ADAS 份额首破 50%，城区 NOA 芯片份额 22.8%',
+      '2025-08 第 1000 万套为征程6M，客户吉利（千里浩瀚 H3）',
+    ],
+  },
+  {
+    tag: '厂商宣称待验',
+    tone: 'warn',
+    items: [
+      '"计算性能十年提升超 1000 倍，超越摩尔定律"',
+      '"每三台智能汽车就有一台搭载地平线"',
+      '"未来 3-5 年 HSD 达成千万量产"',
+      '"未来 3-5 年无人物流车部署规模有望达百万辆"',
+      '征程6P 相比特斯拉 HW3.0 的性能对比（厂商发布会口径）',
+      '均为官方发布会与业绩会表述，无第三方实测',
+    ],
+  },
+  {
+    tag: '第三方口径 / 存疑',
+    tone: 'none',
+    items: [
+      '2026H1 按装机量口径仅 3.3 万辆排第六（第一电动网），与官方"千万级出货"表述存在口径差异',
+      'L2+ 第三方方案市占率 8.4% 排第五（易车榜），系统口径远低于芯片口径',
+      '征程6 系列制程节点未公开（纳什架构自研，但制程归属不明）',
+      'HSD 实际交付量与 ASP 未单独披露',
+      '具身智能 / Robotaxi 业务尚无实质收入',
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} locale="zh" pathPrefix="/insights/horizon-robotics" showLang={false}>
+  <section class="border-b border-slate-200/80 bg-gradient-to-b from-slate-50 to-transparent py-16 dark:border-slate-800 dark:from-slate-900/50">
+    <div class="container-prose">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-700 dark:text-accent-400">Industry Insight · Automotive Chips</p>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl dark:text-white">地平线机器人：千万级出货，与系统话语权的落差</h1>
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        地平线（9660.HK）不是车企，也不是传统 Tier1 —— 它同时是吉利、比亚迪、理想、奇瑞的芯片供应商，
+        又是它们在智驾方案上的竞争对手。本文拆解它的四代产品线、20 段里程碑、两个互相矛盾的市场份额榜单，
+        以及「车企自研会不会杀死它」这个核心争议。
+      </p>
+      <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+        数据来源：地平线官方、经济参考报（新华社）、中国经济网、21 世纪经济报道、招银国际、OFweek、界面新闻、易车榜、百度第一电动网 · 截至 2026-09
+      </p>
+      <p class="mt-4 text-sm">
+        <a href="../geely-chips/" class="font-semibold text-accent-700 underline underline-offset-4 hover:text-accent-800 dark:text-accent-400">吉利造芯 →</a>
+        <span class="mx-2 text-slate-400">·</span>
+        <a href="../byd-chips/" class="font-semibold text-accent-700 underline underline-offset-4 hover:text-accent-800 dark:text-accent-400">比亚迪造芯 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 关键数字 -->
+  <section class="py-12">
+    <div class="container-prose">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {kpis.map((k) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{k.metric}</p>
+            <p class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{k.label}</p>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{k.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 组织架构 -->
+  <section class="py-16">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">一、组织架构：一家有四种身份的公司</h2>
+      <div class="mt-8 space-y-4">
+        {org.map((o) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">{o.entity}</h3>
+              <p class="text-sm font-medium text-accent-700 dark:text-accent-400">{o.role}</p>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{o.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 双业务线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">二、双业务线：卖芯片（基本盘）+ 卖系统（增量）</h2>
+      <div class="mt-8 space-y-5">
+        {lines.map((l) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="text-lg font-bold text-slate-950 dark:text-white">{l.name}</h3>
+              <span class="rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-800 dark:bg-accent-900/40 dark:text-accent-300">{l.type}</span>
+              <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">{l.badge}</span>
+            </div>
+            <ul class="mt-5 space-y-2">
+              {l.specs.map((sp) => (
+                <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-600"></span>
+                  <span>{sp}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-4 rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <span class="font-semibold">关键节点：</span>{l.position}
+            </p>
+            <p class="mt-2 rounded-xl bg-accent-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-accent-950/30 dark:text-slate-300">
+              <span class="font-semibold">解读：</span>{l.note}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">三、里程碑时间线（2019 – 2026）</h2>
+      <ol class="mt-8 space-y-0 border-l-2 border-slate-200 pl-6 dark:border-slate-800">
+        {timeline.map((t) => (
+          <li class="relative pb-6">
+            <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-accent-600 bg-white dark:bg-slate-950"></span>
+            <p class="text-sm font-bold tabular-nums text-accent-700 dark:text-accent-400">{t.date}</p>
+            <p class="mt-1 text-base font-semibold text-slate-950 dark:text-white">{t.event}</p>
+            {t.note && <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t.note}</p>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 竞争格局 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">{landscape.title}</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[820px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              {landscape.headers.map((h, i) => (
+                <th class:list={[
+                  'px-3 py-3 font-semibold',
+                  i === 0 && 'text-left text-slate-900 dark:text-slate-100',
+                  i === 6 && 'text-left text-accent-700 dark:text-accent-400',
+                ]}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {landscape.rows.map((r) => (
+              <tr class="border-b border-slate-200 align-top dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{r.metric}</td>
+                {r.cells.map((c, i) => (
+                  <td class:list={['px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300', i === 4 && 'text-slate-400']}>{c}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-5 space-y-2">
+        {landscape.rows.map((r) => (
+          <p class="text-sm text-slate-600 dark:text-slate-400">· {r.metric} — {r.note}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 三方对标 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">{vsOEM.title}</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[820px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              {vsOEM.headers.map((h, i) => (
+                <th class:list={[
+                  'px-3 py-3 font-semibold',
+                  i === 0 && 'text-left text-slate-900 dark:text-slate-100',
+                  i === 1 && 'text-left text-accent-700 dark:text-accent-400',
+                  i === 2 && 'text-left text-emerald-700 dark:text-emerald-400',
+                  i === 3 && 'text-left text-amber-700 dark:text-amber-400',
+                ]}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {vsOEM.rows.map((r) => (
+              <tr class="border-b border-slate-200 align-top dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{r.dim}</td>
+                <td class="px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300">{r.hz}</td>
+                <td class="px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300">{r.geely}</td>
+                <td class="px-3 py-3 leading-relaxed text-slate-700 dark:text-slate-300">{r.byd}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心争议 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">{debate.question}</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+          <h3 class="text-base font-bold text-emerald-900 dark:text-emerald-400">{debate.blue.label}</h3>
+          <ul class="mt-4 space-y-2.5">
+            {debate.blue.points.map((p) => (
+              <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-600"></span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-amber-200 bg-amber-50/60 p-6 dark:border-amber-900/50 dark:bg-amber-950/20">
+          <h3 class="text-base font-bold text-amber-900 dark:text-amber-400">{debate.red.label}</h3>
+          <ul class="mt-4 space-y-2.5">
+            {debate.red.points.map((p) => (
+              <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600"></span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="mt-6 rounded-2xl border border-slate-300 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">{debate.verdict.label}</h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{debate.verdict.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 洞察 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">五、八条洞察</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {insights.map((i) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{i.n}</p>
+            <h3 class="mt-2 text-base font-bold text-slate-950 dark:text-white">{i.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{i.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 证据边界 -->
+  <section class="border-t border-slate-200 py-12 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">证据边界</h2>
+      <div class="mt-5 grid gap-5 sm:grid-cols-3">
+        {evidence.map((e) => (
+          <div class:list={[
+            'rounded-2xl border p-5',
+            e.tone === 'ok' && 'border-emerald-200 bg-emerald-50/60 dark:border-emerald-900/50 dark:bg-emerald-950/20',
+            e.tone === 'warn' && 'border-amber-200 bg-amber-50/60 dark:border-amber-900/50 dark:bg-amber-950/20',
+            e.tone === 'none' && 'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900',
+          ]}>
+            <p class:list={[
+              'text-sm font-bold',
+              e.tone === 'ok' && 'text-emerald-800 dark:text-emerald-400',
+              e.tone === 'warn' && 'text-amber-800 dark:text-amber-400',
+              e.tone === 'none' && 'text-slate-800 dark:text-slate-300',
+            ]}>{e.tag}</p>
+            <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+              {e.items.map((i) => <li>· {i}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
