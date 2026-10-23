@@ -1,0 +1,477 @@
+---
+/**
+ * /proposals/value-slice-delivery/ — 价值切片交付法提案页
+ *
+ * 一份可评审的方法论提案。内容来自 2026-10-17 赛力斯拜访的真实复盘。
+ * 立论：售前的交付物不是方案，是「判定」。方案只是判定的载体。
+ * 格式对标 /insights/ 系列：定论 → 数据 → 框架 → 红队自审 → 落地
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = '价值切片交付法 · Robin Ji';
+const description =
+  '面向工业与汽车行业售前 / POC 的工程化交付方法提案 — 用 1 周可证伪的价值命题换取「是/否」判定，而不是用 40 页 PPT 换取「我再想想」。';
+
+/* ---------- 三个关键数字 ---------- */
+const kpis = [
+  { metric: '25%', label: '当前首次拜访命中率', detail: '2026-10-17 整车厂全天拜访，三条话题只有一条活下来' },
+  { metric: '8–24', label: '单商机获取成本（人天）', detail: '含差旅 2–3 人天 + 方案准备 1–3 人天 ÷ 25% 命中率' },
+  { metric: '≤ 10', label: '目标判定周期（工作日）', detail: '一周切片 × 最多两轮假设修正' },
+];
+
+/* ---------- 一、问题诊断 ---------- */
+const visitCase = {
+  title: '一次典型全天拜访的复盘',
+  date: '2026-10-17 · 某整车厂',
+  rows: [
+    { topic: '数据重定位标注', ask: '100 米不偏斜的标注精度', ours: '能力不满足', result: '明确无戏', why: '客户抱怨的是标注人力成本，我方在攻精度上限。问题翻译错了。', dead: true },
+    { topic: 'GPU 卡模型训练', ask: '资源选型与性能', ours: '技术方案', result: '无商业前景', why: '客户没有预算、没有场景、没有时间表，只有兴趣。兴趣不是商机。', dead: true },
+    { topic: '数据湖仓', ask: '第一部分架构 + 测试意愿', ours: '完整方案 + 产品演示', result: '唯一有效', why: '客户自己已经把范围切到了最小。', dead: false },
+  ],
+};
+
+/* ---------- 二、核心假设 ---------- */
+const hypothesis = {
+  claim: '工业与汽车行业售前的瓶颈，不是方案质量，而是判定速度。',
+  body: '传统模式的问题不在于「方案做得不够好」，而在于「方案做完之前，双方都无法判断这事成不成」。方案的质量只有在被验证之后才知道，而验证成本极高，于是所有人都选择用「看起来专业」来替代「已经被证明」。',
+  corollary: '用最小投入换一个「是/否」的判定，比用大投入换一堆「大概可以」更有价值。',
+  note: '这不是降低标准，是把标准从「交付物质量」换成「结论确定性」。',
+};
+
+/* ---------- 三、四阶段切片循环 ---------- */
+const stages = [
+  {
+    n: 'Stage 0',
+    name: '信号翻译',
+    dur: '0.5 天',
+    output: '2–3 个可验证假设，每个带一个数字',
+    detail: '客户说的不是需求，是抱怨。客户的原话必须翻译成「能用客户现有数字回答」的形式。答不出来 = 假设不成立 = 我们还没问对问题。这一步筛掉的通常是最容易做、也最没价值的那条。',
+    gate: 'Gate：每个假设必须能用客户现有的数字回答',
+  },
+  {
+    n: 'Stage 1',
+    name: '切片定义',
+    dur: '0.5 天',
+    output: '一张切片卡（见第四章）',
+    detail: '切片的定义公式：可证伪的命题 + 客户在意的数字 + 一周 + 双方事先同意的放弃条件。四个要素缺一不可。超过一周，客户注意力会转移，我方也会开始内部消耗。',
+    gate: 'Gate：命题必须是「能做到 / 做不到」，不能是「探索方向」',
+  },
+  {
+    n: 'Stage 2',
+    name: '快速证伪',
+    dur: '1 周',
+    output: '一个数字 + 一个判定',
+    detail: '切片里不出现架构图，只出现「输入 → 处理 → 输出」三段式。不承诺 SLA，只验证可行性。结果必须是一个数字，不是「基本上可行」——任何模糊表述都会让切片退化成又一次方案汇报。',
+    gate: 'Gate：无偿 POC 上限 2 人天 / 周，超出即转付费',
+  },
+  {
+    n: 'Stage 3',
+    name: '判定与放大',
+    dur: '0.5 天',
+    output: '通 → 商务 / 不通 → 释放 / 不足 → 换假设（最多两次）',
+    detail: '「不通」不是失败，是本方法论的正常产出之一。每一次「不通」都在给这条产品线排除一个错误方向，这个价值不应该被计入浪费。',
+    gate: 'Gate：数据不足时最多回退两轮，避免无限延期',
+  },
+];
+
+/* ---------- 切片公式对照 ---------- */
+const sliceCompare = [
+  { bad: '「我们为贵司规划了同城双活数据湖仓架构，整体方案包含 X 个模块……」', good: '「你们现在从采集到可用数据要 3 天，我们的目标是 1 天。需要的只有你们提供一套接口 + 3 天时间。一周后我给你一个数字。做不出来我们当场停。」' },
+];
+
+/* ---------- 三类切片 ---------- */
+const sliceTypes = [
+  {
+    tag: 'B 类 · 成本型',
+    formula: '你们现在花 X 人天，我们的目标是 Y 人天',
+    apply: '标注质检、数据治理、运维排障',
+    cost: '中（需客户参与真实流程）',
+    risk: '客户最愿意听这个，因为直接对应预算',
+    priority: '最高',
+    priorityLevel: 'ok',
+  },
+  {
+    tag: 'A 类 · 性能型',
+    formula: '你们现在 X，我们的目标是 Y',
+    apply: '数据处理延迟、训练吞吐、查询响应',
+    cost: '低（数据可脱敏、可采样）',
+    risk: '客户可能说「我们不需要这么快」',
+    priority: '中',
+    priorityLevel: 'mid',
+  },
+  {
+    tag: 'C 类 · 可行性型',
+    formula: '这个场景你们内部认为做不了，我们证明能做',
+    apply: '新技术验证、跨域场景',
+    cost: '高（不确定性最大）',
+    risk: '最容易被用作免费技术咨询，必须限定在切片卡内',
+    priority: '最低',
+    priorityLevel: 'low',
+  },
+];
+
+/* ---------- 切片卡模板 ---------- */
+const cardTemplate = [
+  { k: '一、可证伪命题', v: '必须是「能做到 / 做不到」，不能是「探索方向」' },
+  { k: '二、验证目标数字', v: '客户当前值 ______ → 目标值 ______（数字来源必须是客户现有的数）' },
+  { k: '三、投入', v: '我方 ≤ 2 人天；客户配合 = 一套现有接口；环境 = 我方环境（不要求客户提供生产环境）' },
+  { k: '四、时间', v: '一周，不延期' },
+  { k: '五、放弃条件', v: '若 ______ 未达成，判定为不通，双方不再投入（事先约定）' },
+  { k: '六、不做的事', v: '✗ 不做完整架构设计　✗ 不承诺 SLA　✗ 不涉及生产环境变更　✗ 不做 POC 之后的无偿延展' },
+  { k: '七、判定', v: '通 / 不通 / 数据不足（→ 回 Stage 1，最多两次）' },
+];
+
+/* ---------- 八、红队自审 ---------- */
+const redTeam = [
+  {
+    q: '切片做不出来，客户会觉得我们不专业。',
+    a: '做出来了客户会记住你的可信度；做不出来当场停，客户会记住你的诚实。反之，做不出来还硬撑三个月，客户会记住你的拖延。在工业客户里，信用是复利资产。',
+  },
+  {
+    q: '有些商机就是需要完整方案才能推动，切片太小了说服不了决策者。',
+    a: '部分成立。切片的作用不是替代完整方案，是在写完整方案之前先确认方案值得写。切片通过后，完整方案是从「可能性」变成「已验证」，说服力完全不同。顺序不能反。',
+  },
+  {
+    q: '销售会抗拒，因为切片会让他们前期拿不到业绩。',
+    a: '这是最真实的风险。切片法的第一周产出是「一个数字」，不是「一个订单」。需要配套的激励设计，否则会被一线私下绕开——继续出方案，只是把切片卡当摆设。',
+  },
+  {
+    q: '我们的客户是国企 / 央企，他们要的就是完整方案和汇报材料。',
+    a: '这是真的。但这也正是问题所在——完整方案是给审批看的，切片是给事实看的，两个都需要，只是顺序不同。先切片再方案，方案通过率会上升，因为方案是基于已验证事实写的，而不是基于猜测。',
+  },
+  {
+    q: '数据不一致、接口拿不到，一周根本跑不通。',
+    a: '一周跑不通通常意味着 Stage 0 没做够。真正的风险不是技术难度，是我们以为的假设和客户真实的约束不一致。一周的时间盒正是用来快速暴露这个不一致的。',
+  },
+];
+
+/* ---------- 九、KPI ---------- */
+const kpisTable = [
+  { metric: '判定周期', def: '从切片卡发出到出判定', target: '≤ 10 个工作日' },
+  { metric: '命中率', def: '判定「通」的比例', target: '≥ 40%' },
+  { metric: '单商机人天', def: '从首次拜访到判定的我方总投入', target: '≤ 6 人天' },
+  { metric: '方案返工', def: '完整方案被要求修改的次数', target: '≤ 1 次' },
+  { metric: '误判率', def: '判定「通」后 3 个月内流单的比例', target: '≤ 20% · 关键自我纠偏指标' },
+];
+
+/* ---------- 七、收益测算 ---------- */
+const gains = [
+  { metric: '判定周期', before: '3–6 个月', after: '2–4 周', basis: '一周切片 × 最多两轮' },
+  { metric: '首次拜访命中率', before: '25%', after: '60%', basis: 'Stage 0 翻译筛掉错误假设' },
+  { metric: '单商机获取成本', before: '8–24 人天', after: '4–6 人天', basis: '无效方案返工归零' },
+  { metric: '陪标 / 无偿 POC', before: '不可控', after: '≤ 2 人天 / 单', basis: 'Stage 2 硬约束第 3 条' },
+  { metric: '方案返工次数', before: '平均 2–3 次', after: '0', basis: '未过 Stage 1 不出方案' },
+];
+
+/* ---------- 六、落地路径 ---------- */
+const rollout = [
+  { week: '第 1 周 · 准备', items: ['最近 5 个商机的客户原话做一次信号翻译', '用历史数据回填切片卡（至少 3 张）', '建立放弃条件话术模板（内部统一口径）'] },
+  { week: '第 2 周 · 试点', items: ['选 2 个在办商机，按切片法重做，不改现有商务关系', '精确到小时记录全部投入人天'] },
+  { week: '第 3 周 · 扩面', items: ['新进商机一律先出切片卡，不出方案', '对比试点前后的投入产出'] },
+  { week: '第 4 周 · 评估固化', items: ['统计：判定周期 / 命中率 / 单商机人天 / 误判率', '决定：全量推广 / 限定行业 / 回退'] },
+];
+
+/* ---------- 十、结论 ---------- */
+const conclusions = [
+  '售前的交付物是判定，不是方案。方案只是判定的载体。',
+  '先切片，再方案。顺序不能反，反了就是用猜测换时间。',
+  '放弃条件事先约定。没有放弃条件的切片，本质上是另一种免费 POC。',
+  '「不通」是正常产出。每次排除一个错误方向都是收益。',
+  '最大的风险不是技术，是激励。如果考核只认方案，团队会私下绕开切片法。',
+];
+---
+
+<BaseLayout title={title} description={description} locale="zh" pathPrefix="/proposals/value-slice-delivery" showLang={false}>
+  <section class="border-b border-slate-200/80 bg-gradient-to-b from-slate-50 to-transparent py-16 dark:border-slate-800 dark:from-slate-900/50">
+    <div class="container-prose">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-700 dark:text-accent-400">Methodology Proposal · v1.0 · 2026-10-23</p>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl dark:text-white">价值切片交付法</h1>
+      <p class="mt-3 text-xl font-medium text-slate-700 dark:text-slate-300">面向工业与汽车行业售前 / POC 的工程化交付方法</p>
+      <p class="mt-6 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        当前售前的默认模式是「客户提需求 → 我们出方案 → 客户不买账」。这个模式在工业与汽车行业已经系统性失效，
+        因为它把「交付」定义为一份文档，而客户真正需要的是「被验证的价值」。
+        <strong class="font-semibold text-slate-900 dark:text-slate-100">本提案的核心论点是：售前的交付物不是方案，是判定。方案只是判定的载体。</strong>
+      </p>
+      <p class="mt-6 text-sm">
+        <a href="/insights/" class="font-semibold text-accent-700 underline underline-offset-4 dark:text-accent-400">← 返回洞察板块</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 关键数字 -->
+  <section class="py-12">
+    <div class="container-prose">
+      <div class="grid gap-4 sm:grid-cols-3">
+        {kpis.map((k) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-2xl font-bold tabular-nums text-accent-700 dark:text-accent-400">{k.metric}</p>
+            <p class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{k.label}</p>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{k.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 一、问题诊断 -->
+  <section class="py-16">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">一、问题诊断：用真实数据说话</h2>
+      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">{visitCase.title} · {visitCase.date}</p>
+      <div class="mt-8 space-y-4">
+        {visitCase.rows.map((r) => (
+          <div class:list={[
+            'rounded-2xl border p-5',
+            r.dead
+              ? 'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900'
+              : 'border-emerald-200 bg-emerald-50/60 dark:border-emerald-900/50 dark:bg-emerald-950/20',
+          ]}>
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="text-base font-bold text-slate-950 dark:text-white">{r.topic}</h3>
+              <span class:list={[
+                'rounded-full px-2.5 py-0.5 text-xs font-semibold',
+                r.dead
+                  ? 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200'
+                  : 'bg-emerald-600 text-white',
+              ]}>{r.result}</span>
+            </div>
+            <div class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+              <p class="text-slate-600 dark:text-slate-400"><span class="font-medium">客户诉求：</span>{r.ask}</p>
+              <p class="text-slate-600 dark:text-slate-400"><span class="font-medium">我方准备：</span>{r.ours}</p>
+            </div>
+            <p class="mt-3 border-t border-slate-200 pt-3 text-sm leading-relaxed text-slate-700 dark:border-slate-300 dark:border-slate-700">{r.why}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 rounded-2xl border-l-4 border-accent-600 bg-accent-50/60 p-5 dark:bg-accent-950/30">
+        <p class="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+          <strong>全天 1 个有效商机，命中率 25%。</strong>三条里唯一活下来的，是<strong>客户主动缩小了范围</strong>的那一条。
+        </p>
+      </div>
+      <div class="mt-8 space-y-4">
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">三个被忽略的诊断</h3>
+        <ol class="space-y-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          <li><strong class="text-slate-950 dark:text-white">诊断一：客户的抱怨不是需求。</strong>客户说「标注不准」，真实诉求可能是「标注成本太高」「标注完的数据没人用」「质检没有闭环」。直接去攻精度，无论投入多少都不会成交——因为精度从来不是他要买的东西。</li>
+          <li><strong class="text-slate-950 dark:text-white">诊断二：售前交付的是文档，客户消费的是确定性。</strong>一份 40 页架构 PPT 传递的信息量极低，客户无法判断它会不会 work。而一句「我们用 1 周把你们的 XX 压到 YY，你只需要给我一个数据接口」——客户立刻能判断要不要配合。后者才是有效交付。</li>
+          <li><strong class="text-slate-950 dark:text-white">诊断三：成本结构是反的。</strong>一次全天拜访含差旅约 2–3 人天，方案准备 1–3 人天。在 25% 命中率下，单个商机的获取成本是 8–24 人天。这个数字不可能支撑任何合理的销售目标。</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 二、核心假设 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">二、核心假设</h2>
+      <div class="mt-8 rounded-2xl border-2 border-accent-600 bg-accent-50/60 p-6 dark:bg-accent-950/30">
+        <p class="text-lg font-bold leading-relaxed text-slate-950 dark:text-white">假设：{hypothesis.claim}</p>
+      </div>
+      <p class="mt-6 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{hypothesis.body}</p>
+      <p class="mt-4 text-base font-semibold leading-relaxed text-slate-900 dark:text-slate-100">{hypothesis.corollary}</p>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{hypothesis.note}</p>
+    </div>
+  </section>
+
+  <!-- 三、四阶段 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">三、方法论：四阶段切片循环</h2>
+      <div class="mt-8 space-y-4">
+        {stages.map((s) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <div class="flex items-baseline gap-3">
+                <span class="font-mono text-sm font-bold text-accent-700 dark:text-accent-400">{s.n}</span>
+                <h3 class="text-lg font-bold text-slate-950 dark:text-white">{s.name}</h3>
+              </div>
+              <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-700 dark:bg-slate-800 dark:text-slate-300">{s.dur}</span>
+            </div>
+            <p class="mt-3 text-sm font-medium text-slate-900 dark:text-slate-100">输出：{s.output}</p>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{s.detail}</p>
+            <p class="mt-4 rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-700 dark:bg-slate-800 dark:text-slate-300">{s.gate}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8 space-y-3">
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">切片公式对照</h3>
+        {sliceCompare.map((s) => (
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-200 bg-rose-50/60 p-4 dark:border-rose-900/50 dark:bg-rose-950/20">
+              <p class="text-xs font-bold text-rose-700 dark:text-rose-400">✗ 反例</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{s.bad}</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+              <p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">✓ 正例</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{s.good}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 四、切片卡 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">四、切片卡模板</h2>
+      <div class="mt-8 space-y-0 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
+        {cardTemplate.map((c, i) => (
+          <div class:list={[
+            'grid gap-1 p-4 sm:grid-cols-[13rem_1fr] sm:gap-4',
+            i % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50 dark:bg-slate-950',
+          ]}>
+            <p class="text-sm font-bold text-slate-950 dark:text-white">{c.k}</p>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{c.v}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 五、三类切片 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">五、三类切片的形态</h2>
+      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">不是所有切片都长一个样。按客户给的数字类型分三类。<strong class="text-slate-800 dark:text-slate-200">优先级：B &gt; A &gt; C。</strong></p>
+      <div class="mt-8 space-y-4">
+        {sliceTypes.map((t) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-base font-bold text-slate-950 dark:text-white">{t.tag}</h3>
+              <span class:list={[
+                'rounded-full px-2.5 py-0.5 text-xs font-semibold',
+                t.priorityLevel === 'ok' && 'bg-emerald-600 text-white',
+                t.priorityLevel === 'mid' && 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200',
+                t.priorityLevel === 'low' && 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400',
+              ]}>优先级 {t.priority}</span>
+            </div>
+            <p class="mt-3 text-base font-medium text-slate-900 dark:text-slate-100">{t.formula}</p>
+            <div class="mt-4 grid gap-3 text-sm sm:grid-cols-3">
+              <p class="text-slate-600 dark:text-slate-400"><span class="font-medium text-slate-800 dark:text-slate-200">适用：</span>{t.apply}</p>
+              <p class="text-slate-600 dark:text-slate-400"><span class="font-medium text-slate-800 dark:text-slate-200">验证成本：</span>{t.cost}</p>
+              <p class="text-slate-600 dark:text-slate-400"><span class="font-medium text-slate-800 dark:text-slate-200">风险：</span>{t.risk}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 六、落地路径 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">六、落地路径（30 天试点）</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {rollout.map((r) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-sm font-bold text-accent-700 dark:text-accent-400">{r.week}</h3>
+            <ul class="mt-3 space-y-2">
+              {r.items.map((it) => (
+                <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-600"></span>
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 七、收益测算 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">七、收益测算</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[600px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 dark:border-slate-700">
+              <th class="px-3 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">指标</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-600 dark:text-slate-400">现状</th>
+              <th class="px-3 py-3 text-left font-semibold text-accent-700 dark:text-accent-400">切片法目标</th>
+              <th class="px-3 py-3 text-left font-semibold text-slate-600 dark:text-slate-400">依据</th>
+            </tr>
+          </thead>
+          <tbody>
+            {gains.map((g) => (
+              <tr class="border-b border-slate-200 dark:border-slate-800">
+                <td class="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{g.metric}</td>
+                <td class="px-3 py-3 text-slate-600 dark:text-slate-400">{g.before}</td>
+                <td class="px-3 py-3 font-semibold text-slate-900 dark:text-slate-100">{g.after}</td>
+                <td class="px-3 py-3 text-slate-500 dark:text-slate-400">{g.basis}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-5 rounded-2xl border-l-4 border-amber-500 bg-amber-50/60 p-4 text-sm leading-relaxed text-slate-800 dark:bg-amber-950/20 dark:text-slate-200">
+        <strong>注意这里的取舍：</strong>命中率提升来自「更早说不」。会有一部分原本可能成交的商机，因为被切片判定为「不通」而提前出局。
+        这不是零和博弈——因为那些商机原本消耗的是 8–24 人天，且大概率在第 3 个月才暴露不通。
+      </p>
+    </div>
+  </section>
+
+  <!-- 八、红队自审 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">八、红队自审</h2>
+      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">这个提案可能被质疑的地方，先自己说出来。</p>
+      <div class="mt-8 space-y-4">
+        {redTeam.map((r, i) => (
+          <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-5 dark:border-amber-900/50 dark:bg-amber-950/15">
+            <p class="text-sm font-bold text-amber-900 dark:text-amber-400">质疑 {String(i + 1).padStart(2, '0')}：{r.q}</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{r.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 九、KPI -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">九、KPI（试点期考核）</h2>
+      <div class="mt-8 space-y-0 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
+        {kpisTable.map((k, i) => (
+          <div class:list={[
+            'grid gap-1 p-4 sm:grid-cols-[9rem_1fr_11rem] sm:gap-4',
+            i % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50 dark:bg-slate-950',
+          ]}>
+            <p class="text-sm font-bold text-slate-950 dark:text-white">{k.metric}</p>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{k.def}</p>
+            <p class="text-sm font-semibold text-accent-700 dark:text-accent-400">{k.target}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-5 rounded-2xl border-l-4 border-accent-600 bg-accent-50/60 p-4 text-sm leading-relaxed text-slate-800 dark:bg-accent-950/30 dark:text-slate-200">
+        <strong>误判率是这个方法论最关键的自我纠偏指标。</strong>如果误判率偏高，说明 Stage 1 的切片定得太松，需要收紧而不是放松。
+      </p>
+    </div>
+  </section>
+
+  <!-- 十、结论 -->
+  <section class="border-t border-slate-200 py-16 dark:border-slate-800">
+    <div class="container-prose">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">十、结论</h2>
+      <ol class="mt-8 space-y-3">
+        {conclusions.map((c, i) => (
+          <li class="flex gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+            <span class="font-mono text-sm font-bold tabular-nums text-accent-700 dark:text-accent-400">{String(i + 1).padStart(2, '0')}</span>
+            <span>{c}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-12 rounded-2xl border border-slate-300 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+        <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          <strong class="text-slate-950 dark:text-white">这份提案的来源不是方法论，是实战。</strong>
+          命中率 25% 来自 2026-10-17 赛力斯全天拜访的逐条复盘；
+          「问题翻译错了」来自标注那段的真实判断失误；
+          「无偿 POC 无上限」是三不碰护栏的由来，现在写成了 Stage 2 的硬约束；
+          「兴趣不是商机」来自 GPU 那段的判断。
+          护栏不是外部加的，是在真实场景里打出来的。方法论只是把它写成了可传承的形式。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
