@@ -1,0 +1,347 @@
+---
+/**
+ * /insights/consulting-practice/ — 战略咨询实战复盘
+ *
+ * 目的：展示"能把一次商业问题变成可拍板判断"的能力，而不只是读过多少框架。
+ * 方法：真实跑通 S0–S7 完整咨询流程，12 项可执行门禁校验通过。
+ * 选题：比亚迪功率半导体外供路径（用已有的一手年报/环评数据，非本人经历）
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const title = '战略咨询实战复盘 · 比亚迪功率半导体 · Robin Ji';
+const description =
+  '用完整咨询流程 S0–S7 分析比亚迪功率半导体的外供路径：五力识别最强约束、价值链定位、三法交叉测算、书面红队判决、12 项交付物门禁全部通过。';
+
+/* ---------- 12 项门禁 ---------- */
+const gates = [
+  { id: 'G0', name: '决策者具名', rule: 'D 角色必须是具名的人，不能是部门', lesson: '咨询项目死得最多的地方 —— 没人拍板。写"业务部门"等于没写。' },
+  { id: 'G2', name: '诊断无方案词', rule: '诊断陈述里出现"应该/建议引入/方案是"即阻塞', lesson: '甲方管理者的本能就是给方案。这条最难过，但它把"诊断"和"提案"彻底分开。' },
+  { id: 'G3', name: '根假设互斥', rule: '根假设 ≥3 条即退回问题定义', lesson: '根假设互斥意味着问题定义错了，不是分析不够努力。' },
+  { id: 'G4', name: 'A 级证据 + 锚点', rule: '关键结论无一手证据或缺事实锚点即退回取证', lesson: '挡住二手数据堆砌。锚点必须是可复核的文件、页码或原话。' },
+  { id: 'G5', name: '三角验证 ≥2 路径', rule: '关键数字需两条以上独立路径，差异不得取平均', lesson: '平均数掩盖分歧。差异 >2 倍时要么解释清楚，要么把结论改成条件式。' },
+  { id: 'G6', name: '翻转则条件化', rule: '有翻转风险但结论未改写为条件式即阻塞', lesson: '防止过度自信。"结论在某条件下成立"比"结论成立"专业得多。' },
+  { id: 'G7', name: '单一排序工具', rule: '同时使用多个排序工具即阻塞', lesson: '排序口径混乱，结论之间无法比较。' },
+  { id: 'G8', name: '红队书面判决', rule: '红队后结论未改写且未记录理由即阻塞', lesson: '红队不是开会挑刺。CIA 原文区分 Devil\'s Advocacy 与 Red Team，要求书面结构化判决。' },
+  { id: 'G9', name: 'turnaround 业务所有者', rule: '接管失败项目需甲方侧具名业务所有者，否则不启动', lesson: '接管失败项目的特有风险 —— 没人为业务结果负责。' },
+  { id: 'P6', name: '决策记录', rule: '汇报必须拿到决策或记录下次决策条件', lesson: '"我们讨论了"不是交付物。' },
+  { id: 'P7', name: '落地所有者', rule: '每条建议需甲方所有者，不能是顾问', lesson: '顾问走了没人接。建议不能落地，多半是没写所有者。' },
+  { id: 'P8', name: '复盘规则 ≥3 条', rule: '可复用规则须具体到动作', lesson: '让组织记住，而不是让顾问一个人记住。' },
+];
+
+/* ---------- 框架选择与边界 ---------- */
+const frameworks = [
+  {
+    name: '波特五力',
+    role: '外部结构 —— 判断外供面对的压力',
+    used: '不采用 1–5 分加权打分（Pangarkar 2024 指出这是最常见误用，且五力相互依赖阻碍因果推断），改为识别"最强约束力量"。',
+    boundary: '五力是行业层框架。McGahan & Porter (1997) 分解盈利方差：industry effect 19% vs business-specific effect 32% —— 结构解释约 1/5，自身解释超过 1/3。',
+    finding: '最强约束 = 买方议价力 ∩ 供应商议价力的双夹。下游与英飞凌同台（份额 3.1%、全球第七），上游 SiC 成本由衬底决定。',
+  },
+  {
+    name: '价值链',
+    role: '内部活动 —— 定位真正的壁垒在哪',
+    used: '逐环节拆：衬底/外延（外购）→ 芯片制造（自有，最厚）→ 模组封装（自有）→ 系统集成 → 整车平台。',
+    boundary: '价值链是企业内部工具，不能替代五力做行业判断；两者混用是典型框架错配。',
+    finding: '最厚的不是芯片，是"芯片 + 电池 PACK + 整车"的系统集成（降本约 15%），外部客户拿不到 —— 这直接支撑根假设。',
+  },
+  {
+    name: 'TAM/SAM/SOM 三法',
+    role: '规模测算 —— 检验结论的量级',
+    used: '自上而下（全球 323 亿美元口径）＋ 自下而上（产能 × 单价）＋ 自建口径（整车摊薄）三条独立路径。',
+    boundary: '不能用单一路径。第三方路径在本题中确实不可得 —— 写明缺失并把结论改为条件式，而不是用弱证据填表。',
+    finding: '两条路径差异约 4.5 倍，超 2 倍阈值。可部分解释（口径不同：全球全品类 vs 单一品类含自用），但仍无法拆出"外供收入"单一数字。',
+  },
+  {
+    name: 'BCG 增长-份额矩阵',
+    role: '业务组合定位',
+    used: '定位为"高增速（+120%）、低份额（3.1% 全球第七）"象限。',
+    boundary: 'Eisenhardt & Brown (1999, HBR) 的经典批评：矩阵忽略业务单元间的依赖与动态。且"该象限需要投入"不等于"需要独立资本化"。',
+    finding: '该业务的价值在于支撑整车成本曲线，不在于自身成为规模业务 —— 这解释了 IPO 四次中止为何未必是坏事。',
+  },
+];
+
+/* ---------- 红队判决 ---------- */
+const redTeam = [
+  {
+    challenge: '根假设本身：自用摊薄这么强，为什么外供没同步放量？',
+    verdict: '维持',
+    reason: '自用摊薄强恰恰解释了外供放不出量 —— 内部需求已被低成本产能优先满足，产能无溢出。自洽，非矛盾。',
+  },
+  {
+    challenge: '三法交叉 4.5 倍差异，拆不出外供收入，凭什么还说结论成立？',
+    verdict: '修改',
+    reason: '主结论改写为条件式，并明确写出"外供收入从未被单独披露"是最大不确定性。判断方向（自用优先）不依赖那个单一数字。',
+  },
+  {
+    challenge: '从"系统集成独有"推出"外供不值钱"，跳过了"只卖芯片也能赚钱"这个选项。',
+    verdict: '修改',
+    reason: '推论强度下调：结论不再声称"外供无价值"，改为"外供不构成增长主线"。',
+  },
+  {
+    challenge: 'IPO 四次中止从未有官方说明，会不会只是窗口问题？',
+    verdict: '维持',
+    reason: '即使原因是窗口，H3 的否证条件仍成立。结论中已写明此失效路径：若证实为合规问题，整个项目输入失效而非结论微调。',
+  },
+  {
+    challenge: '从 BCG 象限直接跳到资本化决策，中间没有逻辑。',
+    verdict: '修改',
+    reason: '改为条件表述：是否需要独立资本化，取决于外供独立口径建立后能否自证。',
+  },
+];
+
+/* ---------- 五条可复用规则 ---------- */
+const rules = [
+  { n: 1, title: '混合口径的数字不能回答单一问题', body: '拿到任何汇总口径的经营数字，先用一句话标注它的口径边界，并在第 1 步就要求拆分。22 亿元开票里含自用 —— 它回答不了"外供能不能成"。' },
+  { n: 2, title: '框架不解释超常表现', body: '每个框架用完后强制写一行"本框架的层级边界"，写不出来就换框架。五力解释不了"这家公司为什么特别强"。' },
+  { n: 3, title: '"公开信息不可得"是合法结论', body: '第三方数据找不到时在三角验证表内标注缺失，并把结论改为条件式。禁止用弱证据补位填表。' },
+  { n: 4, title: 'IPO 受阻不必然等于业务失败', body: '见到"中止/撤回/未落地"，先在假设树列出三种原因（收入/合规/窗口）并各写一条证伪路径，再下任何结论。' },
+  { n: 5, title: '矩阵结论要交叉到业务组合层', body: '用完 BCG/GE 矩阵后补一行"该业务对其他业务单元的依赖"，否则矩阵结论只能用于排序，不能用于资本化决策。' },
+];
+
+/* ---------- 结论与行动 ---------- */
+const conclusion = {
+  main: '在 SiC 车规认证于 2027 年底前拿下 3 家以上 Tier1 定点的条件下成立：比亚迪功率半导体的规模天花板由自用摊薄而非外供转化决定，外供是第二优先级而非增长主线。',
+  flip: '若 2027 年底 SiC 车规定点 ≥3 家，本结论翻转。',
+  actions: [
+    { a: '维持自用优先，SiC 产能爬坡优先于外供铺量', owner: '半导体事业部总经理', when: '立即' },
+    { a: '建立外供收入独立口径（单独核算 + 单独披露）', owner: '集团财务负责人', when: '30 天' },
+    { a: 'SiC 车规认证提速，2027 底锁定 3 家定点', owner: '半导体事业部总工', when: '2026 H1 启动' },
+    { a: '季度复核：定点进度 + 外供口径', owner: '集团战略部', when: '季度' },
+  ],
+  notDoing: '不追外供收入 KPI；不以 IPO 时点为战略目标。',
+};
+
+/* ---------- 来源 ---------- */
+const sources = [
+  { s: '比亚迪半导体 2021-06 招股书（2018–2020 营收 13.40/10.96/14.41 亿元，净利 1.04/0.85/0.59 亿元）', t: 'A · 一手' },
+  { s: '2020-06 A+ 轮：估值 102.04 亿元，投资方含 SK 中国、小米、招银国际、联想、CPE 源峰、Arm、中芯国际、上汽投资', t: 'A · 一手' },
+  { s: '英飞凌 2024 财报口径：全球功率半导体市场 323 亿美元，比亚迪份额 3.1% 全球第七，士兰微 3.3% 全球第六', t: 'A · 一手' },
+  { s: '宁波 SiC 芯片项目竣工环保验收公示（2025-11，总投资 7.44 亿元，产能 24 万片/年）', t: 'A · 一手' },
+  { s: 'Porter (1980) Competitive Strategy 扫描全文 — Stuck in the Middle 位于第 2 章第 3 节 p.41', t: '原典' },
+  { s: 'McGahan & Porter (1997) — 盈利方差分解：industry 19% / business-specific 32%', t: '学术' },
+  { s: 'Pangarkar (2024) Global Business and Organizational Excellence 43(5) — 五力的零和假设、边界主观性、最强约束力量', t: '学术' },
+  { s: 'Eisenhardt & Brown (1999) HBR — Patching: Restitching Business Portfolios in Dynamic Markets', t: '学术' },
+  { s: 'CIA《Clearing the Path to Innovation》— Devil\'s Advocacy 与 Red Team 的区分及书面判决要求', t: '一手方法论' },
+  { s: 'ODNI ICD 203 — 证据分级 1/2/3 级与强制概率用词表', t: '一手标准' },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-3xl px-5 py-12 lg:py-16">
+
+    <!-- ── 页首 ── -->
+    <header class="mb-12">
+      <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+        战略咨询实战 · S0–S7 全流程
+      </p>
+      <h1 class="text-3xl font-bold leading-tight text-slate-900 lg:text-4xl">
+        比亚迪功率半导体：外供路径的可行性判断
+      </h1>
+      <p class="mt-4 text-base leading-relaxed text-slate-600">
+        一次完整的咨询级复盘。用一手年报与环评数据，跑通从委托界定到落地复盘的九份交付物，
+        并通过 12 项可执行门禁校验。<strong class="text-slate-900">这份复盘练的是判断力，不是框架记忆。</strong>
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-800">门禁 12/12 通过</span>
+        <span class="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-800">九份交付物</span>
+        <span class="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-800">5 项红队判决</span>
+        <span class="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">证据分级 A/B/C</span>
+      </div>
+    </header>
+
+    <!-- ── 结论先行 ── -->
+    <section class="mb-14 rounded-2xl border-l-4 border-emerald-500 bg-emerald-50/60 p-7">
+      <h2 class="mb-3 text-lg font-bold text-emerald-900">结论</h2>
+      <p class="text-[15px] leading-relaxed text-emerald-950">{conclusion.main}</p>
+      <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4">
+        <p class="text-sm font-semibold text-amber-900">翻转条件</p>
+        <p class="mt-1 text-sm text-amber-800">{conclusion.flip}</p>
+      </div>
+    </section>
+
+    <!-- ── 问题定义 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">一、先诊断，后方案</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 G2 会拦截任何在诊断陈述里写"应该/建议/引入 XX"的交付物 —— 诊断和提案必须分开。
+      </p>
+      <blockquote class="rounded-xl border border-slate-200 bg-slate-50 p-6 text-[15px] leading-relaxed text-slate-800">
+        功率半导体业务单元的资本化路径连续四次中止、撤回，且一级市场估值长期停留在 102–300 亿区间，
+        同时 2024 年扬州基地开票 22 亿元、同比增长 120% —— 自用量增长与外供受阻同时存在，
+        二者之间的差距来自内部消化产能的节奏与外部客户导入的转化率，而非产能本身。
+      </blockquote>
+      <p class="mt-4 text-sm text-slate-600">
+        注意这段话里没有一句是"应该怎么做"。它只描述一个可以被证据推翻的差距。
+      </p>
+    </section>
+
+    <!-- ── 框架运用 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">二、四个框架，四种用法</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        关键不是"用了哪些框架"，而是"每个框架的层级边界写清楚了没有"。
+      </p>
+      <div class="space-y-5">
+        {frameworks.map((f) => (
+          <div class="rounded-xl border border-slate-200 bg-white p-6">
+            <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h3 class="text-lg font-bold text-slate-900">{f.name}</h3>
+              <span class="text-xs text-slate-500">{f.role}</span>
+            </div>
+            <dl class="space-y-2 text-sm leading-relaxed">
+              <div>
+                <dt class="inline font-semibold text-slate-700">怎么用：</dt>
+                <dd class="inline text-slate-600">{f.used}</dd>
+              </div>
+              <div>
+                <dt class="inline font-semibold text-slate-700">边界：</dt>
+                <dd class="inline text-slate-600">{f.boundary}</dd>
+              </div>
+              <div>
+                <dt class="inline font-semibold text-slate-700">发现：</dt>
+                <dd class="inline text-slate-700">{f.finding}</dd>
+              </div>
+            </dl>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── 红队 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">三、红队：书面判决，不是开会挑刺</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 G8 要求逐条给出"维持 / 修改 / 放弃"，并且结论必须被改写或记录不修改的理由。
+      </p>
+      <div class="space-y-4">
+        {redTeam.map((r, i) => (
+          <div class="rounded-xl border border-slate-200 bg-white p-5">
+            <div class="mb-2 flex items-start gap-3">
+              <span class="mt-0.5 font-mono text-xs font-bold text-slate-400">{String(i + 1).padStart(2, '0')}</span>
+              <p class="flex-1 text-sm font-semibold leading-relaxed text-slate-900">{r.challenge}</p>
+              <span class={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
+                r.verdict === '维持' ? 'bg-slate-200 text-slate-700' : 'bg-rose-100 text-rose-700'
+              }`}>
+                {r.verdict}
+              </span>
+            </div>
+            <p class="ml-9 text-sm leading-relaxed text-slate-600">{r.reason}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <p class="text-sm leading-relaxed text-slate-700">
+          <strong class="text-slate-900">结论改写记录：</strong>
+          5 项挑战中 3 项判"修改"。主结论从"外供不构成主线"改为带明确翻转条件的条件式表述，
+          并把"外供是否有价值"这个更强的主张从结论中移除。
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 门禁 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">四、12 项交付物门禁</h2>
+      <p class="mb-2 text-sm text-slate-500">
+        规则不是文字描述，是可执行的校验脚本。本复盘交付物逐项通过。
+      </p>
+      <p class="mb-6 text-sm text-slate-500">
+        校验器在开发中抓出了三个真实缺陷：表格格式的 RAPID 表取不到 D 角色、
+        标题与内容分两行时诊断陈述提取失败、以及"非 turnaround"的否定式声明被误判为 turnaround 项目。
+        <span class="text-slate-700">门禁本身也需要被测试。</span>
+      </p>
+      <div class="overflow-hidden rounded-xl border border-slate-200">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="px-4 py-3 font-semibold">门禁</th>
+              <th class="px-4 py-3 font-semibold">拦截什么</th>
+              <th class="px-4 py-3 font-semibold">为什么这条最狠</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {gates.map((g) => (
+              <tr>
+                <td class="px-4 py-3 align-top">
+                  <span class="font-mono text-xs font-bold text-emerald-700">{g.id}</span>
+                  <div class="mt-0.5 text-sm font-medium text-slate-800">{g.name}</div>
+                </td>
+                <td class="px-4 py-3 align-top text-slate-600">{g.rule}</td>
+                <td class="px-4 py-3 align-top text-slate-600">{g.lesson}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── 行动 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">五、落地与"不做什么"</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 P7 要求每条建议有甲方所有者 —— 否则顾问走了没人接。
+      </p>
+      <div class="overflow-hidden rounded-xl border border-slate-200">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="px-4 py-3 font-semibold">动作</th>
+              <th class="px-4 py-3 font-semibold">所有者</th>
+              <th class="px-4 py-3 font-semibold">时限</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {conclusion.actions.map((a) => (
+              <tr>
+                <td class="px-4 py-3 text-slate-800">{a.a}</td>
+                <td class="px-4 py-3 text-slate-600">{a.owner}</td>
+                <td class="px-4 py-3 text-slate-600">{a.when}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-5">
+        <p class="text-sm font-semibold text-rose-900">我们不做什么</p>
+        <p class="mt-1 text-sm text-rose-800">{conclusion.notDoing}</p>
+      </div>
+    </section>
+
+    <!-- ── 复盘规则 ── -->
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">六、五条可复用规则</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 P8 要求规则具体到动作，且至少 3 条 —— 项目必须产生组织能力，而不是让顾问一个人记住。
+      </p>
+      <ol class="space-y-3">
+        {rules.map((r) => (
+          <li class="rounded-xl border border-slate-200 bg-white p-5">
+            <div class="flex gap-3">
+              <span class="font-mono text-sm font-bold text-slate-400">{r.n}</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-900">{r.title}</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-600">{r.body}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- ── 来源 ── -->
+    <section class="mb-12">
+      <h2 class="mb-4 text-2xl font-bold text-slate-900">来源</h2>
+      <ul class="space-y-2">
+        {sources.map((s) => (
+          <li class="flex flex-wrap items-baseline gap-x-3 text-sm">
+            <span class="font-mono text-xs font-bold text-slate-400">{s.t}</span>
+            <span class="text-slate-600">{s.s}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-xs text-slate-500">
+        本页是方法论演示。比亚迪半导体部分为公开信息基础上的分析推演，非该公司委托成果。
+      </p>
+    </section>
+
+  </div>
+</BaseLayout>
