@@ -1,0 +1,376 @@
+---
+/**
+ * /insights/consulting-practice/seres/ — 赛力斯四线投入结构实战复盘
+ *
+ * 这是"自己的题"：用完整咨询流程解一个真实的账户资源分配问题。
+ * 练的是组织判断（关键人地图 / 价值链空位 / 信号速度排序），不是量化测算。
+ * 交付物通过 12 项可执行门禁校验。
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const title = '赛力斯四线投入结构 · 战略咨询实战复盘 · Robin Ji';
+const description =
+  '用完整咨询流程 S0–S7 分析赛力斯四条并行线的投入结构：关键人地图、价值链空位识别、信号速度排序、5 项书面红队判决。护栏不变，12 项门禁全部通过。';
+
+const keyPeople = [
+  {
+    line: '①数据产线+训练卡',
+    who: '郑哥、林奇（业务）+ 大卡心智',
+    state: '选型权受外部约束',
+    broke: '客户想要的我给不了（大卡）',
+    mine: '已多次配合（优化 ≥3 次）',
+  },
+  {
+    line: '②Token Hub',
+    who: '客户自研团队（M9/M8 销量 -30%）',
+    state: '预算收紧',
+    broke: '客户自己解决（自研）',
+    mine: '需求明显但决策链短',
+  },
+  {
+    line: '③图数据库私有化',
+    who: '肖阳（对接）+ 雪源（产品侧）',
+    state: '内部匹配确认中',
+    broke: '流程卡住（内部未答复 >1 周）',
+    mine: '节前提的需求',
+  },
+  {
+    line: '④清图 POC',
+    who: '东风专家（8 月底新招）+ 清图团队',
+    state: '团队新建、方案制定中',
+    broke: '已半只脚进场',
+    mine: '已配合片段数据',
+  },
+];
+
+const findings = [
+  {
+    tag: '关键判断',
+    f: '排序依据是信号速度，不是收入规模',
+    d: '在护栏把投入锁定在 ≤1 天/周的情况下，可优化变量不是"做多大"，而是"命中率"。线③单次动作即可产出二值信号（给不给时间表），线④已半只脚进场；线①②的命中路径都依赖客户侧行为，我方动作只是必要条件而非充分条件。',
+  },
+  {
+    tag: '价值链',
+    f: '客户价值链上，两个位是空的',
+    d: '算力位被大卡心智锁死（正面竞争必输）、AI 平台位被自研替代；但数据采集位与数据平台位是空的 —— 它们既不与大卡竞争，也不被自研直接替代。投入应转向这两个位。',
+  },
+  {
+    tag: '战略集团',
+    f: '同一个客户集团，只维护一个深度验证位',
+    d: '深度华为合作的主机厂集团内，乙方要么是"配套供应商"（拼成本），要么是"技术验证"（当前位置）。四个技术验证位每一个都要消耗同样的"进入信任"成本 —— 同时推四个是低效的。',
+  },
+  {
+    tag: '红队',
+    f: '根假设第一版被自己的证据推翻',
+    d: '原写"三条线同一机制"，但关键人地图显示三种性质完全不同。已改写为"同处一个乙方位置结构、共享进入信任成本" —— 这个表述能同时容纳三种差异，且战略集团分析独立支持它。',
+  },
+];
+
+const redTeam = [
+  {
+    c: '根假设 H1 被你自己的证据反驳 —— 三条线断裂原因根本不同',
+    v: '修改',
+    r: '根假设改写为"共享进入信任成本"，能被三种差异同时容纳；H1 标注为部分不成立，不再作为结论支撑。',
+  },
+  {
+    c: '线④的成功是能力还是运气？东风专家 8 月底才新招、团队刚建',
+    v: '维持',
+    r: '排序依据是"单次动作能否产出二值信号"，线④的进场状态本身就是事实，不依赖对原因的解释。已在分析中标注无法排除资源偶然性。',
+  },
+  {
+    c: '"降为观察"可能比放弃更贵 —— 关系维护有成本，客户侧会看成放弃',
+    v: '修改',
+    r: '明确"保持关系"是有成本的动作；观察期复核定在 10-18，若线①②出现客户主动信号则恢复投入。降级 = 低成本关系维护 + 信号监听，不是放手。',
+  },
+  {
+    c: '线③要拿时间表、线④要做 POC，会不会必然要求驻场或免费 POC？',
+    v: '维持',
+    r: '"单次动作出二值信号"的设计正是为了让验证不依赖驻场。已把该否证条件写进敏感性表：若任一条线必然要求驻场或免费 POC，则该线直接排除而非降级。',
+  },
+  {
+    c: '这题的根本难点：三条线是不是本来就不该同时存在？',
+    v: '维持并采纳',
+    r: '指向更上游的账户组合历史。本分析只能给出线级别的重排序；账户组合层面的重构需由决策者在更高层判断。已写入失效路径。',
+  },
+];
+
+const actions = [
+  { a: '线④持续配合，推进到可验证 POC', o: '我（纪多斌）', w: '持续' },
+  { a: '线③重庆技术交流，取得明确时间表', o: '我（纪多斌）', w: '10/14' },
+  { a: '线①②转为观察：保持关系，不主动方案化投入', o: '我（纪多斌）', w: '立即' },
+  { a: '摸清"数据采集/数据平台"两个空位的新进入角度', o: '我（纪多斌）', w: '本季度' },
+  { a: '条件寄存器更新（命中/未命中 + 投入档位）', o: '我（纪多斌）', w: '每周' },
+];
+
+const rules = [
+  {
+    t: '先按"单次动作能否产出二值信号"排序，不按收入规模或关系亲疏',
+    d: '信号速度才是受限资源的正确分配依据。"客户说还行"不是信号，"客户给不给时间表"才是信号。',
+  },
+  {
+    t: '在深度绑定第三方的客户上，先找"不与第三方正面竞争、也不被自研替代"的空位',
+    d: '避免把资源投在锁死位和替代位。',
+  },
+  {
+    t: '同一客户集团内并行多线前，先算清每条线消耗的进入信任成本是否共享',
+    d: '若共享，只保留一个深度验证位，其余降为轻量观察。',
+  },
+  {
+    t: '护栏写进诊断的显式部分，每条建议后核对"是否需要放松护栏"',
+    d: '若需要，该建议不可进入排序表 —— 而不是先列进去再打补丁。',
+  },
+  {
+    t: '根假设要能容纳你发现的反例',
+    d: '第一版根假设被自己的证据推翻。写的时候就问"如果三种不同现象都存在，它还成立吗"。',
+  },
+];
+
+const gates = [
+  { id: 'G0', n: '决策者具名', r: 'D 角色必须是具名的人，不能是部门' },
+  { id: 'G2', n: '诊断无方案词', r: '诊断陈述里出现"应该/建议引入/方案是"即阻塞' },
+  { id: 'G3', n: '根假设互斥', r: '根假设 ≥3 条即退回问题定义' },
+  { id: 'G4', n: 'A 级证据 + 锚点', r: '关键结论无一手证据或缺事实锚点即退回取证' },
+  { id: 'G5', n: '多源一致性', r: '定性判断题需多个独立证据源（本题 6 个）' },
+  { id: 'G6', n: '翻转则条件化', r: '有翻转风险但结论未改写为条件式即阻塞' },
+  { id: 'G7', n: '单一排序工具', r: '同时使用多个排序工具即阻塞' },
+  { id: 'G8', n: '红队书面判决', r: '红队后结论未改写且未记录理由即阻塞' },
+  { id: 'G9', n: 'turnaround 所有者', r: '接管失败项目需甲方侧具名业务所有者' },
+  { id: 'P6', n: '决策记录', r: '汇报必须拿到决策或记录下次决策条件' },
+  { id: 'P7', n: '落地所有者', r: '每条建议需甲方所有者，不能是顾问' },
+  { id: 'P8', n: '复盘规则 ≥3 条', r: '可复用规则须具体到动作' },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-3xl px-5 py-12 lg:py-16">
+
+    <header class="mb-12">
+      <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+        战略咨询实战 · 案例二 · 自己的题 · 练组织判断
+      </p>
+      <h1 class="text-3xl font-bold leading-tight text-slate-900 lg:text-4xl">
+        赛力斯四条线：投入结构该往哪调
+      </h1>
+      <p class="mt-4 text-base leading-relaxed text-slate-600">
+        一个真实的账户资源分配问题，用完整的咨询流程解一遍：委托界定 → 假设树 → 证据分级 →
+        关键人地图 → 价值链空位 → 信号速度排序 → 书面红队 → 落地跟踪。
+        <strong class="text-slate-900">护栏不变。</strong>
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-800">门禁 12/12 通过</span>
+        <span class="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-800">5 项红队判决</span>
+        <span class="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-800">5 条可复用规则</span>
+        <span class="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">护栏不变</span>
+      </div>
+    </header>
+
+    {/* ── 原始诉求 vs 诊断 ── */}
+    <section class="mb-14">
+      <h2 class="mb-4 text-2xl font-bold text-slate-900">一、先诊断，后方案</h2>
+      <p class="mb-4 text-sm text-slate-500">
+        原始诉求是"赛力斯这四条线，我还要不要继续跟？"—— 这是一个带情绪的决策题，不是分析题。
+        门禁 G2 会拦截任何在诊断陈述里写"应该/建议"的交付物。
+      </p>
+      <blockquote class="rounded-xl border border-slate-200 bg-slate-50 p-6 text-[15px] leading-relaxed text-slate-800">
+        四条线中三条的关键人匹配已断裂（自动驾驶数据线卡在大卡心智、Token Hub 线面临客户自研转向导致的预算收紧、
+        图数据库线自节前提需求后内部确认超期未答复），仅清图线已具备可验证的进场条件，
+        因此在不改变护栏的前提下，继续按四线平推的单位投入产出低于将资源集中于单线验证。
+      </blockquote>
+      <p class="mt-4 text-sm leading-relaxed text-slate-600">
+        这段话里没有一句"应该怎么做"。它只描述一个可以被证据推翻的差距。
+        <strong class="text-slate-800">而且它提出了真正的诊断难点：</strong>
+        三条线的断裂是同一个机制造成的，还是三个独立原因？如果是同一个机制，调整投入结构无效，只能等。
+      </p>
+    </section>
+
+    {/* ── 结论 ── */}
+    <section class="mb-14">
+      <h2 class="mb-4 text-2xl font-bold text-slate-900">二、结论</h2>
+      <div class="rounded-2xl border-l-4 border-emerald-500 bg-emerald-50/60 p-7">
+        <p class="text-[15px] leading-relaxed text-emerald-950">
+          在 10/14 重庆技术交流后线③对方能给出明确时间表的前提下成立：赛力斯四条线的投入应从"四线平推"
+          调整为「<strong>线④为主 · 线③验证 · 线①②降为观察</strong>」，其中线①②的降级不改变跟进频率
+          但停止主动投入方案化工作；若线③交流后仍无时间表承诺，则全部降为季度观察。
+        </p>
+        <p class="mt-5 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-800">
+          <strong>翻转条件：</strong>若 10/14 交流后线③仍无时间表承诺 → 全部降为季度观察。
+        </p>
+      </div>
+    </section>
+
+    {/* ── 关键人地图 ── */}
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">三、关键人地图是分析的第一层</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        不是最后一步的补充材料。四个框架之前，先看清楚谁在哪、谁能拍板、断在哪。
+      </p>
+      <div class="mb-5 overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full min-w-[680px] text-left text-sm">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="px-4 py-3 font-semibold">线</th>
+              <th class="px-4 py-3 font-semibold">客户侧关键人</th>
+              <th class="px-4 py-3 font-semibold">决策权状态</th>
+              <th class="px-4 py-3 font-semibold">断裂形态</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {keyPeople.map((p) => (
+              <tr>
+                <td class="px-4 py-3 align-top">
+                  <span class="font-medium text-slate-900">{p.line}</span>
+                  <div class="mt-1 text-xs text-slate-500">我方：{p.mine}</div>
+                </td>
+                <td class="px-4 py-3 align-top text-slate-600">{p.who}</td>
+                <td class="px-4 py-3 align-top text-slate-600">{p.state}</td>
+                <td class="px-4 py-3 align-top font-medium text-slate-800">{p.broke}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <p class="text-sm leading-relaxed text-slate-700">
+          <strong class="text-slate-900">读法：</strong>
+          线①的断裂是"客户想要的东西我给不了"（大卡）；线②是"客户自己解决"（自研）；线③是"流程卡住"（内部未答复）。
+          <span class="text-slate-600">三种不同性质 —— 这直接动摇了"三条线同一机制"的根假设，见红队挑战 1。</span>
+        </p>
+      </div>
+    </section>
+
+    {/* ── 四个发现 ── */}
+    <section class="mb-14">
+      <h2 class="mb-6 text-2xl font-bold text-slate-900">四、四个发现</h2>
+      <div class="space-y-3">
+        {findings.map((f) => (
+          <div class="rounded-xl border border-slate-200 bg-white p-5">
+            <div class="mb-2 flex flex-wrap items-center gap-2">
+              <span class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-600">{f.tag}</span>
+              <span class="text-sm font-semibold text-slate-900">{f.f}</span>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600">{f.d}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ── 红队 ── */}
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">五、红队：书面判决，不是开会挑刺</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 G8 要求逐条给出"维持 / 修改 / 放弃"，且结论必须被改写或记录不修改的理由。
+        5 项挑战中 2 项判"修改"。
+      </p>
+      <div class="space-y-4">
+        {redTeam.map((r, i) => (
+          <div class="rounded-xl border border-slate-200 bg-white p-5">
+            <div class="mb-2 flex items-start gap-3">
+              <span class="mt-0.5 font-mono text-xs font-bold text-slate-400">{String(i + 1).padStart(2, '0')}</span>
+              <p class="flex-1 text-sm font-semibold leading-relaxed text-slate-900">{r.c}</p>
+              <span class={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
+                r.v === '维持' ? 'bg-slate-200 text-slate-700' : 'bg-rose-100 text-rose-700'
+              }`}>
+                {r.v}
+              </span>
+            </div>
+            <p class="ml-9 text-sm leading-relaxed text-slate-600">{r.r}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ── 落地 ── */}
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">六、落地与"不做什么"</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 P7 要求每条建议有甲方所有者 —— 否则顾问走了没人接。
+      </p>
+      <div class="mb-5 overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full min-w-[560px] text-left text-sm">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="px-4 py-3 font-semibold">动作</th>
+              <th class="px-4 py-3 font-semibold">所有者</th>
+              <th class="px-4 py-3 font-semibold">时限</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {actions.map((a) => (
+              <tr>
+                <td class="px-4 py-3 text-slate-800">{a.a}</td>
+                <td class="px-4 py-3 text-slate-600">{a.o}</td>
+                <td class="px-4 py-3 text-slate-600">{a.w}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="rounded-xl border border-rose-200 bg-rose-50 p-5">
+        <p class="text-sm font-semibold text-rose-900">我们不做什么</p>
+        <p class="mt-1 text-sm text-rose-800">
+          不放松护栏（不驻场 / 不陪标 / 不免费 POC）；不为了"显得积极"而维持四线平推；不陪标。
+        </p>
+      </div>
+    </section>
+
+    {/* ── 规则 ── */}
+    <section class="mb-14">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">七、五条可复用规则</h2>
+      <p class="mb-6 text-sm text-slate-500">
+        门禁 P8 要求规则具体到动作，且至少 3 条 —— 项目必须产生组织能力，而不是让分析师一个人记住。
+      </p>
+      <ol class="space-y-2">
+        {rules.map((r, i) => (
+          <li class="rounded-xl border border-slate-200 bg-white p-4">
+            <div class="flex gap-3">
+              <span class="font-mono text-sm font-bold text-slate-400">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-900">{r.t}</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-600">{r.d}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {/* ── 门禁 ── */}
+    <section class="mb-12">
+      <h2 class="mb-2 text-2xl font-bold text-slate-900">八、12 项交付物门禁</h2>
+      <p class="mb-2 text-sm text-slate-500">
+        规则不是文字描述，是可执行的校验脚本。本案例交付物逐项通过。
+      </p>
+      <p class="mb-6 text-sm text-slate-500">
+        <strong class="text-slate-700">这个案例本身暴露了门禁的一个缺陷：</strong>
+        G5 要求"自上而下/自下而上/第三方"三条量化路径 —— 但这是纯判断题，不含市场测算，
+        强制要求三角验证就是逼作者凑无意义的路径。现已改为按题型分流：定量题查三角验证，定性题查多源一致性。
+      </p>
+      <div class="overflow-hidden rounded-xl border border-slate-200">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="px-4 py-3 font-semibold">门禁</th>
+              <th class="px-4 py-3 font-semibold">名称</th>
+              <th class="px-4 py-3 font-semibold">拦截什么</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {gates.map((g) => (
+              <tr>
+                <td class="px-4 py-3 align-top">
+                  <span class="font-mono text-xs font-bold text-emerald-700">{g.id}</span>
+                </td>
+                <td class="px-4 py-3 align-top font-medium text-slate-800">{g.n}</td>
+                <td class="px-4 py-3 align-top text-slate-600">{g.r}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-xs text-slate-500">
+        本页是方法论复盘。客户名称为说明需要保留，未涉及任何客户机密信息。
+      </p>
+    </section>
+
+  </div>
+</BaseLayout>
